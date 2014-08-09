@@ -8,10 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.egorn.dribbble.R;
+import com.egorn.dribbble.data.InfiniteScrollListener;
 import com.egorn.dribbble.data.models.Shot;
 
 import java.util.ArrayList;
@@ -26,8 +27,10 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
 
     private String mReference;
     private OnShotClickedListener mListener;
-    private ListAdapter mAdapter;
+    private ShotsAdapter mAdapter;
     private ArrayList<Shot> shots = new ArrayList<Shot>();
+
+    private ShotsController controller;
 
     public static ShotsFragment newInstance(String reference) {
         ShotsFragment fragment = new ShotsFragment();
@@ -53,6 +56,12 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
         ButterKnife.inject(this, rootView);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
+        mListView.setOnScrollListener(new InfiniteScrollListener() {
+            @Override
+            public void loadMore(int page, int totalItemsCount) {
+                controller.loadMore(mReference);
+            }
+        });
         return rootView;
     }
 
@@ -66,9 +75,10 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
         }
     }
 
-    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ShotsController controller = ShotsController.getInstance(mReference, this);
+        controller = ShotsController.getInstance(mReference, this);
     }
 
     @Override
@@ -92,16 +102,28 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
         }
     }
 
-    @Override public void onShotsLoaded(ArrayList<Shot> shots) {
+    @Override
+    public void onShotsLoaded(ArrayList<Shot> shots) {
         if (isAdded()) {
-            this.shots = shots;
-            mAdapter = new ShotsAdapter(shots, getActivity());
-            mListView.setAdapter(mAdapter);
+            this.shots.addAll(shots);
+            if (mAdapter == null) {
+                mAdapter = new ShotsAdapter(shots, getActivity());
+                mListView.setAdapter(mAdapter);
+            } else {
+                mAdapter.setItems(shots);
+            }
         }
     }
 
-    @Override public void onShotsError() {
-
+    @Override
+    public void onShotsError() {
+        if (isAdded()) {
+            Toast.makeText(
+                    getActivity(),
+                    "No more shots",
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
     }
 
     public interface OnShotClickedListener {

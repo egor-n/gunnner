@@ -1,5 +1,7 @@
 package com.egorn.dribbble.ui.shots;
 
+import android.util.Log;
+
 import com.egorn.dribbble.data.api.Api;
 import com.egorn.dribbble.data.api.ShotsResponse;
 import com.egorn.dribbble.data.models.Shot;
@@ -20,6 +22,7 @@ public class ShotsController {
     private String reference;
     private HashMap<String, OnShotsLoadedListener> callbacks = new HashMap<String, OnShotsLoadedListener>();
     private HashMap<String, ArrayList<Shot>> shots = new HashMap<String, ArrayList<Shot>>();
+    private HashMap<String, Integer> pages = new HashMap<String, Integer>();
 
     public static ShotsController getInstance(String reference, OnShotsLoadedListener callback) {
         if (instance == null) {
@@ -34,6 +37,7 @@ public class ShotsController {
         callbacks.put(reference, callback);
         if (shots.containsKey(reference)) {
             if (callback != null) {
+                Log.e("got shots", "for reference " + reference + " from cache");
                 callback.onShotsLoaded(shots.get(reference));
             }
         } else {
@@ -41,16 +45,36 @@ public class ShotsController {
         }
     }
 
+    public void loadMore(String reference) {
+        int page = 1;
+        try {
+            page = pages.get(reference);
+        } catch (NullPointerException ignored) {
+        }
+        page++;
+        pages.put(reference, page);
+        loadShots(reference);
+    }
+
     private void loadShots(final String reference) {
-        Api.dribbble().shots(reference, new Callback<ShotsResponse>() {
-            @Override public void success(ShotsResponse shotsResponse, Response response) {
-                shots.put(reference, shotsResponse.getShots());
+        if (!pages.containsKey(reference)) {
+            pages.put(reference, 1);
+        }
+        Api.dribbble().shots(reference, pages.get(reference), new Callback<ShotsResponse>() {
+            @Override
+            public void success(ShotsResponse shotsResponse, Response response) {
+                if (shots.containsKey(reference)) {
+                    shots.get(reference).addAll(shotsResponse.getShots());
+                } else {
+                    shots.put(reference, shotsResponse.getShots());
+                }
                 if (callbacks.get(reference) != null) {
-                    callbacks.get(reference).onShotsLoaded(shotsResponse.getShots());
+                    callbacks.get(reference).onShotsLoaded(shots.get(reference));
                 }
             }
 
-            @Override public void failure(RetrofitError error) {
+            @Override
+            public void failure(RetrofitError error) {
                 if (callbacks.get(reference) != null) {
                     callbacks.get(reference).onShotsError();
                 }

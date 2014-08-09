@@ -14,7 +14,7 @@ import com.egorn.dribbble.data.models.Shot;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class OpennedShotFragment extends Fragment implements OpennedShotController.OnShotLoadedListener {
+public class OpenedShotFragment extends Fragment implements OpennedShotController.OnShotLoadedListener {
     private static final String SHOT_ID = "shot_id";
 
     @InjectView(R.id.shot_data) TextView mShotData;
@@ -22,11 +22,11 @@ public class OpennedShotFragment extends Fragment implements OpennedShotControll
     private int mShotId;
     private Shot mShot;
 
-    public static OpennedShotFragment newInstance(int shotId) {
+    public static OpenedShotFragment newInstance(int shotId) {
         Bundle arguments = new Bundle();
         arguments.putInt(SHOT_ID, shotId);
 
-        OpennedShotFragment fragment = new OpennedShotFragment();
+        OpenedShotFragment fragment = new OpenedShotFragment();
         fragment.setArguments(arguments);
         return fragment;
     }
@@ -48,17 +48,20 @@ public class OpennedShotFragment extends Fragment implements OpennedShotControll
         return rootView;
     }
 
-    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         OpennedShotController controller = OpennedShotController.getInstance(mShotId, this);
     }
 
-    @Override public void onShotLoaded(Shot shot) {
+    @Override
+    public void onShotLoaded(Shot shot) {
         this.mShot = shot;
-        mShotData.setText(shot.toString());
+        mShotData.setText(mShot.toString());
     }
 
-    @Override public void onShotLoadingError() {
+    @Override
+    public void onShotLoadingError() {
         Toast.makeText(
                 getActivity(),
                 "Error loading shot with id = " + mShotId,

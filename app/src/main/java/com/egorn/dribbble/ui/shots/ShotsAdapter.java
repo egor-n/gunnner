@@ -30,19 +30,23 @@ public class ShotsAdapter extends BaseAdapter {
         this.context = context;
     }
 
-    @Override public int getCount() {
+    @Override
+    public int getCount() {
         return shots.size();
     }
 
-    @Override public Object getItem(int i) {
+    @Override
+    public Object getItem(int i) {
         return shots.get(i);
     }
 
-    @Override public long getItemId(int i) {
+    @Override
+    public long getItemId(int i) {
         return shots.get(i).get_id();
     }
 
-    @Override public View getView(int i, View view, ViewGroup viewGroup) {
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
         if (view == null) {
             view = View.inflate(context, R.layout.row_shot, null);
             view.setTag(new ViewHolder(view));
@@ -64,6 +68,11 @@ public class ShotsAdapter extends BaseAdapter {
         holder.likes.setText(shot.getLikesCount() + "");
         holder.comments.setText(shot.getCommentsCount() + "");
         return view;
+    }
+
+    public void setItems(ArrayList<Shot> shots) {
+        this.shots = shots;
+        notifyDataSetChanged();
     }
 
     static class ViewHolder {

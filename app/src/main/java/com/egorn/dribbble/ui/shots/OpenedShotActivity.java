@@ -7,7 +7,7 @@ import android.view.MenuItem;
 
 import com.egorn.dribbble.R;
 
-public class OpennedShotActivity extends FragmentActivity {
+public class OpenedShotActivity extends FragmentActivity {
     public static final String SHOT_ID = "shot_id";
 
     @Override
@@ -16,7 +16,7 @@ public class OpennedShotActivity extends FragmentActivity {
         setContentView(R.layout.activity_shot);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, OpennedShotFragment.newInstance(getIntent().getIntExtra(SHOT_ID, 0)))
+                    .add(R.id.container, OpenedShotFragment.newInstance(getIntent().getIntExtra(SHOT_ID, 0)))
                     .commit();
         }
     }

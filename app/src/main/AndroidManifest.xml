@@ -25,7 +25,7 @@
             android:value="5a3b0203215a43a61151b78162b22359b3acc655"/>
 
         <activity
-            android:name=".ui.shots.OpennedShotActivity"
+            android:name=".ui.shots.OpenedShotActivity"
             android:label="@string/title_activity_shot">
         </activity>
     </application>

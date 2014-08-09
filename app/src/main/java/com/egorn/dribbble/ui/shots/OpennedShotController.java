@@ -40,13 +40,15 @@ public class OpennedShotController {
 
     private void loadShot(int shotId) {
         Api.dribbble().shot(shotId, new Callback<Shot>() {
-            @Override public void success(Shot shot, Response response) {
+            @Override
+            public void success(Shot shot, Response response) {
                 if (callback != null) {
                     callback.onShotLoaded(shot);
                 }
             }
 
-            @Override public void failure(RetrofitError error) {
+            @Override
+            public void failure(RetrofitError error) {
                 if (callback != null) {
                     callback.onShotLoadingError();
                 }

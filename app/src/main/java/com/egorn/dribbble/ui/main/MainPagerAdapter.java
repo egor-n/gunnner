@@ -15,7 +15,8 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
         super(fm);
     }
 
-    @Override public Fragment getItem(int position) {
+    @Override
+    public Fragment getItem(int position) {
         switch (position) {
             case 0:
                 return ShotsFragment.newInstance(Shot.DEBUTS);
@@ -27,11 +28,13 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
         return ShotsFragment.newInstance(Shot.POPULAR);
     }
 
-    @Override public int getCount() {
+    @Override
+    public int getCount() {
         return 3;
     }
 
-    @Override public CharSequence getPageTitle(int position) {
+    @Override
+    public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
                 return "DEBUTS";
