@@ -1,6 +1,8 @@
 package com.egorn.dribbble.ui.widgets;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -50,6 +52,13 @@ public class ShotView extends FrameLayout {
 
     private void init(Context context) {
         LayoutInflater.from(context).inflate(R.layout.shot_view_children, this, true);
+
+        int[] attrs = new int[]{android.R.attr.selectableItemBackground /* index 0 */};
+        TypedArray ta = context.obtainStyledAttributes(attrs);
+        Drawable foreground = ta.getDrawable(0);
+        ta.recycle();
+        setForeground(foreground);
+
         ButterKnife.inject(this);
     }
 
