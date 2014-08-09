@@ -14,7 +14,8 @@ import com.egorn.dribbble.data.models.Shot;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class OpenedShotFragment extends Fragment implements OpennedShotController.OnShotLoadedListener {
+public class OpenedShotFragment extends Fragment implements
+        OpennedShotController.OnShotLoadedListener {
     private static final String SHOT_ID = "shot_id";
 
     @InjectView(R.id.shot_data) TextView mShotData;

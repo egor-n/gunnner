@@ -26,10 +26,19 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    signingConfigs {
+        testing {
+            storeFile file("testing.jks")
+            storePassword "testing"
+            keyAlias "testing"
+            keyPassword "testing"
+        }
+    }
     buildTypes {
         release {
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.testing
         }
     }
 }

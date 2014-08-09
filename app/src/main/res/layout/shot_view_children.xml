@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:foreground="?android:attr/selectableItemBackground"
-             tools:background="@color/background">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:tools="http://schemas.android.com/tools"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:foreground="?android:attr/selectableItemBackground">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="5dp"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="16dp"
+        tools:background="@color/background">
 
         <ImageView
             android:id="@+id/shot_image"
@@ -133,4 +133,4 @@
 
     </RelativeLayout>
 
-</FrameLayout>
+</merge>
