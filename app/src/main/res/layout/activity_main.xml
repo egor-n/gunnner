@@ -22,7 +22,7 @@
          the container. -->
     <fragment
         android:id="@+id/navigation_drawer"
-        android:name="com.egorn.dribbble.NavigationDrawerFragment"
+        android:name="com.egorn.dribbble.ui.drawer.NavigationDrawerFragment"
         android:layout_width="@dimen/navigation_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"

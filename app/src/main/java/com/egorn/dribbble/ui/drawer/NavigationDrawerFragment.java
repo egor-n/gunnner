@@ -1,4 +1,4 @@
-package com.egorn.dribbble;
+package com.egorn.dribbble.ui.drawer;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -20,6 +20,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.egorn.dribbble.R;
 
 public class NavigationDrawerFragment extends Fragment {
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";

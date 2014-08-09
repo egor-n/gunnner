@@ -1,4 +1,4 @@
-package com.egorn.dribbble;
+package com.egorn.dribbble.ui.main;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -11,8 +11,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.egorn.dribbble.BuildConfig;
+import com.egorn.dribbble.R;
+import com.egorn.dribbble.data.api.Api;
+import com.egorn.dribbble.data.api.ShotsResponse;
+import com.egorn.dribbble.data.models.Shot;
+import com.egorn.dribbble.ui.drawer.NavigationDrawerFragment;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class MainActivity extends FragmentActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -27,6 +38,22 @@ public class MainActivity extends FragmentActivity
             Crashlytics.start(this);
         }
         setContentView(R.layout.activity_main);
+
+        Api.dribbble().shots(Shot.EVERYONE, new Callback<ShotsResponse>() {
+            @Override
+            public void success(ShotsResponse shotsResponse, Response response) {
+                Toast.makeText(
+                        MainActivity.this,
+                        "Success, total shots = " + shotsResponse.getTotal(),
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
