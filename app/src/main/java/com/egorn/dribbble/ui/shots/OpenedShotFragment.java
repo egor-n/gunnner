@@ -5,12 +5,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.egorn.dribbble.R;
+import com.egorn.dribbble.data.models.Comment;
 import com.egorn.dribbble.data.models.Shot;
 import com.egorn.dribbble.ui.widgets.ShotView;
+
+import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -19,11 +22,12 @@ public class OpenedShotFragment extends Fragment implements
         OpennedShotController.OnShotLoadedListener {
     private static final String SHOT_ID = "shot_id";
 
-    @InjectView(R.id.shot_header) ShotView mShotHeader;
-    @InjectView(R.id.shot_data) TextView mShotData;
+    ShotView mShotHeader;
+    @InjectView(R.id.comments_lv) ListView mCommentsLv;
 
     private int mShotId;
     private Shot mShot;
+    private ArrayList<Comment> mComments;
 
     public static OpenedShotFragment newInstance(int shotId) {
         Bundle arguments = new Bundle();
@@ -59,9 +63,16 @@ public class OpenedShotFragment extends Fragment implements
 
     @Override
     public void onShotLoaded(Shot shot) {
+        if (!isAdded()) {
+            return;
+        }
+
         this.mShot = shot;
+        mShotHeader = (ShotView) View.inflate(getActivity(), R.layout.shot_view, null);
         mShotHeader.setShot(shot);
-        mShotData.setText(mShot.toString());
+        mShotHeader.hideCommentsBadge();
+        mCommentsLv.addHeaderView(mShotHeader);
+        mCommentsLv.setAdapter(new CommentsAdapter(getActivity(), new ArrayList<Comment>()));
     }
 
     @Override
