@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,8 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
     private static final String REFERENCE = "reference";
 
     @InjectView(R.id.shots_list) AbsListView mListView;
+    @InjectView(R.id.progress_bar) ProgressBar mProgressBar;
+    @InjectView(android.R.id.empty) TextView mEpmtyView;
 
     private String mReference;
     private OnShotClickedListener mListener;
@@ -78,6 +81,7 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mProgressBar.setVisibility(View.VISIBLE);
         controller = ShotsController.getInstance(mReference, this);
     }
 
@@ -95,17 +99,14 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
     }
 
     public void setEmptyText(CharSequence emptyText) {
-        View emptyView = mListView.getEmptyView();
-
-        if (emptyText instanceof TextView) {
-            ((TextView) emptyView).setText(emptyText);
-        }
+        (mEpmtyView).setText(emptyText);
     }
 
     @Override
     public void onShotsLoaded(ArrayList<Shot> shots) {
         if (isAdded()) {
             this.shots.addAll(shots);
+            mProgressBar.setVisibility(View.GONE);
             if (mAdapter == null) {
                 mAdapter = new ShotsAdapter(shots, getActivity());
                 mListView.setAdapter(mAdapter);
@@ -118,6 +119,7 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
     @Override
     public void onShotsError() {
         if (isAdded()) {
+            mProgressBar.setVisibility(View.GONE);
             Toast.makeText(
                     getActivity(),
                     "No more shots",
