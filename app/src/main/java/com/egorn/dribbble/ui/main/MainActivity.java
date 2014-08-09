@@ -1,32 +1,24 @@
 package com.egorn.dribbble.ui.main;
 
 import android.app.ActionBar;
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.egorn.dribbble.BuildConfig;
 import com.egorn.dribbble.R;
-import com.egorn.dribbble.data.api.Api;
-import com.egorn.dribbble.data.api.ShotsResponse;
-import com.egorn.dribbble.data.models.Shot;
 import com.egorn.dribbble.ui.drawer.NavigationDrawerFragment;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import com.egorn.dribbble.ui.shots.OpennedShotActivity;
+import com.egorn.dribbble.ui.shots.ShotsFragment;
 
 public class MainActivity extends FragmentActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+        ShotsFragment.OnShotClickedListener {
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
     private CharSequence mTitle;
@@ -38,22 +30,6 @@ public class MainActivity extends FragmentActivity
             Crashlytics.start(this);
         }
         setContentView(R.layout.activity_main);
-
-        Api.dribbble().shots(Shot.EVERYONE, new Callback<ShotsResponse>() {
-            @Override
-            public void success(ShotsResponse shotsResponse, Response response) {
-                Toast.makeText(
-                        MainActivity.this,
-                        "Success, total shots = " + shotsResponse.getTotal(),
-                        Toast.LENGTH_SHORT
-                ).show();
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -68,7 +44,7 @@ public class MainActivity extends FragmentActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .replace(R.id.container, new MainFragment())
                 .commit();
     }
 
@@ -112,32 +88,15 @@ public class MainActivity extends FragmentActivity
         return super.onOptionsItemSelected(item);
     }
 
-    public static class PlaceholderFragment extends Fragment {
-        private static final String ARG_SECTION_NUMBER = "section_number";
+    @Override public void onShotClicked(int shotId) {
+        Toast.makeText(
+                this,
+                "Shot wih id = " + shotId + " clicked",
+                Toast.LENGTH_SHORT
+        ).show();
 
-        public PlaceholderFragment() {
-        }
-
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
-        }
+        Intent intent = new Intent(this, OpennedShotActivity.class);
+        intent.putExtra(OpennedShotActivity.SHOT_ID, shotId);
+        startActivity(intent);
     }
 }

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.egorn.dribbble">
+<manifest
+    package="com.egorn.dribbble"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -13,14 +14,20 @@
             android:name=".ui.main.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.crashlytics.ApiKey"
-            android:value="5a3b0203215a43a61151b78162b22359b3acc655" />
+            android:value="5a3b0203215a43a61151b78162b22359b3acc655"/>
+
+        <activity
+            android:name=".ui.shots.OpennedShotActivity"
+            android:label="@string/title_activity_shot">
+        </activity>
     </application>
 
 </manifest>

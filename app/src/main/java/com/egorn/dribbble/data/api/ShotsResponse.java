@@ -9,4 +9,8 @@ import java.util.ArrayList;
  */
 public class ShotsResponse extends ListResponse {
     private ArrayList<Shot> shots;
+
+    public ArrayList<Shot> getShots() {
+        return shots;
+    }
 }

@@ -13,8 +13,8 @@ public class Player {
     private String location;
     @SerializedName("twitter_screen_name")
     private String twitterScreenName;
-    @SerializedName("drafted_by_player_id")
-    private Object draftedByPlayerId;
+    //    @SerializedName("drafted_by_player_id")
+//    private Object draftedByPlayerId;
     @SerializedName("shots_count")
     private int shotsCount;
     @SerializedName("draftees_count")
@@ -38,6 +38,78 @@ public class Player {
     @SerializedName("created_at")
     private String createdAt;
 
+    public int get_id() {
+        return _id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getTwitterScreenName() {
+        return twitterScreenName;
+    }
+
+    public int getShotsCount() {
+        return shotsCount;
+    }
+
+    public int getDrafteesCount() {
+        return drafteesCount;
+    }
+
+    public int getFollowersCount() {
+        return followersCount;
+    }
+
+    public int getFollowingCount() {
+        return followingCount;
+    }
+
+    public int getCommentsCount() {
+        return commentsCount;
+    }
+
+    public int getCommentsReceivedCount() {
+        return commentsReceivedCount;
+    }
+
+    public int getLikesCount() {
+        return likesCount;
+    }
+
+    public int getLikesReceivedCount() {
+        return likesReceivedCount;
+    }
+
+    public int getReboundsCount() {
+        return reboundsCount;
+    }
+
+    public int getReboundsReceivedCount() {
+        return reboundsReceivedCount;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
     @Override
     public String toString() {
         return "Player{" +
@@ -48,7 +120,7 @@ public class Player {
                 ", avatarUrl='" + avatarUrl + '\'' +
                 ", location='" + location + '\'' +
                 ", twitterScreenName='" + twitterScreenName + '\'' +
-                ", draftedByPlayerId=" + draftedByPlayerId +
+//                ", draftedByPlayerId=" + draftedByPlayerId +
                 ", shotsCount=" + shotsCount +
                 ", drafteesCount=" + drafteesCount +
                 ", followersCount=" + followersCount +

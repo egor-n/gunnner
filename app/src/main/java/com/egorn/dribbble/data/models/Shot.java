@@ -34,6 +34,70 @@ public class Shot {
     private String createdAt;
     private Player player;
 
+    public Player getPlayer() {
+        return player;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public int getReboundSourceId() {
+        return reboundSourceId;
+    }
+
+    public int getReboundsCount() {
+        return reboundsCount;
+    }
+
+    public int getCommentsCount() {
+        return commentsCount;
+    }
+
+    public int getLikesCount() {
+        return likesCount;
+    }
+
+    public int getViewsCount() {
+        return viewsCount;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public String getImageTeaserUrl() {
+        return imageTeaserUrl;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public String getShortUrl() {
+        return shortUrl;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public int get_id() {
+        return _id;
+    }
+
     @Override
     public String toString() {
         return "Shot{" +
