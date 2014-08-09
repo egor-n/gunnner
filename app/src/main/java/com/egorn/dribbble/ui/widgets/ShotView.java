@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -24,6 +25,7 @@ import butterknife.InjectView;
  */
 public class ShotView extends FrameLayout {
     @InjectView(R.id.shot_image) ImageView mShotImage;
+    @InjectView(R.id.rebound) ImageView mRebound;
     @InjectView(R.id.title) TextView mTitle;
     @InjectView(R.id.player) TextView mPlayer;
     @InjectView(R.id.views) TextView mViews;
@@ -67,6 +69,10 @@ public class ShotView extends FrameLayout {
                 .fit()
                 .placeholder(R.drawable.placeholder)
                 .into(mShotImage);
+
+        if (shot.isRebound()) {
+            mRebound.setVisibility(View.VISIBLE);
+        }
 
         mTitle.setText(shot.getTitle());
         mPlayer.setText(Html.fromHtml("by " + "<font color=\"#f52b79\">" + shot.getPlayer().getName() + "</font>"));

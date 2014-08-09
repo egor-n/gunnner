@@ -22,6 +22,13 @@
             android:scaleType="fitCenter"
             tools:src="@drawable/placeholder"/>
 
+        <ImageView
+            android:id="@+id/rebound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/rebound"
+            android:visibility="gone"/>
+
         <View
             android:id="@+id/divider"
             android:layout_width="match_parent"

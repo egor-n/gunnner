@@ -98,6 +98,10 @@ public class Shot {
         return _id;
     }
 
+    public boolean isRebound() {
+        return getReboundSourceId() != 0;
+    }
+
     @Override
     public String toString() {
         return "Shot{" +

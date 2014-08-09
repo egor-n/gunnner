@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.egorn.dribbble.R;
 import com.egorn.dribbble.data.models.Shot;
+import com.egorn.dribbble.ui.widgets.ShotView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -18,6 +19,7 @@ public class OpenedShotFragment extends Fragment implements
         OpennedShotController.OnShotLoadedListener {
     private static final String SHOT_ID = "shot_id";
 
+    @InjectView(R.id.shot_header) ShotView mShotHeader;
     @InjectView(R.id.shot_data) TextView mShotData;
 
     private int mShotId;
@@ -58,6 +60,7 @@ public class OpenedShotFragment extends Fragment implements
     @Override
     public void onShotLoaded(Shot shot) {
         this.mShot = shot;
+        mShotHeader.setShot(shot);
         mShotData.setText(mShot.toString());
     }
 
