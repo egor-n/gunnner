@@ -40,6 +40,7 @@ public class ShotView extends FrameLayout {
     @InjectView(R.id.comments) TextView mComments;
     @InjectView(R.id.time) TextView mTime;
     @Optional @InjectView(R.id.gif) ImageView mGif;
+    @Optional @InjectView(R.id.description) TextView mDescription;
     private int style = 0;
 
     public ShotView(Context context) {
@@ -132,14 +133,15 @@ public class ShotView extends FrameLayout {
         }
 
         mTitle.setText(shot.getTitle());
-        mPlayer.setText(Html.fromHtml("by " + "<font color=\"#f52b79\">" + shot.getPlayer().getName() + "</font>"));
+        mPlayer.setText(Html.fromHtml("by " + "<font color=\"#ea4c89\">" + shot.getPlayer().getName() + "</font>"));
         mTime.setText(DateFormatter.formatDate(getContext(), shot.getCreatedAt()));
         mViews.setText(shot.getViewsCount() + "");
         mLikes.setText(shot.getLikesCount() + "");
-        if (style == 0) {
+        if (style == SMALL) {
             mComments.setText(shot.getCommentsCount() + "");
         } else {
             mComments.setText(shot.getCommentsCount() + " Responses");
+            mDescription.setText(Html.fromHtml(shot.getDescription()));
         }
     }
 
@@ -151,7 +153,7 @@ public class ShotView extends FrameLayout {
 
     private void loadWithPicasso(Shot shot) {
         Picasso.with(getContext()).load(shot.getImageUrl())
-                .fit()
+//                .fit()
                 .placeholder(R.drawable.placeholder)
                 .into(mShotImage);
     }

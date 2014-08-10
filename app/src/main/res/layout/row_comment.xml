@@ -39,6 +39,7 @@
         android:layout_toEndOf="@id/player_avatar"
         android:layout_toRightOf="@id/player_avatar"
         android:autoLink="all"
+        android:textColorLink="@color/dribbble"
         tools:text="Love this icon, love this app."/>
 
 </RelativeLayout>

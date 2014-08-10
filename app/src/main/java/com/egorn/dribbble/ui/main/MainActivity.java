@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
-import android.view.MenuItem;
 
 import com.crashlytics.android.Crashlytics;
 import com.egorn.dribbble.BuildConfig;
@@ -43,9 +42,34 @@ public class MainActivity extends FragmentActivity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, new MainFragment())
-                .commit();
+        switch (position) {
+            case 0:  // main
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, new MainFragment())
+                        .commit();
+                break;
+            case 1:  // my profile
+                break;
+            case 2:  // my shots
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, ShotsFragment.newInstance(ShotsFragment.MY_SHOTS))
+                        .commit();
+                break;
+            case 3:  // following
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, ShotsFragment.newInstance(ShotsFragment.FOLLOWING))
+                        .commit();
+                break;
+            case 4:  // likes
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, ShotsFragment.newInstance(ShotsFragment.LIKES))
+                        .commit();
+                break;
+            case 5:  // settings
+                break;
+            case 6:  // about
+                break;
+        }
     }
 
     public void onSectionAttached(int number) {
@@ -77,15 +101,6 @@ public class MainActivity extends FragmentActivity
             return true;
         }
         return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

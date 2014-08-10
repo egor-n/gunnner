@@ -119,6 +119,8 @@ public class OpenedShotFragment extends Fragment implements
         }
 
         if (mShotHeader == null) {
+            // Shot wasn't loaded yet, so we have to wait for it to set adapter,
+            // because you can't addHeaderView after setAdapter
             return;
         }
 

@@ -3,6 +3,7 @@ package com.egorn.dribbble.ui.shots;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,10 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.egorn.dribbble.R;
 import com.egorn.dribbble.data.InfiniteScrollListener;
+import com.egorn.dribbble.data.UserController;
 import com.egorn.dribbble.data.models.Shot;
 
 import java.util.ArrayList;
@@ -21,24 +22,40 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class ShotsFragment extends Fragment implements AbsListView.OnItemClickListener, ShotsController.OnShotsLoadedListener {
+public class ShotsFragment extends Fragment implements AbsListView.OnItemClickListener,
+        ShotsController.OnShotsLoadedListener {
+    public static final int FOLLOWING = 1;
+    public static final int LIKES = 2;
+    public static final int MY_SHOTS = 3;
+
     private static final String REFERENCE = "reference";
+    private static final String TYPE = "type";
 
     @InjectView(R.id.shots_list) AbsListView mListView;
     @InjectView(R.id.progress_bar) ProgressBar mProgressBar;
-    @InjectView(android.R.id.empty) TextView mEpmtyView;
+    @InjectView(R.id.empty) TextView mEmptyView;
 
     private String mReference;
+    private int mType;
     private OnShotClickedListener mListener;
     private ShotsAdapter mAdapter;
     private ArrayList<Shot> shots = new ArrayList<Shot>();
 
     private ShotsController controller;
+    private UserController userController;
 
     public static ShotsFragment newInstance(String reference) {
         ShotsFragment fragment = new ShotsFragment();
         Bundle args = new Bundle();
         args.putString(REFERENCE, reference);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static ShotsFragment newInstance(int type) {
+        ShotsFragment fragment = new ShotsFragment();
+        Bundle args = new Bundle();
+        args.putInt(TYPE, type);
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,6 +66,9 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
 
         if (getArguments() != null) {
             mReference = getArguments().getString(REFERENCE);
+            if (TextUtils.isEmpty(mReference)) {
+                mType = getArguments().getInt(TYPE);
+            }
         }
     }
 
@@ -57,12 +77,21 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_shots, container, false);
         ButterKnife.inject(this, rootView);
+        setEmptyText(getString(R.string.no_shots));
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
         mListView.setOnScrollListener(new InfiniteScrollListener() {
             @Override
             public void loadMore(int page, int totalItemsCount) {
-                controller.loadMore(mReference);
+                if (mType == FOLLOWING) {
+                    userController.loadMoreFollowingShots();
+                } else if (mType == LIKES) {
+                    userController.loadMoreLikesShots();
+                } else if (mType == MY_SHOTS) {
+                    userController.loadMorePlayerShots();
+                } else {
+                    controller.loadMore(mReference);
+                }
             }
         });
         return rootView;
@@ -82,7 +111,18 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mProgressBar.setVisibility(View.VISIBLE);
-        controller = ShotsController.getInstance(mReference, this);
+        if (mType == FOLLOWING) {
+            userController = UserController.getInstance("tsunami");
+            userController.getFollowingShots(this);
+        } else if (mType == LIKES) {
+            userController = UserController.getInstance("tsunami");
+            userController.getLikesShots(this);
+        } else if (mType == MY_SHOTS) {
+            userController = UserController.getInstance("tsunami");
+            userController.getPlayerShots(this);
+        } else {
+            controller = ShotsController.getInstance(mReference, this);
+        }
     }
 
     @Override
@@ -99,7 +139,7 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
     }
 
     public void setEmptyText(CharSequence emptyText) {
-        (mEpmtyView).setText(emptyText);
+        mEmptyView.setText(emptyText);
     }
 
     @Override
@@ -113,6 +153,12 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
             } else {
                 mAdapter.setItems(shots);
             }
+
+            if (shots.size() == 0) {
+                mEmptyView.setVisibility(View.VISIBLE);
+            } else {
+                mEmptyView.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -120,11 +166,6 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
     public void onShotsError() {
         if (isAdded()) {
             mProgressBar.setVisibility(View.GONE);
-            Toast.makeText(
-                    getActivity(),
-                    "No more shots",
-                    Toast.LENGTH_SHORT
-            ).show();
         }
     }
 

@@ -27,4 +27,8 @@ public class ListResponse {
     public int getTotal() {
         return total;
     }
+
+    public boolean shouldLoadMore() {
+        return page < pages;
+    }
 }

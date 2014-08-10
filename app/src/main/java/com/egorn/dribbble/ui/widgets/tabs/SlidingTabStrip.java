@@ -13,7 +13,7 @@ class SlidingTabStrip extends LinearLayout {
     private static final int DEFAULT_BOTTOM_BORDER_THICKNESS_DIPS = 1;
     private static final byte DEFAULT_BOTTOM_BORDER_COLOR_ALPHA = 0x64;  // 0x26
     private static final int SELECTED_INDICATOR_THICKNESS_DIPS = 4;
-    private static final int DEFAULT_SELECTED_INDICATOR_COLOR = 0xFFF52B79;
+    private static final int DEFAULT_SELECTED_INDICATOR_COLOR = 0xFFEA4C89;
     private static final int DEFAULT_BORDER_BOTTOM_COLOR = 0xFF686868;
     private static final int DEFAULT_DIVIDER_THICKNESS_DIPS = 1;
     private static final byte DEFAULT_DIVIDER_COLOR_ALPHA = 0x79;

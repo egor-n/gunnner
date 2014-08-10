@@ -16,13 +16,14 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:scrollbarStyle="outsideOverlay"
-        tools:listitem="@layout/row_shot"/>
+        tools:listitem="@layout/shot_view_small"/>
 
     <TextView
-        android:id="@android:id/empty"
+        android:id="@+id/empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:visibility="gone"/>
 
     <ProgressBar
         android:id="@+id/progress_bar"

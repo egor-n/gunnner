@@ -117,12 +117,25 @@
             android:textSize="12sp"
             tools:text="Jul 30, 2014"/>
 
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/time"
+            android:layout_marginTop="6dp"
+            android:autoLink="all"
+            android:gravity="center_vertical"
+            android:textColor="#f3f3f3"
+            android:textColorLink="@color/dribbble"
+            android:textSize="12sp"
+            tools:text="Designing a best-selling app for creating comic books.\nRead our case stufy: http://sfcd.com/work/halftone2 \n"/>
+
         <View
             android:id="@+id/comments_divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@id/time"
-            android:layout_marginTop="6dp"
+            android:layout_below="@id/description"
+            android:layout_marginTop="-12dp"
             android:background="#686868"/>
 
         <TextView

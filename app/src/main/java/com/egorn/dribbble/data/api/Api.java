@@ -39,10 +39,10 @@ public class Api {
                              Callback<CommentsResponse> callback);
 
         @GET("/players/{id}/shots")
-        public void recentShots(@Path("id") int playerId, @Query("page") int page,
+        public void playerShots(@Path("id") int playerId, @Query("page") int page,
                                 Callback<ShotsResponse> callback);
 
-        @GET("/players/{id}/following")
+        @GET("/players/{id}/shots/following")
         public void followingShots(@Path("id") int playerId, @Query("page") int page,
                                    Callback<ShotsResponse> callback);
 
@@ -66,10 +66,10 @@ public class Api {
                                    Callback<PlayersResponse> callback);
 
         @GET("/players/{id}/shots")
-        public void recentShots(@Path("id") String playerId, @Query("page") int page,
+        public void playerShots(@Path("id") String playerId, @Query("page") int page,
                                 Callback<ShotsResponse> callback);
 
-        @GET("/players/{id}/following")
+        @GET("/players/{id}/shots/following")
         public void followingShots(@Path("id") String playerId, @Query("page") int page,
                                    Callback<ShotsResponse> callback);
 
