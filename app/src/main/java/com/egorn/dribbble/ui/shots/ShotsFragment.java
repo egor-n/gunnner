@@ -105,7 +105,7 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
     @Override
     public void onShotsLoaded(ArrayList<Shot> shots) {
         if (isAdded()) {
-            this.shots.addAll(shots);
+            this.shots = shots;
             mProgressBar.setVisibility(View.GONE);
             if (mAdapter == null) {
                 mAdapter = new ShotsAdapter(shots, getActivity());

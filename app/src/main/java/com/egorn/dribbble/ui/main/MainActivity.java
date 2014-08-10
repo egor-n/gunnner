@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.egorn.dribbble.BuildConfig;
@@ -91,12 +90,6 @@ public class MainActivity extends FragmentActivity
 
     @Override
     public void onShotClicked(Shot shot) {
-        Toast.makeText(
-                this,
-                "Shot wih id = " + shot.get_id() + " clicked",
-                Toast.LENGTH_SHORT
-        ).show();
-
         Intent intent = new Intent(this, OpenedShotActivity.class);
         intent.putExtra(OpenedShotActivity.SHOT, shot);
         startActivity(intent);

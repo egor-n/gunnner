@@ -1,6 +1,7 @@
 package com.egorn.dribbble.ui.widgets;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.egorn.dribbble.R;
 import com.egorn.dribbble.data.helpers.DateFormatter;
 import com.egorn.dribbble.data.models.Shot;
+import com.egorn.dribbble.ui.shots.OpenedShotActivity;
 import com.squareup.picasso.Picasso;
 
 import butterknife.ButterKnife;
@@ -88,6 +90,17 @@ public class ShotView extends FrameLayout {
                 R.styleable.ShotView,
                 0, 0);
         style = a.getInt(R.styleable.ShotView_style, 0);
+    }
+
+    public void setOnReboundClickListener(final int reboundId) {
+        mRebound.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), OpenedShotActivity.class);
+                intent.putExtra(OpenedShotActivity.SHOT_ID, reboundId);
+                getContext().startActivity(intent);
+            }
+        });
     }
 
     public void setShot(Shot shot) {

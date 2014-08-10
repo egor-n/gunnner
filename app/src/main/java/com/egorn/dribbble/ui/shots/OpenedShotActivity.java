@@ -10,15 +10,22 @@ import com.egorn.dribbble.data.models.Shot;
 
 public class OpenedShotActivity extends FragmentActivity {
     public static final String SHOT = "shot";
+    public static final String SHOT_ID = "shot_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shot);
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, OpenedShotFragment.newInstance((Shot) getIntent().getParcelableExtra(SHOT)))
-                    .commit();
+            if (getIntent().getExtras().containsKey(SHOT)) {
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, OpenedShotFragment.newInstance((Shot) getIntent().getParcelableExtra(SHOT)))
+                        .commit();
+            } else {
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, OpenedShotFragment.newInstance(getIntent().getIntExtra(SHOT_ID, 0)))
+                        .commit();
+            }
         }
     }
 

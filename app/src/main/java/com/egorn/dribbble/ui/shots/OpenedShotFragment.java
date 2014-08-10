@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.egorn.dribbble.R;
 import com.egorn.dribbble.data.InfiniteScrollListener;
@@ -43,6 +42,15 @@ public class OpenedShotFragment extends Fragment implements
         return fragment;
     }
 
+    public static OpenedShotFragment newInstance(int shotId) {
+        Bundle arguments = new Bundle();
+        arguments.putInt(SHOT_ID, shotId);
+
+        OpenedShotFragment fragment = new OpenedShotFragment();
+        fragment.setArguments(arguments);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,26 +76,49 @@ public class OpenedShotFragment extends Fragment implements
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (mShot != null) {
+            prepareHeader();
+        }
         controller = OpenedShotController.getInstance(mShotId, this);
-        prepareHeader();
-        prepareCommentsLv();
     }
 
     private void prepareHeader() {
         mShotHeader = ShotView.inflateBig(mCommentsLv);
         mShotHeader.setShot(mShot);
-    }
 
-    private void prepareCommentsLv() {
-        mAdapter = new CommentsAdapter(getActivity(), new ArrayList<Comment>());
+        if (mShot.getReboundSourceId() != 0) {
+            mShotHeader.setOnReboundClickListener(mShot.getReboundSourceId());
+        }
 
         mCommentsLv.addHeaderView(mShotHeader, null, false);
+
+        mAdapter = new CommentsAdapter(getActivity(), new ArrayList<Comment>());
         mCommentsLv.setAdapter(mAdapter); // set empty adapter so it shows the header
+    }
+
+    @Override
+    public void onShotLoaded(Shot shot) {
+        if (isAdded()) {
+            this.mShot = shot;
+            if (mShotHeader == null) {
+                prepareHeader();
+            } else {
+                updateHeader(shot);
+            }
+        }
+    }
+
+    private void updateHeader(Shot shot) {
+        mShotHeader.setShot(shot);
     }
 
     @Override
     public void onCommentsLoaded(boolean shouldLoadMore, ArrayList<Comment> comments) {
         if (!isAdded()) {
+            return;
+        }
+
+        if (mShotHeader == null) {
             return;
         }
 
@@ -101,22 +132,13 @@ public class OpenedShotFragment extends Fragment implements
             mCommentsLv.setOnScrollListener(new InfiniteScrollListener() {
                 @Override
                 public void loadMore(int page, int totalItemsCount) {
-                    controller.loadMore(mShotId);
+                    if (controller != null) {
+                        controller.loadMore(mShotId);
+                    }
                 }
             });
         } else {
             mCommentsLv.setOnScrollListener(null);
-        }
-    }
-
-    @Override
-    public void onCommentsLoadingError() {
-        if (isAdded()) {
-            Toast.makeText(
-                    getActivity(),
-                    "Error loading comments for shot with id = " + mShotId,
-                    Toast.LENGTH_SHORT
-            ).show();
         }
     }
 }

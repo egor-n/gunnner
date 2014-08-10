@@ -6,6 +6,7 @@ import android.util.SparseIntArray;
 import com.egorn.dribbble.data.api.Api;
 import com.egorn.dribbble.data.api.CommentsResponse;
 import com.egorn.dribbble.data.models.Comment;
+import com.egorn.dribbble.data.models.Shot;
 
 import java.util.ArrayList;
 
@@ -19,8 +20,9 @@ import retrofit.client.Response;
 public class OpenedShotController {
     private static OpenedShotController instance;
 
-    private OnCommentsLoadedListener callback;
+    private SparseArray<OnCommentsLoadedListener> callbacks = new SparseArray<OnCommentsLoadedListener>();
     private SparseArray<ArrayList<Comment>> comments = new SparseArray<ArrayList<Comment>>();
+    private SparseArray<Shot> shots = new SparseArray<Shot>();
     private SparseIntArray pages = new SparseIntArray();
 
     public static OpenedShotController getInstance(int shotId, OnCommentsLoadedListener callback) {
@@ -32,7 +34,17 @@ public class OpenedShotController {
     }
 
     private void init(int shotId, OnCommentsLoadedListener callback) {
-        this.callback = callback;
+        callbacks.put(shotId, callback);
+
+        Shot shot = shots.get(shotId);
+        if (shot != null) {
+            if (callback != null) {
+                callback.onShotLoaded(shot);
+            }
+        } else {
+            loadShot(shotId);
+        }
+
         ArrayList<Comment> comments = this.comments.get(shotId);
         if (comments != null) {
             if (callback != null) {
@@ -70,8 +82,8 @@ public class OpenedShotController {
                 } else {
                     comments.put(shotId, commentsResponse.getComments());
                 }
-                if (callback != null) {
-                    callback.onCommentsLoaded(
+                if (callbacks.get(shotId) != null) {
+                    callbacks.get(shotId).onCommentsLoaded(
                             commentsResponse.getPage() < commentsResponse.getPages(),
                             comments.get(shotId));
                 }
@@ -79,16 +91,32 @@ public class OpenedShotController {
 
             @Override
             public void failure(RetrofitError error) {
-                if (callback != null) {
-                    callback.onCommentsLoadingError();
+            }
+        });
+    }
+
+    private void loadShot(final int shotId) {
+        Api.dribbble().shot(shotId, new Callback<Shot>() {
+            @Override
+            public void success(Shot shot, Response response) {
+                shots.put(shotId, shot);
+
+                if (callbacks.get(shotId) != null) {
+                    callbacks.get(shotId).onShotLoaded(shot);
+                    callbacks.get(shotId).onCommentsLoaded(true, comments.get(shotId));
                 }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
             }
         });
     }
 
     public interface OnCommentsLoadedListener {
-        public void onCommentsLoaded(boolean shouldLoadMore, ArrayList<Comment> comments);
+        public void onShotLoaded(Shot shot);
 
-        public void onCommentsLoadingError();
+        public void onCommentsLoaded(boolean shouldLoadMore, ArrayList<Comment> comments);
     }
 }
