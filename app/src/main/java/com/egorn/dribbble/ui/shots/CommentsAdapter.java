@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.egorn.dribbble.R;
 import com.egorn.dribbble.data.models.Comment;
-import com.squareup.picasso.Picasso;
+import com.koushikdutta.ion.Ion;
 
 import java.util.ArrayList;
 
@@ -57,9 +57,7 @@ public class CommentsAdapter extends BaseAdapter {
         Comment comment = comments.get(i);
 
         ViewHolder holder = (ViewHolder) view.getTag();
-        Picasso.with(context)
-                .load(comment.getPlayer().getAvatarUrl())
-                .into(holder.playerAvatar);
+        Ion.with(holder.playerAvatar).load(comment.getPlayer().getAvatarUrl());
         holder.playerName.setText(comment.getPlayer().getName());
         holder.commentBody.setText(comment.getBody());
         return view;

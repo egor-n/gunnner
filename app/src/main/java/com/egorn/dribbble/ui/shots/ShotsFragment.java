@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.egorn.dribbble.R;
 import com.egorn.dribbble.data.InfiniteScrollListener;
-import com.egorn.dribbble.data.UserController;
+import com.egorn.dribbble.data.PlayerController;
 import com.egorn.dribbble.data.models.Shot;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
     private ArrayList<Shot> shots = new ArrayList<Shot>();
 
     private ShotsController controller;
-    private UserController userController;
+    private PlayerController playerController;
 
     public static ShotsFragment newInstance(String reference) {
         ShotsFragment fragment = new ShotsFragment();
@@ -84,11 +84,11 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
             @Override
             public void loadMore(int page, int totalItemsCount) {
                 if (mType == FOLLOWING) {
-                    userController.loadMoreFollowingShots();
+                    playerController.loadMoreFollowingShots();
                 } else if (mType == LIKES) {
-                    userController.loadMoreLikesShots();
+                    playerController.loadMoreLikesShots();
                 } else if (mType == MY_SHOTS) {
-                    userController.loadMorePlayerShots();
+                    playerController.loadMorePlayerShots();
                 } else {
                     controller.loadMore(mReference);
                 }
@@ -112,14 +112,14 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
         super.onViewCreated(view, savedInstanceState);
         mProgressBar.setVisibility(View.VISIBLE);
         if (mType == FOLLOWING) {
-            userController = UserController.getInstance("tsunami");
-            userController.getFollowingShots(this);
+            playerController = PlayerController.getInstance("tsunami");
+            playerController.getFollowingShots(this);
         } else if (mType == LIKES) {
-            userController = UserController.getInstance("tsunami");
-            userController.getLikesShots(this);
+            playerController = PlayerController.getInstance("tsunami");
+            playerController.getLikesShots(this);
         } else if (mType == MY_SHOTS) {
-            userController = UserController.getInstance("tsunami");
-            userController.getPlayerShots(this);
+            playerController = PlayerController.getInstance("tsunami");
+            playerController.getPlayerShots(this);
         } else {
             controller = ShotsController.getInstance(mReference, this);
         }

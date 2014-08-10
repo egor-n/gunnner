@@ -15,8 +15,8 @@ import retrofit.client.Response;
 /**
  * @author Egor N.
  */
-public class UserController {
-    private static UserController instance;
+public class PlayerController {
+    private static PlayerController instance;
 
     private String name;
     private Player player;
@@ -34,9 +34,9 @@ public class UserController {
     private ShotsController.OnShotsLoadedListener likesShotsCallback;
     private ShotsController.OnShotsLoadedListener playerShotsCallback;
 
-    public static UserController getInstance(String name) {
+    public static PlayerController getInstance(String name) {
         if (instance == null) {
-            instance = new UserController();
+            instance = new PlayerController();
         }
         instance.setName(name);
         return instance;
@@ -199,7 +199,7 @@ public class UserController {
             @Override
             public void success(Player player, Response response) {
                 if (player != null) {
-                    UserController.this.player = player;
+                    PlayerController.this.player = player;
                     if (playerCallback != null) {
                         playerCallback.onPlayerReceived(player);
                     }

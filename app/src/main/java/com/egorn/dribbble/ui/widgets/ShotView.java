@@ -17,8 +17,8 @@ import com.egorn.dribbble.R;
 import com.egorn.dribbble.data.helpers.DateFormatter;
 import com.egorn.dribbble.data.models.Shot;
 import com.egorn.dribbble.ui.shots.OpenedShotActivity;
+import com.egorn.dribbble.ui.shots.ShotImageActivity;
 import com.koushikdutta.ion.Ion;
-import com.squareup.picasso.Picasso;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -41,7 +41,9 @@ public class ShotView extends FrameLayout {
     @InjectView(R.id.time) TextView mTime;
     @Optional @InjectView(R.id.gif) ImageView mGif;
     @Optional @InjectView(R.id.description) TextView mDescription;
+
     private int style = 0;
+    private Shot mShot;
 
     public ShotView(Context context) {
         super(context);
@@ -97,32 +99,27 @@ public class ShotView extends FrameLayout {
         style = a.getInt(R.styleable.ShotView_style, 0);
     }
 
-    public void setOnReboundClickListener(final int reboundId) {
+    public void setOnReboundClickListener() {
         mRebound.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), OpenedShotActivity.class);
-                intent.putExtra(OpenedShotActivity.SHOT_ID, reboundId);
+                intent.putExtra(OpenedShotActivity.SHOT_ID, mShot.getReboundSourceId());
                 getContext().startActivity(intent);
             }
         });
     }
 
     public void setShot(Shot shot) {
+        this.mShot = shot;
         boolean isGif = shot.getImageUrl().endsWith("gif");
 
+        loadWithIon(shot);
         if (style == SMALL) {
-            loadWithPicasso(shot);
             if (isGif) {
                 mGif.setVisibility(View.VISIBLE);
             } else {
                 mGif.setVisibility(View.GONE);
-            }
-        } else {
-            if (isGif) {
-                loadWithIon(shot);
-            } else {
-                loadWithPicasso(shot);
             }
         }
 
@@ -145,16 +142,22 @@ public class ShotView extends FrameLayout {
         }
     }
 
-    private void loadWithIon(Shot shot) {
-        Ion.with(mShotImage)
-                .placeholder(R.drawable.placeholder)
-                .load(shot.getImageUrl());
+    public void setImageClickListener() {
+        mShotImage.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ShotImageActivity.class);
+                intent.putExtra(ShotImageActivity.SHOT_IMAGE_URL, mShot.getImageUrl());
+                getContext().startActivity(intent);
+            }
+        });
     }
 
-    private void loadWithPicasso(Shot shot) {
-        Picasso.with(getContext()).load(shot.getImageUrl())
-//                .fit()
-                .placeholder(R.drawable.placeholder)
-                .into(mShotImage);
+    private void loadWithIon(Shot shot) {
+        if (style == SMALL) {
+            Ion.with(mShotImage).placeholder(R.drawable.placeholder).animateGif(false).load(shot.getImageUrl());
+        } else {
+            Ion.with(mShotImage).placeholder(R.drawable.placeholder).load(shot.getImageUrl());
+        }
     }
 }

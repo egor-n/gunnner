@@ -1,8 +1,13 @@
 package com.egorn.dribbble.ui.shots;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -55,6 +60,7 @@ public class OpenedShotFragment extends Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setHasOptionsMenu(true);
         if (getArguments() != null) {
             mShot = getArguments().getParcelable(SHOT);
             if (mShot == null) {
@@ -87,8 +93,10 @@ public class OpenedShotFragment extends Fragment implements
         mShotHeader.setShot(mShot);
 
         if (mShot.getReboundSourceId() != 0) {
-            mShotHeader.setOnReboundClickListener(mShot.getReboundSourceId());
+            mShotHeader.setOnReboundClickListener();
         }
+
+        mShotHeader.setImageClickListener();
 
         mCommentsLv.addHeaderView(mShotHeader, null, false);
 
@@ -124,6 +132,8 @@ public class OpenedShotFragment extends Fragment implements
             return;
         }
 
+        this.mComments = comments;
+
         if (mAdapter == null) {
             mAdapter = new CommentsAdapter(getActivity(), comments);
         } else {
@@ -142,5 +152,32 @@ public class OpenedShotFragment extends Fragment implements
         } else {
             mCommentsLv.setOnScrollListener(null);
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.shot, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        String url = "https://dribbble.com/shots/" + mShotId;
+
+        int id = item.getItemId();
+        if (id == R.id.action_share) {
+            if (mShot != null) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_TEXT, mShot.getTitle() + "\n" + url);
+                intent.setType("text/plain");
+                startActivity(intent);
+                return true;
+            }
+        } else if (id == R.id.action_browser) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
