@@ -54,5 +54,8 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     compile 'com.squareup.retrofit:retrofit:1.6.1'
     compile 'com.jakewharton:butterknife:5.1.2'
+
+    compile 'com.koushikdutta.ion:ion:1.+'
+
     compile 'com.crashlytics.android:crashlytics:1.+'
 }

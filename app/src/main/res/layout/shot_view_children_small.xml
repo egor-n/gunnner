@@ -23,6 +23,18 @@
             tools:src="@drawable/placeholder"/>
 
         <ImageView
+            android:id="@+id/gif"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/gif"
+            android:visibility="gone"/>
+
+        <ImageView
             android:id="@+id/rebound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

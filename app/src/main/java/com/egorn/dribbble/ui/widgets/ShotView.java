@@ -17,10 +17,12 @@ import com.egorn.dribbble.R;
 import com.egorn.dribbble.data.helpers.DateFormatter;
 import com.egorn.dribbble.data.models.Shot;
 import com.egorn.dribbble.ui.shots.OpenedShotActivity;
+import com.koushikdutta.ion.Ion;
 import com.squareup.picasso.Picasso;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.Optional;
 
 /**
  * @author Egor N.
@@ -28,6 +30,7 @@ import butterknife.InjectView;
 public class ShotView extends FrameLayout {
     public static final int SMALL = 0;
     public static final int BIG = 1;
+
     @InjectView(R.id.shot_image) ImageView mShotImage;
     @InjectView(R.id.rebound) ImageView mRebound;
     @InjectView(R.id.title) TextView mTitle;
@@ -36,6 +39,7 @@ public class ShotView extends FrameLayout {
     @InjectView(R.id.likes) TextView mLikes;
     @InjectView(R.id.comments) TextView mComments;
     @InjectView(R.id.time) TextView mTime;
+    @Optional @InjectView(R.id.gif) ImageView mGif;
     private int style = 0;
 
     public ShotView(Context context) {
@@ -64,7 +68,7 @@ public class ShotView extends FrameLayout {
     private void init(Context context, AttributeSet attrs) {
         parseAttributes(context, attrs);
 
-        if (style == 0) {
+        if (style == SMALL) {
             LayoutInflater.from(context).inflate(R.layout.shot_view_children_small, this, true);
         } else {
             LayoutInflater.from(context).inflate(R.layout.shot_view_children_big, this, true);
@@ -104,13 +108,27 @@ public class ShotView extends FrameLayout {
     }
 
     public void setShot(Shot shot) {
-        Picasso.with(getContext()).load(shot.getImageUrl())
-                .fit()
-                .placeholder(R.drawable.placeholder)
-                .into(mShotImage);
+        boolean isGif = shot.getImageUrl().endsWith("gif");
+
+        if (style == SMALL) {
+            loadWithPicasso(shot);
+            if (isGif) {
+                mGif.setVisibility(View.VISIBLE);
+            } else {
+                mGif.setVisibility(View.GONE);
+            }
+        } else {
+            if (isGif) {
+                loadWithIon(shot);
+            } else {
+                loadWithPicasso(shot);
+            }
+        }
 
         if (shot.isRebound()) {
             mRebound.setVisibility(View.VISIBLE);
+        } else {
+            mRebound.setVisibility(View.GONE);
         }
 
         mTitle.setText(shot.getTitle());
@@ -123,5 +141,18 @@ public class ShotView extends FrameLayout {
         } else {
             mComments.setText(shot.getCommentsCount() + " Responses");
         }
+    }
+
+    private void loadWithIon(Shot shot) {
+        Ion.with(mShotImage)
+                .placeholder(R.drawable.placeholder)
+                .load(shot.getImageUrl());
+    }
+
+    private void loadWithPicasso(Shot shot) {
+        Picasso.with(getContext()).load(shot.getImageUrl())
+                .fit()
+                .placeholder(R.drawable.placeholder)
+                .into(mShotImage);
     }
 }
