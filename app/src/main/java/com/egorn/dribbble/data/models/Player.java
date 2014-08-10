@@ -1,8 +1,23 @@
 package com.egorn.dribbble.data.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class Player {
+public class Player implements Parcelable {
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Player> CREATOR = new Parcelable.Creator<Player>() {
+        @Override
+        public Player createFromParcel(Parcel in) {
+            return new Player(in);
+        }
+
+        @Override
+        public Player[] newArray(int size) {
+            return new Player[size];
+        }
+    };
     @SerializedName("id")
     private int _id;
     private String name;
@@ -37,6 +52,27 @@ public class Player {
     private int reboundsReceivedCount;
     @SerializedName("created_at")
     private String createdAt;
+
+    protected Player(Parcel in) {
+        _id = in.readInt();
+        name = in.readString();
+        username = in.readString();
+        url = in.readString();
+        avatarUrl = in.readString();
+        location = in.readString();
+        twitterScreenName = in.readString();
+        shotsCount = in.readInt();
+        drafteesCount = in.readInt();
+        followersCount = in.readInt();
+        followingCount = in.readInt();
+        commentsCount = in.readInt();
+        commentsReceivedCount = in.readInt();
+        likesCount = in.readInt();
+        likesReceivedCount = in.readInt();
+        reboundsCount = in.readInt();
+        reboundsReceivedCount = in.readInt();
+        createdAt = in.readString();
+    }
 
     public int get_id() {
         return _id;
@@ -133,5 +169,32 @@ public class Player {
                 ", reboundsReceivedCount=" + reboundsReceivedCount +
                 ", createdAt='" + createdAt + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(_id);
+        dest.writeString(name);
+        dest.writeString(username);
+        dest.writeString(url);
+        dest.writeString(avatarUrl);
+        dest.writeString(location);
+        dest.writeString(twitterScreenName);
+        dest.writeInt(shotsCount);
+        dest.writeInt(drafteesCount);
+        dest.writeInt(followersCount);
+        dest.writeInt(followingCount);
+        dest.writeInt(commentsCount);
+        dest.writeInt(commentsReceivedCount);
+        dest.writeInt(likesCount);
+        dest.writeInt(likesReceivedCount);
+        dest.writeInt(reboundsCount);
+        dest.writeInt(reboundsReceivedCount);
+        dest.writeString(createdAt);
     }
 }

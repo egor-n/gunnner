@@ -31,6 +31,9 @@ public class CommentsAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
+        if (comments == null) {
+            return 0;
+        }
         return comments.size();
     }
 
@@ -60,6 +63,11 @@ public class CommentsAdapter extends BaseAdapter {
         holder.playerName.setText(comment.getPlayer().getName());
         holder.commentBody.setText(comment.getBody());
         return view;
+    }
+
+    public void setComments(ArrayList<Comment> comments) {
+        this.comments = comments;
+        notifyDataSetChanged();
     }
 
     static class ViewHolder {

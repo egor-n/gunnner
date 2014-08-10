@@ -8,5 +8,9 @@ import java.util.ArrayList;
  * @author Egor N.
  */
 public class CommentsResponse extends ListResponse {
-    private ArrayList<Comment> shots;
+    private ArrayList<Comment> comments;
+
+    public ArrayList<Comment> getComments() {
+        return comments;
+    }
 }

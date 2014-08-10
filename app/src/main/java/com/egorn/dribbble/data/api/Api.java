@@ -35,7 +35,8 @@ public class Api {
         public void rebounds(@Path("id") int shotId, Callback<ShotsResponse> callback);
 
         @GET("/shots/{id}/comments")
-        public void comments(@Path("id") int shotId, Callback<ShotsResponse> callback);
+        public void comments(@Path("id") int shotId, @Query("page") int page,
+                             Callback<CommentsResponse> callback);
 
         @GET("/players/{id}/shots")
         public void recentShots(@Path("id") int playerId, @Query("page") int page,

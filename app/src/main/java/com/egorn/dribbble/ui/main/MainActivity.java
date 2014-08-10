@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
 import com.egorn.dribbble.BuildConfig;
 import com.egorn.dribbble.R;
+import com.egorn.dribbble.data.models.Shot;
 import com.egorn.dribbble.ui.drawer.NavigationDrawerFragment;
 import com.egorn.dribbble.ui.shots.OpenedShotActivity;
 import com.egorn.dribbble.ui.shots.ShotsFragment;
@@ -89,15 +90,15 @@ public class MainActivity extends FragmentActivity
     }
 
     @Override
-    public void onShotClicked(int shotId) {
+    public void onShotClicked(Shot shot) {
         Toast.makeText(
                 this,
-                "Shot wih id = " + shotId + " clicked",
+                "Shot wih id = " + shot.get_id() + " clicked",
                 Toast.LENGTH_SHORT
         ).show();
 
         Intent intent = new Intent(this, OpenedShotActivity.class);
-        intent.putExtra(OpenedShotActivity.SHOT_ID, shotId);
+        intent.putExtra(OpenedShotActivity.SHOT, shot);
         startActivity(intent);
     }
 }

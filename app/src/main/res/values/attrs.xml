@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ShotView">
+        <attr name="style" format="enum">
+            <enum name="small" value="0"/>
+            <enum name="big" value="1"/>
+        </attr>
+    </declare-styleable>
+
+</resources>

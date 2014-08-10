@@ -41,7 +41,7 @@ public class ShotsAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup parent) {
         ShotView shotView = (ShotView) view;
         if (shotView == null) {
-            shotView = ShotView.inflate(parent);
+            shotView = ShotView.inflateSmall(parent);
         }
 
         shotView.setShot(shots.get(i));

@@ -94,7 +94,7 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (null != mListener) {
-            mListener.onShotClicked(shots.get(position).get_id());
+            mListener.onShotClicked(shots.get(position));
         }
     }
 
@@ -129,6 +129,6 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
     }
 
     public interface OnShotClickedListener {
-        public void onShotClicked(int shotId);
+        public void onShotClicked(Shot shot);
     }
 }

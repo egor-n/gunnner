@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:tools="http://schemas.android.com/tools"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:foreground="?android:attr/selectableItemBackground">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="16dp"
+        tools:background="@color/background">
+
+        <ImageView
+            android:id="@+id/shot_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            tools:src="@drawable/placeholder"/>
+
+        <ImageView
+            android:id="@+id/rebound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/rebound"
+            android:visibility="gone"/>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_below="@id/shot_image"
+            android:background="#373737"/>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/views"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/divider"
+            android:layout_toLeftOf="@+id/views"
+            android:layout_toStartOf="@+id/views"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:singleLine="true"
+            android:textColor="#f3f3f3"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="Very very lengthy title so it doesn't fit"/>
+
+        <TextView
+            android:id="@+id/player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:gravity="center_vertical"
+            android:textColor="#f3f3f3"
+            android:textSize="12sp"
+            tools:text="by SFCD"/>
+
+        <TextView
+            android:id="@+id/views"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/divider"
+            android:layout_marginLeft="3dp"
+            android:layout_marginStart="3dp"
+            android:layout_toLeftOf="@+id/likes"
+            android:layout_toStartOf="@+id/likes"
+            android:drawableLeft="@drawable/ic_views"
+            android:drawablePadding="3dp"
+            android:drawableStart="@drawable/ic_views"
+            android:gravity="center_vertical"
+            android:paddingBottom="3dp"
+            android:paddingTop="5dp"
+            android:textColor="#f3f3f3"
+            tools:text="122"/>
+
+        <TextView
+            android:id="@+id/likes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/divider"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:drawableLeft="@drawable/ic_likes"
+            android:drawablePadding="3dp"
+            android:drawableStart="@drawable/ic_likes"
+            android:gravity="center_vertical"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:textColor="#f3f3f3"
+            tools:text="17"/>
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/player"
+            android:drawableLeft="@drawable/ic_date"
+            android:drawablePadding="2dp"
+            android:drawableStart="@drawable/ic_date"
+            android:gravity="center_vertical"
+            android:textColor="#434343"
+            android:textSize="12sp"
+            tools:text="Jul 30, 2014"/>
+
+        <View
+            android:id="@+id/comments_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/time"
+            android:layout_marginTop="6dp"
+            android:background="#686868"/>
+
+        <TextView
+            android:id="@+id/comments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/comments_divider"
+            android:layout_centerHorizontal="true"
+            android:drawableLeft="@drawable/ic_comments"
+            android:drawablePadding="3dp"
+            android:drawableStart="@drawable/ic_comments"
+            android:gravity="center_vertical"
+            android:paddingTop="6dp"
+            android:textColor="#f3f3f3"
+            tools:text="5 Responses"/>
+
+    </RelativeLayout>
+
+</merge>

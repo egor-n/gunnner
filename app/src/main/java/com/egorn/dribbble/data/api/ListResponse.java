@@ -12,6 +12,18 @@ public class ListResponse {
     protected int perPage;
     protected int total;
 
+    public int getPage() {
+        return page;
+    }
+
+    public int getPages() {
+        return pages;
+    }
+
+    public int getPerPage() {
+        return perPage;
+    }
+
     public int getTotal() {
         return total;
     }

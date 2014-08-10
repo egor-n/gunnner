@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.egorn.dribbble.R;
+import com.egorn.dribbble.data.InfiniteScrollListener;
 import com.egorn.dribbble.data.models.Comment;
 import com.egorn.dribbble.data.models.Shot;
 import com.egorn.dribbble.ui.widgets.ShotView;
@@ -19,7 +20,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class OpenedShotFragment extends Fragment implements
-        OpennedShotController.OnShotLoadedListener {
+        OpenedShotController.OnCommentsLoadedListener {
+    private static final String SHOT = "shot";
     private static final String SHOT_ID = "shot_id";
 
     ShotView mShotHeader;
@@ -28,10 +30,13 @@ public class OpenedShotFragment extends Fragment implements
     private int mShotId;
     private Shot mShot;
     private ArrayList<Comment> mComments;
+    private CommentsAdapter mAdapter;
 
-    public static OpenedShotFragment newInstance(int shotId) {
+    private OpenedShotController controller;
+
+    public static OpenedShotFragment newInstance(Shot shot) {
         Bundle arguments = new Bundle();
-        arguments.putInt(SHOT_ID, shotId);
+        arguments.putParcelable(SHOT, shot);
 
         OpenedShotFragment fragment = new OpenedShotFragment();
         fragment.setArguments(arguments);
@@ -43,7 +48,12 @@ public class OpenedShotFragment extends Fragment implements
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mShotId = getArguments().getInt(SHOT_ID);
+            mShot = getArguments().getParcelable(SHOT);
+            if (mShot == null) {
+                mShotId = getArguments().getInt(SHOT_ID);
+            } else {
+                mShotId = mShot.get_id();
+            }
         }
     }
 
@@ -58,29 +68,55 @@ public class OpenedShotFragment extends Fragment implements
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        OpennedShotController controller = OpennedShotController.getInstance(mShotId, this);
+        controller = OpenedShotController.getInstance(mShotId, this);
+        prepareHeader();
+        prepareCommentsLv();
+    }
+
+    private void prepareHeader() {
+        mShotHeader = ShotView.inflateBig(mCommentsLv);
+        mShotHeader.setShot(mShot);
+    }
+
+    private void prepareCommentsLv() {
+        mAdapter = new CommentsAdapter(getActivity(), new ArrayList<Comment>());
+
+        mCommentsLv.addHeaderView(mShotHeader, null, false);
+        mCommentsLv.setAdapter(mAdapter); // set empty adapter so it shows the header
     }
 
     @Override
-    public void onShotLoaded(Shot shot) {
+    public void onCommentsLoaded(boolean shouldLoadMore, ArrayList<Comment> comments) {
         if (!isAdded()) {
             return;
         }
 
-        this.mShot = shot;
-        mShotHeader = (ShotView) View.inflate(getActivity(), R.layout.shot_view, null);
-        mShotHeader.setShot(shot);
-        mShotHeader.hideCommentsBadge();
-        mCommentsLv.addHeaderView(mShotHeader);
-        mCommentsLv.setAdapter(new CommentsAdapter(getActivity(), new ArrayList<Comment>()));
+        if (mAdapter == null) {
+            mAdapter = new CommentsAdapter(getActivity(), comments);
+        } else {
+            mAdapter.setComments(comments);
+        }
+
+        if (shouldLoadMore) {
+            mCommentsLv.setOnScrollListener(new InfiniteScrollListener() {
+                @Override
+                public void loadMore(int page, int totalItemsCount) {
+                    controller.loadMore(mShotId);
+                }
+            });
+        } else {
+            mCommentsLv.setOnScrollListener(null);
+        }
     }
 
     @Override
-    public void onShotLoadingError() {
-        Toast.makeText(
-                getActivity(),
-                "Error loading shot with id = " + mShotId,
-                Toast.LENGTH_SHORT
-        ).show();
+    public void onCommentsLoadingError() {
+        if (isAdded()) {
+            Toast.makeText(
+                    getActivity(),
+                    "Error loading comments for shot with id = " + mShotId,
+                    Toast.LENGTH_SHORT
+            ).show();
+        }
     }
 }
