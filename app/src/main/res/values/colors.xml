@@ -2,4 +2,6 @@
 <resources>
     <color name="background">#262626</color>
     <color name="dribbble">#ea4c89</color>
+    <color name="background_row_drawer_normal">#00000000</color>
+    <color name="background_row_drawer_checked">#383838</color>
 </resources>
