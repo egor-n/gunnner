@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.egorn.dribbble.R;
 import com.koushikdutta.ion.Ion;
+import com.squareup.picasso.Picasso;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -19,6 +20,8 @@ public class ShotImageFragment extends Fragment {
 
     @InjectView(R.id.photoView)
     PhotoView mPhotoView;
+
+    private String imageUrl;
 
     public static ShotImageFragment newInstance(String shotImageUrl) {
         ShotImageFragment fragment = new ShotImageFragment();
@@ -39,9 +42,13 @@ public class ShotImageFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Ion.with(mPhotoView)
-                .placeholder(R.drawable.placeholder)
-                .load(getArguments().getString(SHOT_IMAGE_URL));
+        imageUrl = getArguments().getString(SHOT_IMAGE_URL);
+
+        if (imageUrl.endsWith(".git")) {
+            loadWithIon();
+        } else {
+            loadWithPicasso();
+        }
 
         mPhotoView.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
             @Override
@@ -49,5 +56,18 @@ public class ShotImageFragment extends Fragment {
                 getActivity().finish();
             }
         });
+    }
+
+    private void loadWithPicasso() {
+        Picasso.with(getActivity())
+                .load(imageUrl)
+                .placeholder(R.drawable.placeholder)
+                .into(mPhotoView);
+    }
+
+    private void loadWithIon() {
+        Ion.with(mPhotoView)
+                .placeholder(R.drawable.placeholder)
+                .load(imageUrl);
     }
 }

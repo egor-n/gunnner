@@ -19,7 +19,7 @@ import com.egorn.dribbble.data.helpers.DateFormatter;
 import com.egorn.dribbble.data.models.Shot;
 import com.egorn.dribbble.ui.shots.OpenedShotActivity;
 import com.egorn.dribbble.ui.shots.ShotImageActivity;
-import com.koushikdutta.ion.Ion;
+import com.squareup.picasso.Picasso;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -115,13 +115,11 @@ public class ShotView extends FrameLayout {
         this.mShot = shot;
         boolean isGif = shot.getImageUrl().endsWith("gif");
 
-        loadWithIon(shot);
-        if (style == SMALL) {
-            if (isGif) {
-                mGif.setVisibility(View.VISIBLE);
-            } else {
-                mGif.setVisibility(View.GONE);
-            }
+        loadWithPicasso();
+        if (isGif) {
+            mGif.setVisibility(View.VISIBLE);
+        } else {
+            mGif.setVisibility(View.GONE);
         }
 
         if (shot.isRebound()) {
@@ -156,11 +154,16 @@ public class ShotView extends FrameLayout {
         });
     }
 
-    private void loadWithIon(Shot shot) {
-        if (style == SMALL) {
-            Ion.with(mShotImage).placeholder(R.drawable.placeholder).animateGif(false).load(shot.getImageUrl());
+    private void loadWithPicasso() {
+        String toLoad;
+        if (mShot.getImageUrl().endsWith("gif")) {
+            toLoad = mShot.getImageTeaserUrl();
         } else {
-            Ion.with(mShotImage).placeholder(R.drawable.placeholder).load(shot.getImageUrl());
+            toLoad = mShot.getImageUrl();
         }
+        Picasso.with(getContext())
+                .load(toLoad)
+                .placeholder(R.drawable.placeholder)
+                .into(mShotImage);
     }
 }

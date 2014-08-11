@@ -1,6 +1,9 @@
 package com.egorn.dribbble;
 
 import android.app.Activity;
+import android.content.Context;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
@@ -55,5 +58,10 @@ public class Utils {
                 view.getPaddingRight() + config.getPixelInsetRight(),
                 view.getPaddingBottom() + config.getPixelInsetBottom()
         );
+    }
+
+    public static int dpToPixels(Context context, float dpValue) {
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpValue, metrics);
     }
 }

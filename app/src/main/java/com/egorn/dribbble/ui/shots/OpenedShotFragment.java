@@ -145,6 +145,11 @@ public class OpenedShotFragment extends Fragment implements
         if (shouldLoadMore) {
             mCommentsLv.setOnScrollListener(new InfiniteScrollListener() {
                 @Override
+                public void hideTabs(boolean show) {
+                    // do nothing
+                }
+
+                @Override
                 public void loadMore(int page, int totalItemsCount) {
                     if (controller != null) {
                         controller.loadMore(mShotId);

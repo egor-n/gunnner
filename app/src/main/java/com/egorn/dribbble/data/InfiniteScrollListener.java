@@ -8,6 +8,9 @@ public abstract class InfiniteScrollListener implements AbsListView.OnScrollList
     private int currentPage = 0;
     private int itemCount = 0;
     private boolean isLoading = true;
+    private int mLastFirstVisibleItem = 0;
+
+    public abstract void hideTabs(boolean hide);
 
     public abstract void loadMore(int page, int totalItemsCount);
 
@@ -18,6 +21,16 @@ public abstract class InfiniteScrollListener implements AbsListView.OnScrollList
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
                          int totalItemCount) {
+        final int currentFirstVisibleItem = view.getFirstVisiblePosition();
+
+        if (currentFirstVisibleItem > mLastFirstVisibleItem) {
+            hideTabs(true);
+        } else if (currentFirstVisibleItem < mLastFirstVisibleItem) {
+            hideTabs(false);
+        }
+
+        mLastFirstVisibleItem = currentFirstVisibleItem;
+
         if (totalItemCount < itemCount) {
             this.itemCount = totalItemCount;
             if (totalItemCount == 0) {

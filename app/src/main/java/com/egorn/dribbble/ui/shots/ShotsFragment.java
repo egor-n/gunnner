@@ -31,7 +31,6 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
 
     private static final String REFERENCE = "reference";
     private static final String TYPE = "type";
-    private static final String SCROLL_POSITION = "scroll_position";
 
     @InjectView(R.id.shots_list) AbsListView mListView;
     @InjectView(R.id.progress_bar) ProgressBar mProgressBar;
@@ -39,11 +38,11 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
 
     private String mReference;
     private int mType;
-    private OnShotClickedListener mListener;
     private ShotsAdapter mAdapter;
     private ArrayList<Shot> shots = new ArrayList<Shot>();
 
-    private int scrollPosition = 0;
+    private OnShotClickedListener mListener;
+    private OnTabsHideListener tabsListener;
 
     private ShotsController controller;
     private PlayerController playerController;
@@ -86,6 +85,17 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
         mListView.setOnItemClickListener(this);
         mListView.setOnScrollListener(new InfiniteScrollListener() {
             @Override
+            public void hideTabs(boolean hide) {
+                if (tabsListener != null) {
+                    if (hide) {
+                        tabsListener.hideTabs(true);
+                    } else {
+                        tabsListener.hideTabs(false);
+                    }
+                }
+            }
+
+            @Override
             public void loadMore(int page, int totalItemsCount) {
                 if (mType == FOLLOWING) {
                     playerController.loadMoreFollowingShots();
@@ -98,16 +108,7 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
                 }
             }
         });
-        if (savedInstanceState != null) {
-            scrollPosition = savedInstanceState.getInt(SCROLL_POSITION, 0);
-        }
         return rootView;
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(SCROLL_POSITION, mListView.getFirstVisiblePosition());
     }
 
     @Override
@@ -123,6 +124,11 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        try {
+            tabsListener = (OnTabsHideListener) getParentFragment();
+        } catch (ClassCastException ignored) {
+        }
+
         mProgressBar.setVisibility(View.VISIBLE);
         if (mType == FOLLOWING) {
             Utils.setInsets(getActivity(), mListView);
@@ -138,8 +144,18 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
             playerController.getPlayerShots(this);
         } else {
             Utils.setBottomRightInsets(getActivity(), mListView);
+            addTopPadding();
             controller = ShotsController.getInstance(mReference, this);
         }
+    }
+
+    private void addTopPadding() {
+        mListView.setPadding(
+                mListView.getPaddingLeft(),
+                mListView.getPaddingTop() + Utils.dpToPixels(getActivity(), 44f),
+                mListView.getPaddingRight(),
+                mListView.getPaddingBottom()
+        );
     }
 
     @Override
@@ -167,7 +183,6 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
             if (mAdapter == null) {
                 mAdapter = new ShotsAdapter(shots, getActivity());
                 mListView.setAdapter(mAdapter);
-                mListView.setSelection(scrollPosition);
             } else {
                 mAdapter.setItems(shots);
             }
@@ -189,5 +204,9 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
 
     public interface OnShotClickedListener {
         public void onShotClicked(Shot shot);
+    }
+
+    public interface OnTabsHideListener {
+        public void hideTabs(boolean hide);
     }
 }

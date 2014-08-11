@@ -6,19 +6,24 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import com.egorn.dribbble.R;
 import com.egorn.dribbble.Utils;
+import com.egorn.dribbble.ui.shots.ShotsFragment;
 import com.egorn.dribbble.ui.widgets.tabs.SlidingTabLayout;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements ShotsFragment.OnTabsHideListener {
     private static final String CURRENT_TAB = "current_tab";
 
     @InjectView(R.id.sliding_tabs) SlidingTabLayout mSlidingTabs;
     @InjectView(R.id.view_pager) ViewPager mViewPager;
+
+    private int mTabsTop = 0;
+    private boolean tabsHidden = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,16 +39,38 @@ public class MainFragment extends Fragment {
         Utils.setTopRightInsets(getActivity(), view);
         mViewPager.setAdapter(new MainPagerAdapter(getChildFragmentManager()));
         prepareTabs();
+
+        getView().getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                mTabsTop = mSlidingTabs.getTop();
+                getView().getViewTreeObserver().removeGlobalOnLayoutListener(this);
+            }
+        });
     }
 
     private void prepareTabs() {
         mSlidingTabs.setViewPager(mViewPager);
-
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(CURRENT_TAB, mViewPager.getCurrentItem());
+    }
+
+    @Override
+    public void hideTabs(boolean hide) {
+        if (hide) {
+            if (tabsHidden) {
+                mSlidingTabs.animate().y(mTabsTop - mSlidingTabs.getHeight()).start();
+                tabsHidden = false;
+            }
+        } else {
+            if (!tabsHidden) {
+                mSlidingTabs.animate().y(mTabsTop).start();
+                tabsHidden = true;
+            }
+        }
     }
 }
