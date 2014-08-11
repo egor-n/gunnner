@@ -53,6 +53,7 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.6.1'
     compile 'com.jakewharton:butterknife:5.1.2'
     compile 'com.mcxiaoke.photoview:library:1.2.3'
+    compile 'com.readystatesoftware.systembartint:systembartint:1.0.3'
     compile 'com.koushikdutta.ion:ion:1.+'
     compile 'com.crashlytics.android:crashlytics:1.+'
 }

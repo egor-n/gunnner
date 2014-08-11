@@ -1,12 +1,12 @@
 package com.egorn.dribbble.ui.shots;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 
 import com.egorn.dribbble.R;
 import com.egorn.dribbble.data.models.Shot;
+import com.egorn.dribbble.ui.BaseActivity;
 
-public class OpenedShotActivity extends FragmentActivity {
+public class OpenedShotActivity extends BaseActivity {
     public static final String SHOT = "shot";
     public static final String SHOT_ID = "shot_id";
 

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.egorn.dribbble.R;
+import com.egorn.dribbble.Utils;
 import com.egorn.dribbble.data.InfiniteScrollListener;
 import com.egorn.dribbble.data.models.Comment;
 import com.egorn.dribbble.data.models.Shot;
@@ -82,6 +83,7 @@ public class OpenedShotFragment extends Fragment implements
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Utils.setInsets(getActivity(), mCommentsLv);
         if (mShot != null) {
             prepareHeader();
         }

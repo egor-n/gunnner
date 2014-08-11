@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.egorn.dribbble.R;
+import com.egorn.dribbble.Utils;
 import com.egorn.dribbble.data.InfiniteScrollListener;
 import com.egorn.dribbble.data.PlayerController;
 import com.egorn.dribbble.data.models.Shot;
@@ -30,6 +31,7 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
 
     private static final String REFERENCE = "reference";
     private static final String TYPE = "type";
+    private static final String SCROLL_POSITION = "scroll_position";
 
     @InjectView(R.id.shots_list) AbsListView mListView;
     @InjectView(R.id.progress_bar) ProgressBar mProgressBar;
@@ -40,6 +42,8 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
     private OnShotClickedListener mListener;
     private ShotsAdapter mAdapter;
     private ArrayList<Shot> shots = new ArrayList<Shot>();
+
+    private int scrollPosition = 0;
 
     private ShotsController controller;
     private PlayerController playerController;
@@ -94,7 +98,16 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
                 }
             }
         });
+        if (savedInstanceState != null) {
+            scrollPosition = savedInstanceState.getInt(SCROLL_POSITION, 0);
+        }
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(SCROLL_POSITION, mListView.getFirstVisiblePosition());
     }
 
     @Override
@@ -112,15 +125,19 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
         super.onViewCreated(view, savedInstanceState);
         mProgressBar.setVisibility(View.VISIBLE);
         if (mType == FOLLOWING) {
+            Utils.setInsets(getActivity(), mListView);
             playerController = PlayerController.getInstance("tsunami");
             playerController.getFollowingShots(this);
         } else if (mType == LIKES) {
+            Utils.setInsets(getActivity(), mListView);
             playerController = PlayerController.getInstance("tsunami");
             playerController.getLikesShots(this);
         } else if (mType == MY_SHOTS) {
+            Utils.setInsets(getActivity(), mListView);
             playerController = PlayerController.getInstance("tsunami");
             playerController.getPlayerShots(this);
         } else {
+            Utils.setBottomRightInsets(getActivity(), mListView);
             controller = ShotsController.getInstance(mReference, this);
         }
     }
@@ -150,6 +167,7 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
             if (mAdapter == null) {
                 mAdapter = new ShotsAdapter(shots, getActivity());
                 mListView.setAdapter(mAdapter);
+                mListView.setSelection(scrollPosition);
             } else {
                 mAdapter.setItems(shots);
             }

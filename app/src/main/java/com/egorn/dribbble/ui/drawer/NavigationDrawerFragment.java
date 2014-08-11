@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.egorn.dribbble.R;
+import com.egorn.dribbble.Utils;
 
 public class NavigationDrawerFragment extends Fragment {
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
@@ -61,6 +62,7 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Utils.setTopInsets(getActivity(), view);
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

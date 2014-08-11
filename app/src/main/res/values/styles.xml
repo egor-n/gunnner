@@ -5,6 +5,11 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Translucent" parent="@android:style/Theme.Translucent.NoTitleBar">
+        <!-- Empty on purpose -->
+    </style>
+
+
     <style name="Theme.Dribbblestyle" parent="@android:style/Theme.Holo">
         <item name="android:actionBarItemBackground">@drawable/selectable_background_dribbblestyle
         </item>

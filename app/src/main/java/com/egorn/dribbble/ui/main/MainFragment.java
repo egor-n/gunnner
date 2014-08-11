@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.egorn.dribbble.R;
+import com.egorn.dribbble.Utils;
 import com.egorn.dribbble.ui.widgets.tabs.SlidingTabLayout;
 
 import butterknife.ButterKnife;
@@ -30,6 +31,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Utils.setTopRightInsets(getActivity(), view);
         mViewPager.setAdapter(new MainPagerAdapter(getChildFragmentManager()));
         prepareTabs();
     }

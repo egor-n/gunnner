@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -138,7 +139,9 @@ public class ShotView extends FrameLayout {
             mComments.setText(shot.getCommentsCount() + "");
         } else {
             mComments.setText(shot.getCommentsCount() + " Responses");
-            mDescription.setText(Html.fromHtml(shot.getDescription()));
+            if (!TextUtils.isEmpty(shot.getDescription())) {
+                mDescription.setText(Html.fromHtml(shot.getDescription()));
+            }
         }
     }
 
