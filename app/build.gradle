@@ -57,4 +57,6 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.3.3'
     compile 'com.koushikdutta.ion:ion:1.+'
     compile 'com.crashlytics.android:crashlytics:1.+'
+
+    compile project(':app:projectLibs:sbl')
 }
