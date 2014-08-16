@@ -1,5 +1,6 @@
 package com.egorn.dribbble.data;
 
+import android.view.View;
 import android.widget.AbsListView;
 
 public abstract class InfiniteScrollListener implements AbsListView.OnScrollListener {
@@ -9,6 +10,7 @@ public abstract class InfiniteScrollListener implements AbsListView.OnScrollList
     private int itemCount = 0;
     private boolean isLoading = true;
     private int mLastFirstVisibleItem = 0;
+    private int mLastTop = 0;
 
     public abstract void hideTabs(boolean hide);
 
@@ -16,20 +18,31 @@ public abstract class InfiniteScrollListener implements AbsListView.OnScrollList
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
+
     }
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount,
                          int totalItemCount) {
-        final int currentFirstVisibleItem = view.getFirstVisiblePosition();
+        View firstChild = view.getChildAt(0);
+        int top = (firstChild == null) ? 0 : firstChild.getTop();
 
-        if (currentFirstVisibleItem > mLastFirstVisibleItem) {
-            hideTabs(true);
-        } else if (currentFirstVisibleItem < mLastFirstVisibleItem) {
-            hideTabs(false);
+        if (firstVisibleItem == mLastFirstVisibleItem) {
+            if (top > mLastTop) {
+                hideTabs(false);
+            } else if (top < mLastTop) {
+                hideTabs(true);
+            }
+        } else {
+            if (firstVisibleItem < mLastFirstVisibleItem) {
+                hideTabs(false);
+            } else {
+                hideTabs(true);
+            }
         }
 
-        mLastFirstVisibleItem = currentFirstVisibleItem;
+        mLastTop = top;
+        mLastFirstVisibleItem = firstVisibleItem;
 
         if (totalItemCount < itemCount) {
             this.itemCount = totalItemCount;

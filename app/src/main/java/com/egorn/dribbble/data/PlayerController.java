@@ -68,6 +68,9 @@ public class PlayerController {
 
     public static void logOut(Context context) {
         Player.logOut(context);
+        instance = null;
+        player = null;
+        name = null;
     }
 
     private static void restore(Context context) {
