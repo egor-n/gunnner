@@ -23,6 +23,7 @@ public class MainActivity extends BaseActivity
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
     private CharSequence mTitle;
+    private InputDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +88,7 @@ public class MainActivity extends BaseActivity
     }
 
     private void showInputDialog(final android.support.v4.app.Fragment fragment) {
-        new InputDialog(this, new InputDialog.CustomDialogCallback() {
+        dialog = new InputDialog(this, new InputDialog.CustomDialogCallback() {
             @Override
             public void onConfirm(String username) {
                 PlayerController.setName(MainActivity.this, username);
@@ -100,7 +101,8 @@ public class MainActivity extends BaseActivity
             public void onCancel() {
 
             }
-        }).show();
+        });
+        dialog.show();
     }
 
     public void onSectionAttached(int number) {
@@ -122,6 +124,14 @@ public class MainActivity extends BaseActivity
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (dialog != null) {
+            dialog.dismiss();
+        }
     }
 
     @Override

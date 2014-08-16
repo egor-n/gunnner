@@ -48,14 +48,14 @@ public class Utils {
         );
     }
 
-    public static void setBottomRightInsets(Activity activity, View view) {
+    public static void setBottomInsets(Activity activity, View view) {
         SystemBarTintManager tintManager = new SystemBarTintManager(activity);
         SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
 
         view.setPadding(
                 view.getPaddingLeft(),
                 view.getPaddingTop(),
-                view.getPaddingRight() + config.getPixelInsetRight(),
+                view.getPaddingRight(),
                 view.getPaddingBottom() + config.getPixelInsetBottom()
         );
     }

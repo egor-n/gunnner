@@ -143,7 +143,7 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
             playerController = PlayerController.getInstance(getActivity());
             playerController.getPlayerShots(this);
         } else {
-            Utils.setBottomRightInsets(getActivity(), mListView);
+            Utils.setBottomInsets(getActivity(), mListView);
             addTopPadding();
             controller = ShotsController.getInstance(mReference, this);
         }
