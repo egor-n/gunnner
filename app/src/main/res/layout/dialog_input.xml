@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="#fff"
+              android:orientation="vertical"
+              android:padding="16dp">
+
+    <TextView
+        android:id="@+id/dialog_custom_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="@string/log_in"
+        android:textAllCaps="true"
+        android:textColor="#474747"
+        android:textSize="22sp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/dialog_custom_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="12dp"
+        android:hint="@string/dribbble_username"
+        android:inputType="text"
+        android:textColor="#131313"
+        android:textColorHint="#bfbfbf"
+        android:textSize="18sp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/dialog_custom_cancel"
+            android:layout_width="88dp"
+            android:layout_height="36dp"
+            android:background="#FFF"
+            android:text="@string/cancel"
+            android:textAllCaps="true"
+            android:textColor="#212121"
+            android:textSize="16sp"/>
+
+        <Button
+            android:id="@+id/dialog_custom_confirm"
+            android:layout_width="88dp"
+            android:layout_height="36dp"
+            android:background="#FFF"
+            android:text="@string/confirm"
+            android:textAllCaps="true"
+            android:textColor="@color/dribbble"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

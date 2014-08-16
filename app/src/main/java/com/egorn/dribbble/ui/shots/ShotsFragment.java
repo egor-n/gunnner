@@ -132,15 +132,15 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
         mProgressBar.setVisibility(View.VISIBLE);
         if (mType == FOLLOWING) {
             Utils.setInsets(getActivity(), mListView);
-            playerController = PlayerController.getInstance("tsunami");
+            playerController = PlayerController.getInstance(getActivity());
             playerController.getFollowingShots(this);
         } else if (mType == LIKES) {
             Utils.setInsets(getActivity(), mListView);
-            playerController = PlayerController.getInstance("tsunami");
+            playerController = PlayerController.getInstance(getActivity());
             playerController.getLikesShots(this);
         } else if (mType == MY_SHOTS) {
             Utils.setInsets(getActivity(), mListView);
-            playerController = PlayerController.getInstance("tsunami");
+            playerController = PlayerController.getInstance(getActivity());
             playerController.getPlayerShots(this);
         } else {
             Utils.setBottomRightInsets(getActivity(), mListView);

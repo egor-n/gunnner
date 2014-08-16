@@ -9,11 +9,13 @@ import android.view.Menu;
 import com.crashlytics.android.Crashlytics;
 import com.egorn.dribbble.BuildConfig;
 import com.egorn.dribbble.R;
+import com.egorn.dribbble.data.PlayerController;
 import com.egorn.dribbble.data.models.Shot;
 import com.egorn.dribbble.ui.BaseActivity;
 import com.egorn.dribbble.ui.drawer.NavigationDrawerFragment;
 import com.egorn.dribbble.ui.shots.OpenedShotActivity;
 import com.egorn.dribbble.ui.shots.ShotsFragment;
+import com.egorn.dribbble.ui.widgets.InputDialog;
 
 public class MainActivity extends BaseActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
@@ -51,25 +53,54 @@ public class MainActivity extends BaseActivity
             case 1:  // my profile
                 break;
             case 2:  // my shots
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, ShotsFragment.newInstance(ShotsFragment.MY_SHOTS))
-                        .commit();
+                if (PlayerController.isLoggedIn(this)) {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container, ShotsFragment.newInstance(ShotsFragment.MY_SHOTS))
+                            .commit();
+                } else {
+                    showInputDialog(ShotsFragment.newInstance(ShotsFragment.MY_SHOTS));
+                }
                 break;
             case 3:  // following
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, ShotsFragment.newInstance(ShotsFragment.FOLLOWING))
-                        .commit();
+                if (PlayerController.isLoggedIn(this)) {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container, ShotsFragment.newInstance(ShotsFragment.FOLLOWING))
+                            .commit();
+                } else {
+                    showInputDialog(ShotsFragment.newInstance(ShotsFragment.FOLLOWING));
+                }
                 break;
             case 4:  // likes
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, ShotsFragment.newInstance(ShotsFragment.LIKES))
-                        .commit();
+                if (PlayerController.isLoggedIn(this)) {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container, ShotsFragment.newInstance(ShotsFragment.LIKES))
+                            .commit();
+                } else {
+                    showInputDialog(ShotsFragment.newInstance(ShotsFragment.LIKES));
+                }
                 break;
             case 5:  // settings
                 break;
             case 6:  // about
                 break;
         }
+    }
+
+    private void showInputDialog(final android.support.v4.app.Fragment fragment) {
+        new InputDialog(this, new InputDialog.CustomDialogCallback() {
+            @Override
+            public void onConfirm(String username) {
+                PlayerController.setName(MainActivity.this, username);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, fragment)
+                        .commit();
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        }).show();
     }
 
     public void onSectionAttached(int number) {

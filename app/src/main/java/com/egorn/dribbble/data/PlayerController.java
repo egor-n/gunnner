@@ -1,5 +1,7 @@
 package com.egorn.dribbble.data;
 
+import android.content.Context;
+
 import com.egorn.dribbble.data.api.Api;
 import com.egorn.dribbble.data.api.ShotsResponse;
 import com.egorn.dribbble.data.models.Player;
@@ -17,9 +19,9 @@ import retrofit.client.Response;
  */
 public class PlayerController {
     private static PlayerController instance;
+    private static String name;
+    private static Player player;
 
-    private String name;
-    private Player player;
     private ArrayList<Shot> followingShots;
     private ArrayList<Shot> likesShots;
     private ArrayList<Shot> playerShots;
@@ -34,32 +36,53 @@ public class PlayerController {
     private ShotsController.OnShotsLoadedListener likesShotsCallback;
     private ShotsController.OnShotsLoadedListener playerShotsCallback;
 
-    public static PlayerController getInstance(String name) {
+    public static PlayerController getInstance(Context context) {
         if (instance == null) {
             instance = new PlayerController();
         }
-        instance.setName(name);
         return instance;
     }
 
-    private void setName(String name) {
+    public static boolean isLoggedIn(Context context) {
+        restore(context);
+        return name != null;
+    }
+
+    public static void setName(Context context, String name) {
         if (name == null) {
-            this.name = null;
+            PlayerController.name = null;
             player = null;
             return;
         }
 
-        if (name.equals(this.name)) {
+        if (name.equals(PlayerController.name)) {
             return;
         }
 
-        this.name = name;
-        player = null;
+        PlayerController.name = name;
+        if (player != null) {
+            player.delete(context);
+            player = null;
+        }
     }
 
-    public void getPlayer(OnPlayerReceivedListener playerCallback) {
+    public static void logOut(Context context) {
+        Player.logOut(context);
+    }
+
+    private static void restore(Context context) {
+        if (instance == null) {
+            instance = new PlayerController();
+        }
+        player = Player.restorePlayer(context);
+        if (player != null) {
+            name = player.getName();
+        }
+    }
+
+    public void getPlayer(Context context, OnPlayerReceivedListener playerCallback) {
         if (player == null) {
-            loadPlayer(playerCallback);
+            loadPlayer(context, playerCallback);
         } else {
             if (playerCallback != null) {
                 playerCallback.onPlayerReceived(player);
@@ -193,13 +216,16 @@ public class PlayerController {
         });
     }
 
-    private void loadPlayer(OnPlayerReceivedListener callback) {
+    private void loadPlayer(final Context context, OnPlayerReceivedListener callback) {
         playerCallback = callback;
         Api.dribbble().playerProfile(name, new Callback<Player>() {
             @Override
             public void success(Player player, Response response) {
                 if (player != null) {
-                    PlayerController.this.player = player;
+                    if (context != null) {
+                        player.save(context);
+                    }
+                    PlayerController.player = player;
                     if (playerCallback != null) {
                         playerCallback.onPlayerReceived(player);
                     }

@@ -17,5 +17,10 @@
     <string name="action_browser">Browser</string>
     <string name="title_activity_my">MyActivity</string>
     <string name="title_activity_shot_image">ShotImageActivity</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="log_in">Log in</string>
+    <string name="enter_your_username">Only Dribbble username is required.</string>
+    <string name="dribbble_username">Your Dribbble username</string>
 
 </resources>

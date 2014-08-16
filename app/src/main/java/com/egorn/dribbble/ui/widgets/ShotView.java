@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.egorn.dribbble.R;
+import com.egorn.dribbble.data.Settings;
 import com.egorn.dribbble.data.helpers.DateFormatter;
 import com.egorn.dribbble.data.models.Shot;
 import com.egorn.dribbble.ui.shots.OpenedShotActivity;
@@ -156,10 +157,14 @@ public class ShotView extends FrameLayout {
 
     private void loadWithPicasso() {
         String toLoad;
-        if (mShot.getImageUrl().endsWith("gif")) {
+        if (Settings.isLowTrafficEnabled()) {
             toLoad = mShot.getImageTeaserUrl();
         } else {
-            toLoad = mShot.getImageUrl();
+            if (mShot.getImageUrl().endsWith("gif")) {
+                toLoad = mShot.getImageTeaserUrl();
+            } else {
+                toLoad = mShot.getImageUrl();
+            }
         }
         Picasso.with(getContext())
                 .load(toLoad)
