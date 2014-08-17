@@ -1,4 +1,4 @@
-package com.egorn.dribbble;
+package com.egorn.dribbble.data.helpers;
 
 import android.app.Activity;
 import android.content.Context;

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
 import com.egorn.dribbble.R;
-import com.egorn.dribbble.Utils;
+import com.egorn.dribbble.data.helpers.Utils;
 import com.egorn.dribbble.ui.shots.ShotsFragment;
 import com.egorn.dribbble.ui.widgets.tabs.SlidingTabLayout;
 

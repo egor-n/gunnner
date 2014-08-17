@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.egorn.dribbble;
+package com.egorn.dribbble.data.helpers;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;

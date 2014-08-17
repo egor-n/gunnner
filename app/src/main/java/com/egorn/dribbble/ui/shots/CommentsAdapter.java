@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.egorn.dribbble.R;
-import com.egorn.dribbble.Utils;
+import com.egorn.dribbble.data.helpers.Utils;
 import com.egorn.dribbble.data.models.Comment;
 import com.koushikdutta.ion.Ion;
 

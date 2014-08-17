@@ -1,7 +1,5 @@
 package com.egorn.dribbble.data.helpers;
 
-import android.content.Context;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,7 +11,7 @@ import java.util.Date;
 public class DateFormatter {
     private static DateFormat targetFormat;
 
-    public static String formatDate(Context context, String dateString) {
+    public static String formatDate(String dateString) {
         SimpleDateFormat sourceFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss"); // 2012/06/30 22:24:50 -0400
         Date date;
         try {
@@ -24,7 +22,7 @@ public class DateFormatter {
         }
 
         if (targetFormat == null) {
-            targetFormat = android.text.format.DateFormat.getDateFormat(context);
+            targetFormat = DateFormat.getDateInstance();
         }
         return targetFormat.format(date);
     }

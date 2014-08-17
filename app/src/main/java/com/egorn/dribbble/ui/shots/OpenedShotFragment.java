@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.egorn.dribbble.R;
-import com.egorn.dribbble.Utils;
 import com.egorn.dribbble.data.InfiniteScrollListener;
+import com.egorn.dribbble.data.helpers.Utils;
 import com.egorn.dribbble.data.models.Comment;
 import com.egorn.dribbble.data.models.Shot;
 import com.egorn.dribbble.ui.widgets.ShotView;

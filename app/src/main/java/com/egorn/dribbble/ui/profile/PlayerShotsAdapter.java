@@ -56,7 +56,7 @@ public class PlayerShotsAdapter extends BaseAdapter {
                 .load(shots.get(i).getImageTeaserUrl())
                 .placeholder(R.drawable.placeholder_small)
                 .into(holder.image);
-        holder.date.setText(DateFormatter.formatDate(context, shots.get(i).getCreatedAt()));
+        holder.date.setText(DateFormatter.formatDate(shots.get(i).getCreatedAt()));
         return view;
     }
 

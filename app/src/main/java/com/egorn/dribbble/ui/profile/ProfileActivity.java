@@ -3,7 +3,7 @@ package com.egorn.dribbble.ui.profile;
 import android.os.Bundle;
 
 import com.egorn.dribbble.R;
-import com.egorn.dribbble.Utils;
+import com.egorn.dribbble.data.helpers.Utils;
 import com.egorn.dribbble.data.models.Shot;
 import com.egorn.dribbble.ui.SwipeBaseActivity;
 import com.egorn.dribbble.ui.shots.ShotsFragment;

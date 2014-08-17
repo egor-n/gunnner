@@ -75,6 +75,6 @@ public class ProfileView extends RelativeLayout {
         mFollowingValue.setText(player.getFollowingCount() + "");
         mReboundsValue.setText(player.getReboundsCount() + "");
         mMemberSince.setText(Html.fromHtml("<font color=\"#ea4c89\">Member since:</font> " +
-                DateFormatter.formatDate(getContext(), player.getCreatedAt())));
+                DateFormatter.formatDate(player.getCreatedAt())));
     }
 }

@@ -15,9 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.egorn.dribbble.R;
-import com.egorn.dribbble.Utils;
 import com.egorn.dribbble.data.Settings;
 import com.egorn.dribbble.data.helpers.DateFormatter;
+import com.egorn.dribbble.data.helpers.Utils;
 import com.egorn.dribbble.data.models.Shot;
 import com.egorn.dribbble.ui.shots.OpenedShotActivity;
 import com.egorn.dribbble.ui.shots.ShotImageActivity;
@@ -144,7 +144,7 @@ public class ShotView extends FrameLayout {
             });
         }
 
-        mTime.setText(DateFormatter.formatDate(getContext(), shot.getCreatedAt()));
+        mTime.setText(DateFormatter.formatDate(shot.getCreatedAt()));
         mViews.setText(shot.getViewsCount() + "");
         mLikes.setText(shot.getLikesCount() + "");
         if (style == SMALL) {
