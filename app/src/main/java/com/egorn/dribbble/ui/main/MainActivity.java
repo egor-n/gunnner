@@ -2,7 +2,6 @@ package com.egorn.dribbble.ui.main;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -10,11 +9,11 @@ import android.view.Menu;
 import com.crashlytics.android.Crashlytics;
 import com.egorn.dribbble.BuildConfig;
 import com.egorn.dribbble.R;
+import com.egorn.dribbble.Utils;
 import com.egorn.dribbble.data.PlayerController;
 import com.egorn.dribbble.data.models.Shot;
 import com.egorn.dribbble.ui.BaseActivity;
 import com.egorn.dribbble.ui.drawer.NavigationDrawerFragment;
-import com.egorn.dribbble.ui.shots.OpenedShotActivity;
 import com.egorn.dribbble.ui.shots.ShotsFragment;
 import com.egorn.dribbble.ui.widgets.InputDialog;
 
@@ -134,9 +133,7 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void onShotClicked(Shot shot) {
-        Intent intent = new Intent(this, OpenedShotActivity.class);
-        intent.putExtra(OpenedShotActivity.SHOT, shot);
-        startActivity(intent);
+        Utils.openShot(this, shot);
     }
 
     @Override

@@ -64,11 +64,13 @@ public class ShotView extends FrameLayout {
     }
 
     public static ShotView inflateSmall(ViewGroup parent) {
-        return (ShotView) LayoutInflater.from(parent.getContext()).inflate(R.layout.shot_view_small, parent, false);
+        return (ShotView) LayoutInflater.from(parent.getContext()).inflate(
+                R.layout.shot_view_small, parent, false);
     }
 
     public static ShotView inflateBig(ViewGroup parent) {
-        return (ShotView) LayoutInflater.from(parent.getContext()).inflate(R.layout.shot_view_big, parent, false);
+        return (ShotView) LayoutInflater.from(parent.getContext()).inflate(
+                R.layout.shot_view_big, parent, false);
     }
 
     private void init(Context context, AttributeSet attrs) {

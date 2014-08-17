@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:foreground="?android:attr/selectableItemBackground">
+
+    <ImageView
+        android:id="@+id/player_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginRight="12dp"/>
+
+    <LinearLayout
+        android:id="@+id/player_data_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/player_image"
+        android:layout_alignTop="@id/player_image"
+        android:layout_toEndOf="@id/player_image"
+        android:layout_toRightOf="@id/player_image"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/player_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:text="Ryan Brinkerhoff"
+            android:textColor="#f3f3f3"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/player_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:fontFamily="sans-serif-light"
+            android:text="Palo Alto, CA"
+            android:textColor="@color/gray"/>
+
+        <TextView
+            android:id="@+id/player_twitter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_twitter"
+            android:drawablePadding="6dp"
+            android:drawableStart="@drawable/ic_twitter"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center_vertical"
+            android:text="twittername"
+            android:textColor="@color/gray"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/stats_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/player_image"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/profile_stats_background"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/shots_label"
+            style="@style/ProfileLabel"
+            android:text="@string/shots_label"/>
+
+        <TextView
+            android:id="@+id/colon1"
+            style="@style/ColonTextView"/>
+
+        <TextView
+            android:id="@+id/shots_value"
+            style="@style/ProfileValue"
+            android:layout_alignBottom="@id/colon1"
+            android:layout_alignTop="@id/colon1"
+            android:text="0"/>
+
+        <TextView
+            android:id="@+id/likes_label"
+            style="@style/ProfileLabel"
+            android:layout_below="@id/shots_label"
+            android:text="@string/likes_label"/>
+
+        <TextView
+            android:id="@+id/colon2"
+            style="@style/ColonTextView"
+            android:layout_below="@id/colon1"/>
+
+        <TextView
+            android:id="@+id/likes_value"
+            style="@style/ProfileValue"
+            android:layout_alignBottom="@id/colon2"
+            android:layout_alignTop="@id/colon2"
+            android:text="0"/>
+
+        <TextView
+            android:id="@+id/followers_label"
+            style="@style/ProfileLabel"
+            android:layout_below="@id/likes_label"
+            android:text="@string/followers_label"/>
+
+        <TextView
+            android:id="@+id/colon3"
+            style="@style/ColonTextView"
+            android:layout_below="@id/colon2"/>
+
+        <TextView
+            android:id="@+id/followers_value"
+            style="@style/ProfileValue"
+            android:layout_alignBottom="@id/colon3"
+            android:layout_alignTop="@id/colon3"
+            android:text="0"/>
+
+        <TextView
+            android:id="@+id/following_label"
+            style="@style/ProfileLabel"
+            android:layout_below="@id/followers_label"
+            android:text="@string/following_label"/>
+
+        <TextView
+            android:id="@+id/colon4"
+            style="@style/ColonTextView"
+            android:layout_below="@id/colon3"/>
+
+        <TextView
+            android:id="@+id/following_value"
+            style="@style/ProfileValue"
+            android:layout_alignBottom="@id/colon4"
+            android:layout_alignTop="@id/colon4"
+            android:text="45"/>
+
+        <TextView
+            android:id="@+id/rebounds_label"
+            style="@style/ProfileLabel"
+            android:layout_below="@id/following_label"
+            android:text="@string/rebounds_label"/>
+
+        <TextView
+            android:id="@+id/colon5"
+            style="@style/ColonTextView"
+            android:layout_below="@id/colon4"/>
+
+        <TextView
+            android:id="@+id/rebounds_value"
+            style="@style/ProfileValue"
+            android:layout_alignBottom="@id/colon5"
+            android:layout_alignTop="@id/colon5"
+            android:text="0"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/member_since"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/stats_wrapper"
+        android:layout_marginTop="16dp"
+        android:gravity="center_horizontal"
+        android:text="Member since: 7 April 2009"/>
+
+</merge>

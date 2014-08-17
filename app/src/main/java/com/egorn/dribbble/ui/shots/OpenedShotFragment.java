@@ -184,6 +184,7 @@ public class OpenedShotFragment extends Fragment implements
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(url));
             startActivity(intent);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

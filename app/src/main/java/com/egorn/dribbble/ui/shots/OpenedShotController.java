@@ -24,7 +24,6 @@ public class OpenedShotController {
     private SparseArray<ArrayList<Comment>> comments = new SparseArray<ArrayList<Comment>>();
     private SparseArray<Shot> shots = new SparseArray<Shot>();
     private SparseIntArray pages = new SparseIntArray();
-    private boolean shouldLoadMoreComments = true;
 
     public static OpenedShotController getInstance(int shotId, OnCommentsLoadedListener callback) {
         if (instance == null) {

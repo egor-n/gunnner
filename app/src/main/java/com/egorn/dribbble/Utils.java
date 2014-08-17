@@ -10,7 +10,9 @@ import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
 
+import com.egorn.dribbble.data.models.Shot;
 import com.egorn.dribbble.ui.profile.ProfileActivity;
+import com.egorn.dribbble.ui.shots.OpenedShotActivity;
 
 /**
  * @author Egor N.
@@ -96,5 +98,11 @@ public class Utils {
         Point size = new Point();
         display.getSize(size);
         return size.x;
+    }
+
+    public static void openShot(Context context, Shot shot) {
+        Intent intent = new Intent(context, OpenedShotActivity.class);
+        intent.putExtra(OpenedShotActivity.SHOT, shot);
+        context.startActivity(intent);
     }
 }
