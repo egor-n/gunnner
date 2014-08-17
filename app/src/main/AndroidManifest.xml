@@ -21,7 +21,12 @@
         </activity>
         <activity
             android:name=".ui.shots.OpenedShotActivity"
-            android:label="@string/title_activity_shot"/>
+            android:label="@string/title_activity_shot"
+            android:theme="@style/Swipeable"/>
+        <activity
+            android:name=".ui.profile.ProfileActivity"
+            android:label="@string/title_activity_profile"
+            android:theme="@style/Swipeable"/>
         <activity
             android:name=".ui.shots.ShotImageActivity"
             android:label="@string/title_activity_shot_image"
@@ -30,11 +35,6 @@
         <meta-data
             android:name="com.crashlytics.ApiKey"
             android:value="5a3b0203215a43a61151b78162b22359b3acc655"/>
-
-        <activity
-            android:name=".ui.profile.ProfileActivity"
-            android:label="@string/title_activity_profile">
-        </activity>
     </application>
 
 </manifest>

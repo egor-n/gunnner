@@ -1,6 +1,7 @@
 package com.egorn.dribbble.ui.main;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -19,11 +20,11 @@ import com.egorn.dribbble.ui.widgets.InputDialog;
 
 public class MainActivity extends BaseActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
-        ShotsFragment.OnShotClickedListener {
+        ShotsFragment.OnShotClickedListener, InputDialog.CustomDialogCallback {
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
     private CharSequence mTitle;
-    private InputDialog dialog;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class MainActivity extends BaseActivity
                             .replace(R.id.container, ShotsFragment.newInstance(ShotsFragment.MY_SHOTS))
                             .commit();
                 } else {
-                    showInputDialog(ShotsFragment.newInstance(ShotsFragment.MY_SHOTS));
+                    showInputDialog(ShotsFragment.MY_SHOTS);
                 }
                 break;
             case 3:  // following
@@ -68,7 +69,7 @@ public class MainActivity extends BaseActivity
                             .replace(R.id.container, ShotsFragment.newInstance(ShotsFragment.FOLLOWING))
                             .commit();
                 } else {
-                    showInputDialog(ShotsFragment.newInstance(ShotsFragment.FOLLOWING));
+                    showInputDialog(ShotsFragment.FOLLOWING);
                 }
                 break;
             case 4:  // likes
@@ -77,7 +78,7 @@ public class MainActivity extends BaseActivity
                             .replace(R.id.container, ShotsFragment.newInstance(ShotsFragment.LIKES))
                             .commit();
                 } else {
-                    showInputDialog(ShotsFragment.newInstance(ShotsFragment.LIKES));
+                    showInputDialog(ShotsFragment.LIKES);
                 }
                 break;
             case 5:  // settings
@@ -87,21 +88,8 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    private void showInputDialog(final android.support.v4.app.Fragment fragment) {
-        dialog = new InputDialog(this, new InputDialog.CustomDialogCallback() {
-            @Override
-            public void onConfirm(String username) {
-                PlayerController.setName(MainActivity.this, username);
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, fragment)
-                        .commit();
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-        });
+    private void showInputDialog(int type) {
+        dialog = new InputDialog(this, type, this);
         dialog.show();
     }
 
@@ -149,5 +137,18 @@ public class MainActivity extends BaseActivity
         Intent intent = new Intent(this, OpenedShotActivity.class);
         intent.putExtra(OpenedShotActivity.SHOT, shot);
         startActivity(intent);
+    }
+
+    @Override
+    public void onConfirm(String username, int type) {
+        PlayerController.setName(MainActivity.this, username);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, ShotsFragment.newInstance(type))
+                .commit();
+    }
+
+    @Override
+    public void onCancel() {
+
     }
 }

@@ -36,9 +36,13 @@ public class MainFragment extends Fragment implements ShotsFragment.OnTabsHideLi
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         Utils.setTopRightInsets(getActivity(), view);
         mViewPager.setAdapter(new MainPagerAdapter(getChildFragmentManager()));
         prepareTabs();
+        if (savedInstanceState != null) {
+            mViewPager.setCurrentItem(savedInstanceState.getInt(CURRENT_TAB, 0));
+        }
 
         getView().getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override

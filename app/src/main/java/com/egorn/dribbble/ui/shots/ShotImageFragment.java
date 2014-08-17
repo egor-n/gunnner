@@ -44,7 +44,7 @@ public class ShotImageFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         imageUrl = getArguments().getString(SHOT_IMAGE_URL);
 
-        if (imageUrl.endsWith(".git")) {
+        if (imageUrl.endsWith(".gif")) {
             loadWithIon();
         } else {
             loadWithPicasso();

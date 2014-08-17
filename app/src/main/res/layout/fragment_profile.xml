@@ -28,7 +28,7 @@
             android:id="@+id/player_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
+            android:layout_marginBottom="3dp"
             android:text="Ryan Brinkerhoff"
             android:textColor="#f3f3f3"
             android:textSize="18sp"/>
@@ -37,6 +37,7 @@
             android:id="@+id/player_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
             android:fontFamily="sans-serif-light"
             android:text="Palo Alto, CA"
             android:textColor="@color/gray"/>
@@ -45,25 +46,15 @@
             android:id="@+id/player_twitter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@android:drawable/ic_menu_compass"
-            android:drawableStart="@android:drawable/ic_menu_compass"
+            android:drawableLeft="@drawable/ic_twitter"
+            android:drawablePadding="6dp"
+            android:drawableStart="@drawable/ic_twitter"
             android:fontFamily="sans-serif-light"
             android:gravity="center_vertical"
             android:text="twittername"
             android:textColor="@color/gray"/>
 
     </LinearLayout>
-
-    <!--
-        <TextView
-            android:id="@+id/player_summary"
-            android:fontFamily="sans-serif-light"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/player_image"
-            android:text="Logo and identity designer, 7+ years experience, 500+ clients from all around the world."
-            android:textColor="@color/gray"/>
-    -->
 
     <RelativeLayout
         android:id="@+id/stats_wrapper"

@@ -21,13 +21,14 @@
     <EditText
         android:id="@+id/dialog_custom_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:layout_marginTop="12dp"
         android:hint="@string/dribbble_username"
-        android:inputType="text"
+        android:singleLine="true"
         android:textColor="#131313"
         android:textColorHint="#bfbfbf"
+        android:textCursorDrawable="@null"
         android:textSize="18sp"/>
 
     <LinearLayout

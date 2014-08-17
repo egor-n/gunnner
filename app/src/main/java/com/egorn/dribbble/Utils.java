@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
+import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Display;
@@ -16,6 +17,10 @@ import com.egorn.dribbble.ui.profile.ProfileActivity;
  */
 public class Utils {
     public static void setInsets(Activity activity, View view) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            return;
+        }
+
         SystemBarTintManager tintManager = new SystemBarTintManager(activity);
         SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
 
@@ -28,6 +33,10 @@ public class Utils {
     }
 
     public static void setTopInsets(Activity activity, View view) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            return;
+        }
+
         SystemBarTintManager tintManager = new SystemBarTintManager(activity);
         SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
 
@@ -40,6 +49,10 @@ public class Utils {
     }
 
     public static void setTopRightInsets(Activity activity, View view) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            return;
+        }
+
         SystemBarTintManager tintManager = new SystemBarTintManager(activity);
         SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
 
@@ -52,6 +65,10 @@ public class Utils {
     }
 
     public static void setBottomInsets(Activity activity, View view) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            return;
+        }
+
         SystemBarTintManager tintManager = new SystemBarTintManager(activity);
         SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
 
