@@ -22,5 +22,11 @@
     <string name="log_in">Log in</string>
     <string name="enter_your_username">Only Dribbble username is required.</string>
     <string name="dribbble_username">Your Dribbble username</string>
+    <string name="shots_label">SHOTS</string>
+    <string name="likes_label">LIKES</string>
+    <string name="followers_label">FOLLOWERS</string>
+    <string name="following_label">FOLLOWING</string>
+    <string name="rebounds_label">REBOUNDS</string>
+    <string name="title_activity_profile">ProfileActivity</string>
 
 </resources>

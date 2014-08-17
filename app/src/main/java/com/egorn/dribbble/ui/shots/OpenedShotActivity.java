@@ -4,10 +4,9 @@ import android.os.Bundle;
 
 import com.egorn.dribbble.R;
 import com.egorn.dribbble.data.models.Shot;
+import com.egorn.dribbble.ui.SwipeBaseActivity;
 
-import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
-
-public class OpenedShotActivity extends SwipeBackActivity {
+public class OpenedShotActivity extends SwipeBaseActivity {
     public static final String SHOT = "shot";
     public static final String SHOT_ID = "shot_id";
 

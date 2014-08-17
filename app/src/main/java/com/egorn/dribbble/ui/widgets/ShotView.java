@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.egorn.dribbble.R;
+import com.egorn.dribbble.Utils;
 import com.egorn.dribbble.data.Settings;
 import com.egorn.dribbble.data.helpers.DateFormatter;
 import com.egorn.dribbble.data.models.Shot;
@@ -131,6 +132,16 @@ public class ShotView extends FrameLayout {
 
         mTitle.setText(shot.getTitle());
         mPlayer.setText(Html.fromHtml("by " + "<font color=\"#ea4c89\">" + shot.getPlayer().getName() + "</font>"));
+
+        if (style == BIG) {
+            mPlayer.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Utils.openProfile(getContext(), mShot.getPlayer().get_id());
+                }
+            });
+        }
+
         mTime.setText(DateFormatter.formatDate(getContext(), shot.getCreatedAt()));
         mViews.setText(shot.getViewsCount() + "");
         mLikes.setText(shot.getLikesCount() + "");

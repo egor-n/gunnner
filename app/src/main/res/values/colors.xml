@@ -5,4 +5,5 @@
     <color name="background_row_drawer_normal">#00000000</color>
     <color name="background_row_drawer_checked">#383838</color>
     <color name="aqua">#009688</color>
+    <color name="gray">#797979</color>
 </resources>

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.egorn.dribbble.R;
+import com.egorn.dribbble.Utils;
 import com.egorn.dribbble.data.models.Comment;
 import com.koushikdutta.ion.Ion;
 
@@ -54,12 +55,26 @@ public class CommentsAdapter extends BaseAdapter {
             view.setTag(new ViewHolder(view));
         }
 
-        Comment comment = comments.get(i);
+        final Comment comment = comments.get(i);
 
         ViewHolder holder = (ViewHolder) view.getTag();
         Ion.with(holder.playerAvatar).load(comment.getPlayer().getAvatarUrl());
         holder.playerName.setText(comment.getPlayer().getName());
         holder.commentBody.setText(comment.getBody());
+
+        holder.playerAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utils.openProfile(context, comment.getPlayer().get_id());
+            }
+        });
+        holder.playerName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utils.openProfile(context, comment.getPlayer().get_id());
+            }
+        });
+
         return view;
     }
 

@@ -9,7 +9,6 @@
         <!-- Empty on purpose -->
     </style>
 
-
     <style name="Theme.Dribbblestyle" parent="@android:style/Theme.Holo">
         <item name="android:actionBarItemBackground">@drawable/selectable_background_dribbblestyle
         </item>
@@ -70,6 +69,41 @@
     <style name="Theme.Dribbblestyle.Widget" parent="@android:style/Theme.Holo">
         <item name="android:popupMenuStyle">@style/PopupMenu.Dribbblestyle</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Dribbblestyle</item>
+    </style>
+
+    <style name="ColonTextView">
+        <item name="android:text">:</item>
+        <item name="android:textColor">#f3f3f3</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:background">#191819</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:paddingRight">2dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="ProfileLabel">
+        <item name="android:background">#191819</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:paddingLeft">2dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:layout_toLeftOf">@id/colon1</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="ProfileValue">
+        <item name="android:layout_toRightOf">@id/colon1</item>
+        <item name="android:layout_toEndOf">@id/colon1</item>
+        <item name="android:textColor">@color/dribbble</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginStart">5dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
 </resources>
