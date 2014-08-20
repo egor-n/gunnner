@@ -5,10 +5,20 @@
              android:layout_height="match_parent"
              android:background="#d5000000">
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="@style/ProgressBar.Dribbblestyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <uk.co.senab.photoview.PhotoView
         android:id="@+id/photoView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"/>
+        android:layout_height="match_parent"/>
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </FrameLayout>

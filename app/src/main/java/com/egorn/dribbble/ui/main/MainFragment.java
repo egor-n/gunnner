@@ -47,7 +47,7 @@ public class MainFragment extends Fragment implements ShotsFragment.OnTabsHideLi
 
             @Override
             public void onPageSelected(int position) {
-
+                hideTabs(false);
             }
 
             @Override
