@@ -14,5 +14,5 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:scrollbarStyle="outsideOverlay"
-    tools:context="com.egorn.dribbble.ui.shots.OpenedShotFragment"
+    tools:context="com.gunnner.ui.shots.OpenedShotFragment"
     tools:listitem="@layout/row_comment"/>

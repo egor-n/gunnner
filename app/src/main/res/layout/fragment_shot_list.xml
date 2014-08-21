@@ -3,7 +3,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.egorn.dribbble.ui.shots.ShotsFragment">
+             tools:context="com.gunnner.ui.shots.ShotsFragment">
 
     <ListView
         android:id="@+id/shots_list"

@@ -4,9 +4,9 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:background="@color/background"
-             tools:context="com.egorn.dribbble.ui.shots.ShotsFragment">
+             tools:context="com.gunnner.ui.shots.ShotsFragment">
 
-    <com.egorn.dribbble.ui.widgets.HeaderGridView
+    <com.gunnner.ui.widgets.HeaderGridView
         android:id="@+id/player_shots_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

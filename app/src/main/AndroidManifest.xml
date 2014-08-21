@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    package="com.egorn.dribbble"
+    package="com.gunnner"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name="com.gunnner.ui.main.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -21,15 +21,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.shots.OpenedShotActivity"
+            android:name="com.gunnner.ui.shots.OpenedShotActivity"
             android:label="@string/title_activity_shot"
             android:theme="@style/Swipeable"/>
         <activity
-            android:name=".ui.profile.ProfileActivity"
+            android:name="com.gunnner.ui.profile.ProfileActivity"
             android:label="@string/title_activity_profile"
             android:theme="@style/Swipeable"/>
         <activity
-            android:name=".ui.shots.ShotImageActivity"
+            android:name="com.gunnner.ui.shots.ShotImageActivity"
             android:label="@string/title_activity_shot_image"
             android:theme="@style/Translucent"/>
 
