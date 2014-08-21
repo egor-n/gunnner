@@ -32,6 +32,7 @@
     </style>
 
     <style name="ActionBar.Solid.Dribbblestyle" parent="@android:style/Widget.Holo.ActionBar.Solid">
+        <item name="android:logo">@drawable/logo</item>
         <item name="android:colorBackground">#0e0e0e</item>
         <item name="android:background">#0e0e0e</item>
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_dribbblestyle</item>
@@ -41,6 +42,7 @@
 
     <style name="ActionBar.Transparent.Dribbblestyle" parent="@android:style/Widget.Holo.ActionBar">
         <item name="android:background">@drawable/ab_stacked_solid_dribbblestyle</item>
+        <item name="android:logo">@drawable/logo</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Dribbblestyle</item>
     </style>
 

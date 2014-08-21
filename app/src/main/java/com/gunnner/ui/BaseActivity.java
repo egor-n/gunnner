@@ -5,6 +5,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
+import com.gunnner.R;
+
 /**
  * @author Egor N.
  */
@@ -13,6 +15,8 @@ public class BaseActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#181818")));
-        getActionBar().setLogo(new ColorDrawable(Color.TRANSPARENT));
+        getActionBar().setLogo(R.drawable.logo);
+        getActionBar().setDisplayShowTitleEnabled(false);
+        getActionBar().setTitle("");
     }
 }

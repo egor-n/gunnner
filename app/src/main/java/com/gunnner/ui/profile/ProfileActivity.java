@@ -1,5 +1,7 @@
 package com.gunnner.ui.profile;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import com.gunnner.R;
@@ -14,6 +16,7 @@ public class ProfileActivity extends SwipeBaseActivity implements ShotsFragment.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActionBar().setLogo(new ColorDrawable(Color.TRANSPARENT));
         setContentView(R.layout.activity_profile);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()

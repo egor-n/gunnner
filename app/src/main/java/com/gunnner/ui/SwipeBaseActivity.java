@@ -5,6 +5,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.gunnner.R;
+
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
@@ -19,9 +21,10 @@ public class SwipeBaseActivity extends SwipeBackActivity {
 
     private void setUpActionBar() {
         getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#181818")));
-        getActionBar().setLogo(new ColorDrawable(Color.TRANSPARENT));
+        getActionBar().setLogo(R.drawable.logo);
         getActionBar().setDisplayShowHomeEnabled(true);
         getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setTitle("");
     }
 
     @Override
