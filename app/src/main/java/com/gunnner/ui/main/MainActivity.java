@@ -14,6 +14,7 @@ import com.gunnner.data.helpers.Utils;
 import com.gunnner.data.models.Shot;
 import com.gunnner.ui.BaseActivity;
 import com.gunnner.ui.drawer.NavigationDrawerFragment;
+import com.gunnner.ui.profile.ProfileFragment;
 import com.gunnner.ui.shots.ShotsFragment;
 import com.gunnner.ui.widgets.InputDialog;
 
@@ -22,7 +23,6 @@ public class MainActivity extends BaseActivity
         ShotsFragment.OnShotClickedListener, InputDialog.CustomDialogCallback {
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
-    private CharSequence mTitle;
     private AlertDialog dialog;
 
     @Override
@@ -35,9 +35,7 @@ public class MainActivity extends BaseActivity
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
 
-        // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
@@ -52,11 +50,20 @@ public class MainActivity extends BaseActivity
                         .commit();
                 break;
             case 1:  // my profile
+                if (PlayerController.isLoggedIn(this)) {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container,
+                                    ProfileFragment.newInstance(PlayerController.getName()))
+                            .commit();
+                } else {
+                    showInputDialog(ShotsFragment.MY_SHOTS);
+                }
                 break;
             case 2:  // my shots
                 if (PlayerController.isLoggedIn(this)) {
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.container, ShotsFragment.newInstance(ShotsFragment.MY_SHOTS))
+                            .replace(R.id.container,
+                                    ShotsFragment.newInstance(ShotsFragment.MY_SHOTS))
                             .commit();
                 } else {
                     showInputDialog(ShotsFragment.MY_SHOTS);
@@ -65,7 +72,8 @@ public class MainActivity extends BaseActivity
             case 3:  // following
                 if (PlayerController.isLoggedIn(this)) {
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.container, ShotsFragment.newInstance(ShotsFragment.FOLLOWING))
+                            .replace(R.id.container,
+                                    ShotsFragment.newInstance(ShotsFragment.FOLLOWING))
                             .commit();
                 } else {
                     showInputDialog(ShotsFragment.FOLLOWING);
@@ -74,7 +82,8 @@ public class MainActivity extends BaseActivity
             case 4:  // likes
                 if (PlayerController.isLoggedIn(this)) {
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.container, ShotsFragment.newInstance(ShotsFragment.LIKES))
+                            .replace(R.id.container,
+                                    ShotsFragment.newInstance(ShotsFragment.LIKES))
                             .commit();
                 } else {
                     showInputDialog(ShotsFragment.LIKES);
@@ -90,20 +99,6 @@ public class MainActivity extends BaseActivity
     private void showInputDialog(int type) {
         dialog = new InputDialog(this, type, this);
         dialog.show();
-    }
-
-    public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = getString(R.string.title_section1);
-                break;
-            case 2:
-                mTitle = getString(R.string.title_section2);
-                break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
-                break;
-        }
     }
 
     public void restoreActionBar() {

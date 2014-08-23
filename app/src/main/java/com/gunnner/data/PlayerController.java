@@ -1,6 +1,8 @@
 package com.gunnner.data;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 import com.gunnner.data.api.Api;
 import com.gunnner.data.api.ShotsResponse;
@@ -45,52 +47,46 @@ public class PlayerController {
 
     public static boolean isLoggedIn(Context context) {
         restore(context);
-        return name != null;
+        return !TextUtils.isEmpty(name);
     }
 
     public static void setName(Context context, String name) {
-        if (name == null) {
-            PlayerController.name = null;
-            player = null;
-            return;
-        }
-
         if (name.equals(PlayerController.name)) {
             return;
         }
 
         PlayerController.name = name;
-        if (player != null) {
-            player.delete(context);
-            player = null;
-        }
+        player = null;
+
+        save(context);
+    }
+
+    public static String getName() {
+        return name;
     }
 
     public static void logOut(Context context) {
-        Player.logOut(context);
         instance = null;
         player = null;
         name = null;
+
+        save(context);
     }
 
     private static void restore(Context context) {
         if (instance == null) {
             instance = new PlayerController();
         }
-        player = Player.restorePlayer(context);
-        if (player != null) {
-            name = player.getName();
-        }
+
+        name = getPreferences(context).getString("name", "");
     }
 
-    public void getPlayer(Context context, OnPlayerReceivedListener playerCallback) {
-        if (player == null) {
-            loadPlayer(context, playerCallback);
-        } else {
-            if (playerCallback != null) {
-                playerCallback.onPlayerReceived(player);
-            }
-        }
+    private static void save(Context context) {
+        getPreferences(context).edit().putString("name", name).apply();
+    }
+
+    private static SharedPreferences getPreferences(Context context) {
+        return context.getSharedPreferences("player", Context.MODE_PRIVATE);
     }
 
     public void getLikesShots(ShotsController.OnShotsLoadedListener likesShotsCallback) {
@@ -214,31 +210,6 @@ public class PlayerController {
             public void failure(RetrofitError error) {
                 if (playerShotsCallback != null) {
                     playerShotsCallback.onShotsError();
-                }
-            }
-        });
-    }
-
-    private void loadPlayer(final Context context, OnPlayerReceivedListener callback) {
-        playerCallback = callback;
-        Api.dribbble().playerProfile(name, new Callback<Player>() {
-            @Override
-            public void success(Player player, Response response) {
-                if (player != null) {
-                    if (context != null) {
-                        player.save(context);
-                    }
-                    PlayerController.player = player;
-                    if (playerCallback != null) {
-                        playerCallback.onPlayerReceived(player);
-                    }
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                if (playerCallback != null) {
-                    playerCallback.onPlayerError();
                 }
             }
         });

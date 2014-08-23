@@ -1,11 +1,8 @@
 package com.gunnner.data.models;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 public class Player implements Parcelable {
@@ -75,18 +72,6 @@ public class Player implements Parcelable {
         reboundsCount = in.readInt();
         reboundsReceivedCount = in.readInt();
         createdAt = in.readString();
-    }
-
-    public static Player restorePlayer(Context context) {
-        return new Gson().fromJson(getPreferences(context).getString("player", ""), Player.class);
-    }
-
-    private static SharedPreferences getPreferences(Context context) {
-        return context.getSharedPreferences("player", Context.MODE_PRIVATE);
-    }
-
-    public static void logOut(Context context) {
-        getPreferences(context).edit().clear().commit();
     }
 
     public int get_id() {
@@ -159,16 +144,6 @@ public class Player implements Parcelable {
 
     public String getCreatedAt() {
         return createdAt;
-    }
-
-    public void save(Context context) {
-        getPreferences(context).edit()
-                .putString("player", new Gson().toJson(this))
-                .commit();
-    }
-
-    public void delete(Context context) {
-        getPreferences(context).edit().clear().commit();
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.gunnner.ui.widgets;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.text.Html;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 /**
  * @author Egor N.
@@ -63,7 +66,11 @@ public class ProfileView extends RelativeLayout {
     public void setPlayer(Player player) {
         this.player = player;
 
-        ((ProfileActivity) getContext()).setTitle(player.getUsername());
+        try {
+            ((ProfileActivity) getContext()).setTitle(player.getUsername());
+        } catch (ClassCastException ignored) {
+            // it falls here if ProfileFragment is used inside of MainActivity (my profile)
+        }
 
         Picasso.with(getContext()).load(player.getAvatarUrl()).into(mPlayerImage);
         mPlayerName.setText(player.getName());
@@ -76,5 +83,20 @@ public class ProfileView extends RelativeLayout {
         mReboundsValue.setText(player.getReboundsCount() + "");
         mMemberSince.setText(Html.fromHtml("<font color=\"#ea4c89\">Member since:</font> " +
                 DateFormatter.formatDate(player.getCreatedAt())));
+    }
+
+    @OnClick(R.id.player_twitter)
+    void onTwitterNameClicked() {
+        if (player == null) {
+            return;
+        }
+
+        try {
+            getContext().startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("twitter://user?screen_name=" + player.getTwitterScreenName())));
+        } catch (Exception e) {
+            getContext().startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://twitter.com/#!/" + player.getTwitterScreenName())));
+        }
     }
 }

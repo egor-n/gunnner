@@ -10,7 +10,8 @@ import com.gunnner.data.models.Shot;
 import com.gunnner.ui.SwipeBaseActivity;
 import com.gunnner.ui.shots.ShotsFragment;
 
-public class ProfileActivity extends SwipeBaseActivity implements ShotsFragment.OnShotClickedListener {
+public class ProfileActivity extends SwipeBaseActivity
+        implements ShotsFragment.OnShotClickedListener {
     public static final String PLAYER_ID = "player_id";
 
     @Override

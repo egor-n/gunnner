@@ -66,30 +66,30 @@ public class Api {
                                    Callback<PlayersResponse> callback);
 
         @GET("/players/{id}/shots")
-        public void playerShots(@Path("id") String playerId, @Query("page") int page,
+        public void playerShots(@Path("id") String playerName, @Query("page") int page,
                                 Callback<ShotsResponse> callback);
 
         @GET("/players/{id}/shots/following")
-        public void followingShots(@Path("id") String playerId, @Query("page") int page,
+        public void followingShots(@Path("id") String playerName, @Query("page") int page,
                                    Callback<ShotsResponse> callback);
 
         @GET("/players/{id}/shots/likes")
-        public void likesShots(@Path("id") String playerId, @Query("page") int page,
+        public void likesShots(@Path("id") String playerName, @Query("page") int page,
                                Callback<ShotsResponse> callback);
 
-        @GET("/players/{id}")
-        public void playerProfile(@Path("id") String playerId, Callback<Player> callback);
+        @GET("/{id}")
+        public void playerProfile(@Path("id") String playerName, Callback<Player> callback);
 
         @GET("/players/{id}/followers")
-        public void playerFollowers(@Path("id") String playerId, @Query("page") int page,
+        public void playerFollowers(@Path("id") String playerName, @Query("page") int page,
                                     Callback<PlayersResponse> callback);
 
         @GET("/players/{id}/following")
-        public void playerFollowing(@Path("id") String playerId, @Query("page") int page,
+        public void playerFollowing(@Path("id") String playerName, @Query("page") int page,
                                     Callback<PlayersResponse> callback);
 
         @GET("/players/{id}/draftees")
-        public void playerDraftees(@Path("id") String playerId, @Query("page") int page,
+        public void playerDraftees(@Path("id") String playerName, @Query("page") int page,
                                    Callback<PlayersResponse> callback);
     }
 }

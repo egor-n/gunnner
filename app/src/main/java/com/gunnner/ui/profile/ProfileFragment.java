@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.gunnner.R;
 import com.gunnner.data.InfiniteScrollListener;
@@ -29,9 +31,11 @@ import butterknife.OnItemClick;
 
 public class ProfileFragment extends Fragment implements ProfileController.OnPlayerDataListener {
     public static final String PLAYER_ID = "player_id";
+    public static final String PLAYER_NAME = "player_name";
 
     @InjectView(R.id.player_shots_list) HeaderGridView mPlayerShotsList;
     @InjectView(R.id.progress_bar) ProgressBar mProgressBar;
+    @InjectView(R.id.player_error) TextView mPlayerError;
 
     private int playerId;
     private Player mPlayer;
@@ -45,6 +49,14 @@ public class ProfileFragment extends Fragment implements ProfileController.OnPla
     public static ProfileFragment newInstance(int playerId) {
         Bundle args = new Bundle();
         args.putInt(PLAYER_ID, playerId);
+        ProfileFragment fragment = new ProfileFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static ProfileFragment newInstance(String playerName) {
+        Bundle args = new Bundle();
+        args.putString(PLAYER_NAME, playerName);
         ProfileFragment fragment = new ProfileFragment();
         fragment.setArguments(args);
         return fragment;
@@ -73,13 +85,18 @@ public class ProfileFragment extends Fragment implements ProfileController.OnPla
         }
         Utils.setInsets(getActivity(), mPlayerShotsList);
         playerId = getArguments().getInt(PLAYER_ID);
-        controller = ProfileController.getInstance(playerId, this);
+        String playerName = getArguments().getString(PLAYER_NAME);
+        if (TextUtils.isEmpty(playerName)) {
+            controller = ProfileController.getInstance(playerId, this);
+        } else {
+            controller = ProfileController.getInstance(playerName, this);
+        }
     }
 
     @OnItemClick(R.id.player_shots_list)
     void onShotClicked(int position) {
         if (mListener != null) {
-            mListener.onShotClicked(mShots.get(position - 2));  // no idea why -2, but it works this way (something related to header)
+            mListener.onShotClicked(mShots.get(position - 2));
         }
     }
 
@@ -92,6 +109,12 @@ public class ProfileFragment extends Fragment implements ProfileController.OnPla
         this.mPlayer = player;
         mProgressBar.setVisibility(View.GONE);
         prepareHeader();
+    }
+
+    @Override
+    public void onPlayerError() {
+        mProgressBar.setVisibility(View.GONE);
+        mPlayerError.setVisibility(View.VISIBLE);
     }
 
     @Override

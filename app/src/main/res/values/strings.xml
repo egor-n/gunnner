@@ -28,5 +28,6 @@
     <string name="following_label">FOLLOWING</string>
     <string name="rebounds_label">REBOUNDS</string>
     <string name="title_activity_profile">ProfileActivity</string>
+    <string name="profile_error">Player not found :(</string>
 
 </resources>
