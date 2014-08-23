@@ -168,21 +168,19 @@ public class OpenedShotFragment extends Fragment implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        String url = "https://dribbble.com/shots/" + mShotId;
-
         int id = item.getItemId();
         if (id == R.id.action_share) {
             if (mShot != null) {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_TEXT, mShot.getTitle() + "\n" + url);
+                intent.putExtra(Intent.EXTRA_TEXT, mShot.getTitle() + "\n" + mShot.getShortUrl());
                 intent.setType("text/plain");
                 startActivity(intent);
                 return true;
             }
         } else if (id == R.id.action_browser) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(url));
+            intent.setData(Uri.parse(mShot.getShortUrl()));
             startActivity(intent);
             return true;
         }
