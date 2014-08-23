@@ -3,13 +3,12 @@ package com.gunnner.data.helpers;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Point;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.View;
 
+import com.gunnner.R;
 import com.gunnner.data.models.Shot;
 import com.gunnner.ui.profile.ProfileActivity;
 import com.gunnner.ui.shots.OpenedShotActivity;
@@ -19,7 +18,8 @@ import com.gunnner.ui.shots.OpenedShotActivity;
  */
 public class Utils {
     public static void setInsets(Activity activity, View view) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT
+                || !activity.getResources().getBoolean(R.bool.translucent_navigation)) {
             return;
         }
 
@@ -35,7 +35,8 @@ public class Utils {
     }
 
     public static void setTopInsets(Activity activity, View view) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT
+                || !activity.getResources().getBoolean(R.bool.translucent_navigation)) {
             return;
         }
 
@@ -51,7 +52,8 @@ public class Utils {
     }
 
     public static void setTopRightInsets(Activity activity, View view) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT
+                || !activity.getResources().getBoolean(R.bool.translucent_navigation)) {
             return;
         }
 
@@ -67,7 +69,8 @@ public class Utils {
     }
 
     public static void setBottomInsets(Activity activity, View view) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT
+                || !activity.getResources().getBoolean(R.bool.translucent_navigation)) {
             return;
         }
 
@@ -91,13 +94,6 @@ public class Utils {
         Intent intent = new Intent(context, ProfileActivity.class);
         intent.putExtra(ProfileActivity.PLAYER_ID, playerId);
         context.startActivity(intent);
-    }
-
-    public static int getScreenWidth(Activity activity) {
-        Display display = activity.getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        return size.x;
     }
 
     public static void openShot(Context context, Shot shot) {

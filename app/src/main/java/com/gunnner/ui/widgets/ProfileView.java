@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -75,7 +77,11 @@ public class ProfileView extends RelativeLayout {
         Picasso.with(getContext()).load(player.getAvatarUrl()).into(mPlayerImage);
         mPlayerName.setText(player.getName());
         mPlayerLocation.setText(player.getLocation());
-        mPlayerTwitter.setText(player.getTwitterScreenName());
+        if (TextUtils.isEmpty(player.getTwitterScreenName())) {
+            mPlayerTwitter.setVisibility(View.GONE);
+        } else {
+            mPlayerTwitter.setText(player.getTwitterScreenName());
+        }
         mShotsValue.setText(player.getShotsCount() + "");
         mLikesValue.setText(player.getLikesCount() + "");
         mFollowersValue.setText(player.getFollowersCount() + "");
