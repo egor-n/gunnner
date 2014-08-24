@@ -1,41 +1,32 @@
 package com.gunnner.ui.shots;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.gunnner.R;
 import com.gunnner.data.helpers.Utils;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
 import com.squareup.picasso.Picasso;
-
-import java.io.File;
-import java.io.IOException;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
-import pl.droidsonroids.gif.GifDrawable;
-import pl.droidsonroids.gif.GifImageView;
+import butterknife.OnTouch;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class ShotImageFragment extends Fragment {
     public static final String SHOT_IMAGE_URL = "shot_image_url";
 
-    @InjectView(R.id.photoView) PhotoView mPhotoView;
-    @InjectView(R.id.gifView) GifImageView mGifView;
+    @InjectView(R.id.photo_view) PhotoView mPhotoView;
     @InjectView(R.id.progress_bar) ProgressBar mProgressBar;
+    @InjectView(R.id.web_view) WebView mWebView;
 
-    private String imageUrl;
+    private String mImageUrl;
 
     public static ShotImageFragment newInstance(String shotImageUrl) {
         ShotImageFragment fragment = new ShotImageFragment();
@@ -57,10 +48,10 @@ public class ShotImageFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Utils.setInsets(getActivity(), mProgressBar);
-        imageUrl = getArguments().getString(SHOT_IMAGE_URL);
+        mImageUrl = getArguments().getString(SHOT_IMAGE_URL);
 
-        if (imageUrl.endsWith(".gif")) {
-            loadWithIon();
+        if (mImageUrl.endsWith(".gif")) {
+            loadInWebView();
         } else {
             loadWithPicasso();
         }
@@ -73,72 +64,35 @@ public class ShotImageFragment extends Fragment {
         });
     }
 
-    @OnClick(R.id.gifView)
-    void onGifViewClicked() {
-        getActivity().finish();
+    @OnTouch(R.id.web_view)
+    boolean onGifViewClicked(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_CANCEL ||
+                event.getAction() == MotionEvent.ACTION_UP) {
+            getActivity().finish();
+        }
+        return true;
     }
 
     private void loadWithPicasso() {
         mPhotoView.setVisibility(View.VISIBLE);
-        mGifView.setVisibility(View.GONE);
+        mWebView.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.GONE);
         Picasso.with(getActivity())
-                .load(imageUrl)
+                .load(mImageUrl)
                 .placeholder(R.drawable.placeholder)
                 .into(mPhotoView);
     }
 
-    private void loadWithIon() {
+    private void loadInWebView() {
         mPhotoView.setVisibility(View.GONE);
-        mGifView.setVisibility(View.VISIBLE);
-
-        File file = new File(Environment.getExternalStorageDirectory().getPath()
-                + "/gunnner/gifs" + System.currentTimeMillis());
-        file.getParentFile().mkdirs();
-
-        Ion.with(getActivity())
-                .load(imageUrl)
-                .progressBar(mProgressBar)
-                .write(file)
-                .setCallback(new FutureCallback<File>() {
-                    @Override
-                    public void onCompleted(Exception e, final File result) {
-                        if (!isAdded()) {
-                            return;
-                        }
-
-                        Log.e("gif", "loaded");
-
-                        if (e != null) {
-                            Toast.makeText(
-                                    getActivity(),
-                                    "Something went wrong",
-                                    Toast.LENGTH_SHORT
-                            ).show();
-                            e.printStackTrace();
-                            return;
-                        }
-
-                        new AsyncTask<Void, Void, GifDrawable>() {
-                            @Override
-                            protected GifDrawable doInBackground(Void... voids) {
-                                try {
-                                    Log.e("gif", "creating");
-                                    return new GifDrawable(result);
-                                } catch (IOException e1) {
-                                    return null;
-                                } catch (NullPointerException e2) {
-                                    return null;
-                                }
-                            }
-
-                            @Override
-                            protected void onPostExecute(GifDrawable result) {
-                                mGifView.setImageDrawable(result);
-                                mProgressBar.setVisibility(View.GONE);
-                            }
-                        }.execute();
-                    }
-                });
+        mWebView.setVisibility(View.VISIBLE);
+        mWebView.loadData(
+                "<html style=\"height: 100%; display: table; margin: auto\">" +
+                        "<body style=\"display: table-cell; height: 100%; vertical-align: middle; padding:0; margin:0;\">" +
+                        "<img style=\"width:100%;\" src=\"" + mImageUrl + "\">" +
+                        "</body>" +
+                        "</html>", "text/html", "utf-8");
+        mWebView.setBackgroundColor(0x00000000);
+        mWebView.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
     }
 }

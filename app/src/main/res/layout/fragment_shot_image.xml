@@ -7,19 +7,20 @@
 
     <ProgressBar
         android:id="@+id/progress_bar"
-        style="@android:style/Widget.ProgressBar"
+        style="@android:style/Widget.Holo.ProgressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
 
     <uk.co.senab.photoview.PhotoView
-        android:id="@+id/photoView"
+        android:id="@+id/photo_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/gifView"
+    <WebView
+        android:id="@+id/web_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"/>
 
 </FrameLayout>
