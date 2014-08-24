@@ -23,7 +23,7 @@ android {
         applicationId "com.gunnner"
         minSdkVersion 15
         targetSdkVersion 19
-        versionCode 2
+        versionCode 1
         versionName "1.0"
     }
     signingConfigs {
@@ -47,7 +47,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:support-v4:19.1.0'
 
-    compile 'com.google.guava:guava:17.0'
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
     compile 'com.squareup.retrofit:retrofit:1.6.1'
