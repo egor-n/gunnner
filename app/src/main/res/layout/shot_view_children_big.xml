@@ -39,8 +39,8 @@
             android:id="@+id/rebound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/rebound"
-            android:visibility="gone"/>
+            android:alpha="0"
+            android:src="@drawable/rebound"/>
 
         <View
             android:id="@+id/divider"

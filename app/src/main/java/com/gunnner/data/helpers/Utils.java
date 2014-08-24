@@ -18,7 +18,7 @@ import com.gunnner.ui.shots.OpenedShotActivity;
  */
 public class Utils {
     public static void setInsets(Activity activity, View view) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT
+        if (lowerThanKitKat()
                 || !activity.getResources().getBoolean(R.bool.translucent_navigation)) {
             return;
         }
@@ -35,7 +35,7 @@ public class Utils {
     }
 
     public static void setTopInsets(Activity activity, View view) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT
+        if (lowerThanKitKat()
                 || !activity.getResources().getBoolean(R.bool.translucent_navigation)) {
             return;
         }
@@ -52,7 +52,7 @@ public class Utils {
     }
 
     public static void setTopRightInsets(Activity activity, View view) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT
+        if (lowerThanKitKat()
                 || !activity.getResources().getBoolean(R.bool.translucent_navigation)) {
             return;
         }
@@ -69,7 +69,7 @@ public class Utils {
     }
 
     public static void setBottomInsets(Activity activity, View view) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT
+        if (lowerThanKitKat()
                 || !activity.getResources().getBoolean(R.bool.translucent_navigation)) {
             return;
         }
@@ -83,6 +83,10 @@ public class Utils {
                 view.getPaddingRight(),
                 view.getPaddingBottom() + config.getPixelInsetBottom()
         );
+    }
+
+    public static boolean lowerThanKitKat() {
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT;
     }
 
     public static int dpToPixels(Context context, float dpValue) {

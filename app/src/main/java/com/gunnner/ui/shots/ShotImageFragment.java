@@ -1,8 +1,10 @@
 package com.gunnner.ui.shots;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,18 +92,23 @@ public class ShotImageFragment extends Fragment {
         mPhotoView.setVisibility(View.GONE);
         mGifView.setVisibility(View.VISIBLE);
 
+        File file = new File(Environment.getExternalStorageDirectory().getPath()
+                + "/gunnner/gifs" + System.currentTimeMillis());
+        file.getParentFile().mkdirs();
+
         Ion.with(getActivity())
                 .load(imageUrl)
                 .progressBar(mProgressBar)
-                .write(getFile())
+                .write(file)
                 .setCallback(new FutureCallback<File>() {
                     @Override
-                    public void onCompleted(Exception e, File result) {
+                    public void onCompleted(Exception e, final File result) {
                         if (!isAdded()) {
                             return;
                         }
 
-                        mProgressBar.setVisibility(View.GONE);
+                        Log.e("gif", "loaded");
+
                         if (e != null) {
                             Toast.makeText(
                                     getActivity(),
@@ -109,21 +116,29 @@ public class ShotImageFragment extends Fragment {
                                     Toast.LENGTH_SHORT
                             ).show();
                             e.printStackTrace();
+                            return;
                         }
 
-                        try {
-                            mGifView.setImageDrawable(new GifDrawable(result));
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
+                        new AsyncTask<Void, Void, GifDrawable>() {
+                            @Override
+                            protected GifDrawable doInBackground(Void... voids) {
+                                try {
+                                    Log.e("gif", "creating");
+                                    return new GifDrawable(result);
+                                } catch (IOException e1) {
+                                    return null;
+                                } catch (NullPointerException e2) {
+                                    return null;
+                                }
+                            }
+
+                            @Override
+                            protected void onPostExecute(GifDrawable result) {
+                                mGifView.setImageDrawable(result);
+                                mProgressBar.setVisibility(View.GONE);
+                            }
+                        }.execute();
                     }
                 });
-    }
-
-    private File getFile() {
-        File file = new File(Environment.getExternalStorageDirectory().getPath()
-                + "/gunnner/gifs" + System.currentTimeMillis());
-        file.getParentFile().mkdirs();
-        return file;
     }
 }

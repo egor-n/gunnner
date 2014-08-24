@@ -1,9 +1,11 @@
 package com.gunnner.ui.widgets;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -115,6 +117,7 @@ public class ShotView extends FrameLayout {
         });
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public void setShot(Shot shot) {
         this.mShot = shot;
         boolean isGif = shot.getImageUrl().endsWith("gif");
@@ -128,6 +131,7 @@ public class ShotView extends FrameLayout {
 
         if (shot.isRebound()) {
             mRebound.setVisibility(View.VISIBLE);
+            mRebound.animate().alpha(1).setDuration(600).start();
         } else {
             mRebound.setVisibility(View.GONE);
         }
