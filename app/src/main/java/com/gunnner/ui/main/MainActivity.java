@@ -11,9 +11,11 @@ import com.crashlytics.android.Crashlytics;
 import com.gunnner.BuildConfig;
 import com.gunnner.R;
 import com.gunnner.data.PlayerController;
+import com.gunnner.data.Settings;
 import com.gunnner.data.helpers.Utils;
 import com.gunnner.data.models.Shot;
 import com.gunnner.ui.BaseActivity;
+import com.gunnner.ui.SettingsFragment;
 import com.gunnner.ui.drawer.NavigationDrawerFragment;
 import com.gunnner.ui.profile.ProfileFragment;
 import com.gunnner.ui.shots.ShotsFragment;
@@ -29,6 +31,7 @@ public class MainActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Settings.restore(this);
         if (BuildConfig.DEBUG) {
             Crashlytics.start(this);
         }
@@ -91,8 +94,9 @@ public class MainActivity extends BaseActivity
                 }
                 break;
             case 5:  // settings
-                break;
-            case 6:  // about
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, new SettingsFragment())
+                        .commit();
                 break;
         }
     }

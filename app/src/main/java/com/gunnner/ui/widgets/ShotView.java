@@ -23,7 +23,6 @@ import com.gunnner.data.helpers.Utils;
 import com.gunnner.data.models.Shot;
 import com.gunnner.ui.shots.OpenedShotActivity;
 import com.gunnner.ui.shots.ShotImageActivity;
-import com.squareup.picasso.Picasso;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -122,7 +121,7 @@ public class ShotView extends FrameLayout {
         this.mShot = shot;
         boolean isGif = shot.getImageUrl().endsWith("gif");
 
-        loadWithPicasso();
+        loadImage();
         if (isGif) {
             mGif.setVisibility(View.VISIBLE);
         } else {
@@ -172,9 +171,9 @@ public class ShotView extends FrameLayout {
         });
     }
 
-    private void loadWithPicasso() {
+    private void loadImage() {
         String toLoad;
-        if (Settings.isLowTrafficEnabled()) {
+        if (Settings.reduceDataUsage()) {
             toLoad = mShot.getImageTeaserUrl();
         } else {
             if (mShot.getImageUrl().endsWith("gif")) {
@@ -183,9 +182,7 @@ public class ShotView extends FrameLayout {
                 toLoad = mShot.getImageUrl();
             }
         }
-        Picasso.with(getContext())
-                .load(toLoad)
-                .placeholder(R.drawable.placeholder)
-                .into(mShotImage);
+        Utils.getImageLoader(getContext())
+                .displayImage(toLoad, mShotImage, Utils.getDisplayImageOptions());
     }
 }

@@ -15,9 +15,9 @@ import android.widget.TextView;
 
 import com.gunnner.R;
 import com.gunnner.data.helpers.DateFormatter;
+import com.gunnner.data.helpers.Utils;
 import com.gunnner.data.models.Player;
 import com.gunnner.ui.profile.ProfileActivity;
-import com.squareup.picasso.Picasso;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -74,7 +74,9 @@ public class ProfileView extends RelativeLayout {
             // it falls here if ProfileFragment is used inside of MainActivity (my profile)
         }
 
-        Picasso.with(getContext()).load(player.getAvatarUrl()).into(mPlayerImage);
+        Utils.getImageLoader(getContext())
+                .displayImage(player.getAvatarUrl(), mPlayerImage, Utils.getDisplayImageOptions());
+
         mPlayerName.setText(player.getName());
         mPlayerLocation.setText(player.getLocation());
         if (TextUtils.isEmpty(player.getTwitterScreenName())) {

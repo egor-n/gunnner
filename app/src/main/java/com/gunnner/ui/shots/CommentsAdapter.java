@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.gunnner.R;
 import com.gunnner.data.helpers.Utils;
 import com.gunnner.data.models.Comment;
-import com.koushikdutta.ion.Ion;
 
 import java.util.ArrayList;
 
@@ -58,7 +57,8 @@ public class CommentsAdapter extends BaseAdapter {
         final Comment comment = comments.get(i);
 
         ViewHolder holder = (ViewHolder) view.getTag();
-        Ion.with(holder.playerAvatar).load(comment.getPlayer().getAvatarUrl());
+        Utils.getImageLoader(context).displayImage(
+                comment.getPlayer().getAvatarUrl(), holder.playerAvatar);
         holder.playerName.setText(comment.getPlayer().getName());
         holder.commentBody.setText(comment.getBody());
 

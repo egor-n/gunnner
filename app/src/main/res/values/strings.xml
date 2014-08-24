@@ -29,5 +29,17 @@
     <string name="rebounds_label">REBOUNDS</string>
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="profile_error">Player not found :(</string>
+    <string name="main_settings">Main</string>
+    <string name="low_traffic_title">Reduce data usage</string>
+    <string name="low_traffic_summary">Fetch smaller images to save bandwith</string>
+    <string name="log_out">Log out</string>
+    <string name="logged_in_as">Logged in as</string>
+    <string name="clear_cache_title">Clear cache</string>
+    <string name="clear_cache_summary">Delete all images downloaded by the app</string>
+    <string name="other_label">Other</string>
+    <string name="developer">Egor N.</string>
+    <string name="developer_link">https://github.com/egor-n/gunnner</string>
+    <string name="designer">Andrew S.</string>
+    <string name="designer_link">https://dribbble.com/tsunami</string>
 
 </resources>

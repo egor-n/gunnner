@@ -10,8 +10,10 @@ import android.widget.TextView;
 
 import com.gunnner.R;
 import com.gunnner.data.helpers.DateFormatter;
+import com.gunnner.data.helpers.Utils;
 import com.gunnner.data.models.Shot;
-import com.squareup.picasso.Picasso;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import java.util.ArrayList;
 
@@ -24,10 +26,19 @@ import butterknife.InjectView;
 public class PlayerShotsAdapter extends BaseAdapter {
     ArrayList<Shot> shots;
     Context context;
+    DisplayImageOptions options;
 
     public PlayerShotsAdapter(ArrayList<Shot> shots, Context context) {
         this.shots = shots;
         this.context = context;
+        options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(R.drawable.placeholder_small)
+                .showImageForEmptyUri(R.drawable.placeholder_small)
+                .showImageOnFail(R.drawable.placeholder_small)
+                .cacheOnDisk(true)
+                .resetViewBeforeLoading(true)
+                .displayer(new FadeInBitmapDisplayer(300))
+                .build();
     }
 
     @Override
@@ -52,10 +63,8 @@ public class PlayerShotsAdapter extends BaseAdapter {
             view.setTag(new ViewHolder(view));
         }
         ViewHolder holder = (ViewHolder) view.getTag();
-        Picasso.with(context)
-                .load(shots.get(i).getImageTeaserUrl())
-                .placeholder(R.drawable.placeholder_small)
-                .into(holder.image);
+        Utils.getImageLoader(context).displayImage(
+                shots.get(i).getImageTeaserUrl(), holder.image, options);
         holder.date.setText(DateFormatter.formatDate(shots.get(i).getCreatedAt()));
         return view;
     }

@@ -11,7 +11,6 @@ import android.widget.ProgressBar;
 
 import com.gunnner.R;
 import com.gunnner.data.helpers.Utils;
-import com.squareup.picasso.Picasso;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -53,7 +52,7 @@ public class ShotImageFragment extends Fragment {
         if (mImageUrl.endsWith(".gif")) {
             loadInWebView();
         } else {
-            loadWithPicasso();
+            loadWithImageLoader();
         }
 
         mPhotoView.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
@@ -73,14 +72,12 @@ public class ShotImageFragment extends Fragment {
         return true;
     }
 
-    private void loadWithPicasso() {
+    private void loadWithImageLoader() {
         mPhotoView.setVisibility(View.VISIBLE);
         mWebView.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.GONE);
-        Picasso.with(getActivity())
-                .load(mImageUrl)
-                .placeholder(R.drawable.placeholder)
-                .into(mPhotoView);
+        Utils.getImageLoader(getActivity())
+                .displayImage(mImageUrl, mPhotoView, Utils.getDisplayImageOptions());
     }
 
     private void loadInWebView() {
