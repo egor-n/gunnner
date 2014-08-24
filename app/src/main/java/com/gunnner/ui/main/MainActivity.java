@@ -3,6 +3,7 @@ package com.gunnner.ui.main;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 
@@ -56,7 +57,7 @@ public class MainActivity extends BaseActivity
                                     ProfileFragment.newInstance(PlayerController.getName()))
                             .commit();
                 } else {
-                    showInputDialog(ShotsFragment.MY_SHOTS);
+                    showInputDialog(-1);
                 }
                 break;
             case 2:  // my shots
@@ -134,8 +135,14 @@ public class MainActivity extends BaseActivity
     @Override
     public void onConfirm(String username, int type) {
         PlayerController.setName(MainActivity.this, username);
+        Fragment fragment;
+        if (type == -1) {
+            fragment = ProfileFragment.newInstance(username);
+        } else {
+            fragment = ShotsFragment.newInstance(type);
+        }
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, ShotsFragment.newInstance(type))
+                .replace(R.id.container, fragment)
                 .commit();
     }
 

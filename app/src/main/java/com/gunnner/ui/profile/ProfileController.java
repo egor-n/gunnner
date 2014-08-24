@@ -92,6 +92,7 @@ public class ProfileController {
         Api.dribbble().playerProfile(playerId, new Callback<Player>() {
             @Override
             public void success(Player player, Response response) {
+                userProfile = player;
                 if (userCallback != null) {
                     userCallback.onPlayerReceived(player);
                 }

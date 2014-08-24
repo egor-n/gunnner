@@ -22,8 +22,7 @@ public class DrawerAdapter extends BaseAdapter {
             "My Shots",
             "Following",
             "Likes",
-            "Settings",
-            "About",
+            "Settings"
     };
     private static final int[] menuDrawables = new int[]{
             R.drawable.ic_menu_main,
@@ -31,8 +30,7 @@ public class DrawerAdapter extends BaseAdapter {
             R.drawable.ic_menu_shots,
             R.drawable.ic_menu_follow,
             R.drawable.ic_menu_likes,
-            R.drawable.ic_menu_settings,
-            R.drawable.ic_menu_about,
+            R.drawable.ic_menu_settings
     };
     private Context context;
 
@@ -42,7 +40,7 @@ public class DrawerAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 7;
+        return 6;
     }
 
     @Override
