@@ -31,7 +31,7 @@
     <string name="profile_error">Player not found :(</string>
     <string name="main_settings">Main</string>
     <string name="low_traffic_title">Reduce data usage</string>
-    <string name="low_traffic_summary">Fetch smaller images to save bandwith</string>
+    <string name="low_traffic_summary">Fetch smaller images to save bandwidth</string>
     <string name="log_out">Log out</string>
     <string name="logged_in_as">Logged in as</string>
     <string name="clear_cache_title">Clear cache</string>
