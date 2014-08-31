@@ -1,6 +1,7 @@
 package com.gunnner.ui.shots;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,7 @@ public class CommentsAdapter extends BaseAdapter {
         Utils.getImageLoader(context).displayImage(
                 comment.getPlayer().getAvatarUrl(), holder.playerAvatar);
         holder.playerName.setText(comment.getPlayer().getName());
-        holder.commentBody.setText(comment.getBody());
+        holder.commentBody.setText(Html.fromHtml(comment.getBody()));
 
         holder.playerAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
