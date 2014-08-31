@@ -59,7 +59,8 @@ public class CommentsAdapter extends BaseAdapter {
 
         ViewHolder holder = (ViewHolder) view.getTag();
         Utils.getImageLoader(context).displayImage(
-                comment.getPlayer().getAvatarUrl(), holder.playerAvatar);
+                comment.getPlayer().getAvatarUrl(), holder.playerAvatar,
+                Utils.getDisplayImageOptions());
         holder.playerName.setText(comment.getPlayer().getName());
         holder.commentBody.setText(Html.fromHtml(comment.getBody()));
 
