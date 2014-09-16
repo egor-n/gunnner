@@ -1,5 +1,6 @@
 package com.gunnner.data.api;
 
+import com.google.gson.JsonObject;
 import com.gunnner.data.models.Player;
 import com.gunnner.data.models.Shot;
 
@@ -91,5 +92,8 @@ public class Api {
         @GET("/players/{id}/draftees")
         public void playerDraftees(@Path("id") String playerName, @Query("page") int page,
                                    Callback<PlayersResponse> callback);
+
+        @GET("/search")
+        public JsonObject search(@Query("q") String query, @Query("page") int page);
     }
 }

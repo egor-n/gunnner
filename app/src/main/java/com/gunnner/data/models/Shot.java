@@ -46,7 +46,21 @@ public class Shot implements Parcelable {
     private int reboundSourceId;
     @SerializedName("created_at")
     private String createdAt;
+    private boolean hasRebounds = false;
     private Player player;
+
+    public Shot() {
+    }
+
+    public Shot(int _id, String title, int likesCount, int viewsCount, int commentsCount,
+                boolean hasRebounds) {
+        this._id = _id;
+        this.title = title;
+        this.likesCount = likesCount;
+        this.viewsCount = viewsCount;
+        this.commentsCount = commentsCount;
+        this.hasRebounds = hasRebounds;
+    }
 
     protected Shot(Parcel in) {
         _id = in.readInt();
@@ -132,7 +146,7 @@ public class Shot implements Parcelable {
     }
 
     public boolean isRebound() {
-        return getReboundSourceId() != 0;
+        return getReboundSourceId() != 0 || hasRebounds;
     }
 
     @Override

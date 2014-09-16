@@ -19,7 +19,6 @@ import retrofit.client.Response;
 public class ShotsController {
     private static ShotsController instance;
 
-    private String reference;
     private HashMap<String, OnShotsLoadedListener> callbacks = new HashMap<String, OnShotsLoadedListener>();
     private HashMap<String, ArrayList<Shot>> shots = new HashMap<String, ArrayList<Shot>>();
     private HashMap<String, Integer> pages = new HashMap<String, Integer>();
@@ -33,7 +32,6 @@ public class ShotsController {
     }
 
     private void init(String reference, OnShotsLoadedListener callback) {
-        this.reference = reference;
         callbacks.put(reference, callback);
         if (shots.containsKey(reference)) {
             if (callback != null) {

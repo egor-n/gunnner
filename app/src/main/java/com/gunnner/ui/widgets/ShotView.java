@@ -136,7 +136,9 @@ public class ShotView extends FrameLayout {
         }
 
         mTitle.setText(shot.getTitle());
-        mPlayer.setText(Html.fromHtml("by " + "<font color=\"#ea4c89\">" + shot.getPlayer().getName() + "</font>"));
+        if (shot.getPlayer() != null) {
+            mPlayer.setText(Html.fromHtml("by " + "<font color=\"#ea4c89\">" + shot.getPlayer().getName() + "</font>"));
+        }
 
         if (style == BIG) {
             mPlayer.setOnClickListener(new OnClickListener() {

@@ -18,8 +18,12 @@ import com.gunnner.ui.BaseActivity;
 import com.gunnner.ui.SettingsFragment;
 import com.gunnner.ui.drawer.NavigationDrawerFragment;
 import com.gunnner.ui.profile.ProfileFragment;
+import com.gunnner.ui.shots.SearchController;
+import com.gunnner.ui.shots.ShotsController;
 import com.gunnner.ui.shots.ShotsFragment;
 import com.gunnner.ui.widgets.InputDialog;
+
+import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
@@ -32,10 +36,23 @@ public class MainActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Settings.restore(this);
-        if (BuildConfig.DEBUG) {
+        if (!BuildConfig.DEBUG) {
             Crashlytics.start(this);
         }
         setContentView(R.layout.activity_main);
+
+        SearchController controller = SearchController.getInstance();
+        controller.search("pixate", new ShotsController.OnShotsLoadedListener() {
+            @Override
+            public void onShotsLoaded(ArrayList<Shot> shots) {
+
+            }
+
+            @Override
+            public void onShotsError() {
+
+            }
+        });
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
