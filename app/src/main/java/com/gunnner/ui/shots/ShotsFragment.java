@@ -17,6 +17,7 @@ import com.gunnner.data.InfiniteScrollListener;
 import com.gunnner.data.PlayerController;
 import com.gunnner.data.helpers.Utils;
 import com.gunnner.data.models.Shot;
+import com.squareup.okhttp.internal.Util;
 
 import java.util.ArrayList;
 
@@ -31,6 +32,7 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
 
     private static final String REFERENCE = "reference";
     private static final String TYPE = "type";
+    private static final String SHOTS = "shots";
 
     @InjectView(R.id.shots_list) AbsListView mListView;
     @InjectView(R.id.progress_bar) ProgressBar mProgressBar;
@@ -46,6 +48,14 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
 
     private ShotsController controller;
     private PlayerController playerController;
+
+    public static Fragment newInstance(ArrayList<Shot> shots) {
+        ShotsFragment fragment = new ShotsFragment();
+        Bundle args = new Bundle();
+        args.putParcelableArrayList(SHOTS, shots);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public static ShotsFragment newInstance(String reference) {
         ShotsFragment fragment = new ShotsFragment();
@@ -130,6 +140,12 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
         }
 
         mProgressBar.setVisibility(View.VISIBLE);
+
+        shots = getArguments().getParcelableArrayList(SHOTS);
+        if (shots != null && !shots.isEmpty()) {
+            onShotsLoaded(shots);
+        }
+
         if (mType == FOLLOWING) {
             Utils.setInsets(getActivity(), mListView);
             playerController = PlayerController.getInstance(getActivity());

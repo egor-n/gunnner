@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.SearchView;
 
 import com.crashlytics.android.Crashlytics;
 import com.gunnner.BuildConfig;
@@ -30,6 +33,7 @@ public class MainActivity extends BaseActivity
         ShotsFragment.OnShotClickedListener, InputDialog.CustomDialogCallback {
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
+    private SearchController searchController;
     private AlertDialog dialog;
 
     @Override
@@ -41,19 +45,7 @@ public class MainActivity extends BaseActivity
         }
         setContentView(R.layout.activity_main);
 
-        SearchController controller = SearchController.getInstance();
-        controller.search("pixate", new ShotsController.OnShotsLoadedListener() {
-            @Override
-            public void onShotsLoaded(ArrayList<Shot> shots) {
-
-            }
-
-            @Override
-            public void onShotsError() {
-
-            }
-        });
-
+        searchController = SearchController.getInstance();
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
@@ -143,6 +135,45 @@ public class MainActivity extends BaseActivity
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
             getMenuInflater().inflate(R.menu.main, menu);
             restoreActionBar();
+
+            final SearchView searchView = new SearchView(this);
+            searchView.setFocusable(false);
+
+            MenuItem search = menu.findItem(R.id.action_search);
+            search.setActionView(searchView);
+            search.setIcon(R.drawable.ic_search);
+            search.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS
+                    | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    Utils.hideKeyboard(MainActivity.this);
+                    // TODO: show a progress bar or something
+                    searchController.search(query, new ShotsController.OnShotsLoadedListener() {
+                        @Override
+                        public void onShotsLoaded(ArrayList<Shot> shots) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.container,
+                                            ShotsFragment.newInstance(shots))
+                                    .addToBackStack("")
+                                    .commit();
+                        }
+
+                        @Override
+                        public void onShotsError() {
+
+                        }
+                    });
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    return false;
+                }
+            });
+
             return true;
         }
         return super.onCreateOptionsMenu(menu);

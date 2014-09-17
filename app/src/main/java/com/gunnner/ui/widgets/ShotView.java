@@ -149,7 +149,9 @@ public class ShotView extends FrameLayout {
             });
         }
 
-        mTime.setText(DateFormatter.formatDate(shot.getCreatedAt()));
+        if (!TextUtils.isEmpty(shot.getCreatedAt())) {
+            mTime.setText(DateFormatter.formatDate(shot.getCreatedAt()));
+        }
         mViews.setText(shot.getViewsCount() + "");
         mLikes.setText(shot.getLikesCount() + "");
         if (style == SMALL) {

@@ -47,6 +47,7 @@ public class SearchController {
                 Elements elements = Jsoup.connect(url).get().select(".dribbble");
                 for (Element element : elements) {
                     Element shotImgElement = element.select(".dribbble-shot").first();
+                    String imageUrl = shotImgElement.select(".dribbble-img a div div").attr("data-src");
                     String shotUrl = shotImgElement.select(".dribbble-img a").attr("href");
                     String title = shotImgElement.select(".dribbble-over string").html();
                     int shotId = Integer.parseInt(shotUrl.substring(7, shotUrl.indexOf("-")));
@@ -58,7 +59,7 @@ public class SearchController {
 
                     Element shotExtrasElement = element.select(".extras").first();
                     boolean hasRebounds = Integer.parseInt(shotExtrasElement.select("a span").html().substring(0, 1)) > 0;
-                    Shot shot = new Shot(shotId, title, likes, views, comments, hasRebounds);
+                    Shot shot = new Shot(shotId, title, likes, views, comments, imageUrl, hasRebounds);
                     shots.add(shot);
                 }
             } catch (IOException e) {

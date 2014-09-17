@@ -53,12 +53,13 @@ public class Shot implements Parcelable {
     }
 
     public Shot(int _id, String title, int likesCount, int viewsCount, int commentsCount,
-                boolean hasRebounds) {
+                String imageUrl, boolean hasRebounds) {
         this._id = _id;
         this.title = title;
         this.likesCount = likesCount;
         this.viewsCount = viewsCount;
         this.commentsCount = commentsCount;
+        this.imageUrl = imageUrl;
         this.hasRebounds = hasRebounds;
     }
 
