@@ -5,6 +5,7 @@
         <item name="android:windowTranslucentNavigation">@bool/translucent_navigation</item>
         <item name="android:windowIsTranslucent">false</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_ab_back_mtrl_am_alpha</item>
+        <item name="android:actionBarStyle">@style/ActionBar.Transparent.Dribbblestyle</item>
     </style>
 
     <style name="Swipeable" parent="@android:style/Theme.Holo">

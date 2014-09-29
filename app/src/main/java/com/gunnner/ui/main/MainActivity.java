@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.gunnner.BuildConfig;
@@ -137,6 +138,12 @@ public class MainActivity extends BaseActivity
             restoreActionBar();
 
             final SearchView searchView = new SearchView(this);
+            searchView.setOnSearchClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(MainActivity.this, "Search icon clicked", Toast.LENGTH_SHORT).show();
+                }
+            });
             searchView.setFocusable(false);
 
             MenuItem search = menu.findItem(R.id.action_search);

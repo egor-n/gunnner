@@ -15,6 +15,7 @@ public class BaseActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#181818")));
+        getActionBar().setIcon(android.R.color.transparent);
         getActionBar().setLogo(R.drawable.logo);
         getActionBar().setDisplayShowTitleEnabled(false);
         getActionBar().setTitle("");
