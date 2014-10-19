@@ -7,6 +7,7 @@ import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.gunnner.R;
 import com.gunnner.data.models.Shot;
@@ -127,6 +128,17 @@ public class Utils {
         }
 
         return imageLoader;
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        if (activity != null &&
+                activity.getCurrentFocus() != null &&
+                activity.getCurrentFocus().getWindowToken() != null) {
+            InputMethodManager inputManager = (InputMethodManager)
+                    activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 
     public static DisplayImageOptions getDisplayImageOptions() {
