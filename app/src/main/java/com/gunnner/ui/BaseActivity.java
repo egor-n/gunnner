@@ -3,20 +3,17 @@ package com.gunnner.ui;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-
-import com.gunnner.R;
+import android.support.v7.app.ActionBarActivity;
 
 /**
  * @author Egor N.
  */
-public class BaseActivity extends FragmentActivity {
+public class BaseActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#181818")));
-        getActionBar().setLogo(R.drawable.logo);
-        getActionBar().setDisplayShowTitleEnabled(false);
-        getActionBar().setTitle("");
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#181818")));
+//        getSupportActionBar().setLogo(R.drawable.logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
     }
 }

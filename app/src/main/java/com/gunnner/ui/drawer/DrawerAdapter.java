@@ -18,8 +18,8 @@ import butterknife.InjectView;
 public class DrawerAdapter extends BaseAdapter {
     private static final String[] menu = new String[]{
             "Main",
-            "My Profile",
-            "My Shots",
+            "My profile",
+            "My shots",
             "Following",
             "Likes",
             "Settings"

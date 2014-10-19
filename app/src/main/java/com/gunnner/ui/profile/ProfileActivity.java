@@ -17,7 +17,7 @@ public class ProfileActivity extends SwipeBaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActionBar().setLogo(new ColorDrawable(Color.TRANSPARENT));
+        getSupportActionBar().setLogo(new ColorDrawable(Color.TRANSPARENT));
         setContentView(R.layout.activity_profile);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -28,7 +28,7 @@ public class ProfileActivity extends SwipeBaseActivity
     }
 
     public void setTitle(String text) {
-        getActionBar().setTitle(text);
+        getSupportActionBar().setTitle(text);
     }
 
     @Override

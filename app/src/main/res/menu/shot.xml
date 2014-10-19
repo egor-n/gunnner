@@ -1,13 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="com.gunnner.ui.shots.OpenedShotActivity">
     <item
         android:id="@+id/action_share"
-        android:icon="@drawable/ic_menu_share_mtrl_alpha"
-        android:showAsAction="ifRoom"
-        android:title="@string/action_share"/>
+        android:icon="@drawable/abc_ic_menu_share_mtrl_alpha"
+        android:title="@string/action_share"
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_browser"
-        android:showAsAction="ifRoom"
-        android:title="@string/action_browser"/>
+        android:title="@string/action_browser"
+        app:showAsAction="ifRoom"/>
 </menu>

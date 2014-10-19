@@ -1,14 +1,13 @@
 package com.gunnner.ui.main;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.view.Menu;
 
 import com.crashlytics.android.Crashlytics;
-import com.gunnner.BuildConfig;
 import com.gunnner.R;
 import com.gunnner.data.PlayerController;
 import com.gunnner.data.Settings;
@@ -32,9 +31,7 @@ public class MainActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Settings.restore(this);
-        if (BuildConfig.DEBUG) {
-            Crashlytics.start(this);
-        }
+        Crashlytics.start(this);
         setContentView(R.layout.activity_main);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
@@ -55,6 +52,7 @@ public class MainActivity extends BaseActivity
                 break;
             case 1:  // my profile
                 if (PlayerController.isLoggedIn(this)) {
+                    setTitle("My profile");
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container,
                                     ProfileFragment.newInstance(PlayerController.getName()))
@@ -65,6 +63,7 @@ public class MainActivity extends BaseActivity
                 break;
             case 2:  // my shots
                 if (PlayerController.isLoggedIn(this)) {
+                    setTitle("My shots");
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container,
                                     ShotsFragment.newInstance(ShotsFragment.MY_SHOTS))
@@ -75,6 +74,7 @@ public class MainActivity extends BaseActivity
                 break;
             case 3:  // following
                 if (PlayerController.isLoggedIn(this)) {
+                    setTitle("Following");
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container,
                                     ShotsFragment.newInstance(ShotsFragment.FOLLOWING))
@@ -85,6 +85,7 @@ public class MainActivity extends BaseActivity
                 break;
             case 4:  // likes
                 if (PlayerController.isLoggedIn(this)) {
+                    setTitle("Likes");
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container,
                                     ShotsFragment.newInstance(ShotsFragment.LIKES))
@@ -94,11 +95,16 @@ public class MainActivity extends BaseActivity
                 }
                 break;
             case 5:  // settings
+                setTitle("Settings");
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container, new SettingsFragment())
                         .commit();
                 break;
         }
+    }
+
+    public void setTitle(String s) {
+        getSupportActionBar().setTitle(s);
     }
 
     private void showInputDialog(int type) {
@@ -107,10 +113,8 @@ public class MainActivity extends BaseActivity
     }
 
     public void restoreActionBar() {
-        ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle("");
     }
 
     @Override
@@ -141,8 +145,16 @@ public class MainActivity extends BaseActivity
         PlayerController.setName(MainActivity.this, username);
         Fragment fragment;
         if (type == -1) {
+            setTitle("My profile");
             fragment = ProfileFragment.newInstance(username);
         } else {
+            if (type == ShotsFragment.MY_SHOTS) {
+                setTitle("My shots");
+            } else if (type == ShotsFragment.FOLLOWING) {
+                setTitle("Following");
+            } else if (type == ShotsFragment.LIKES) {
+                setTitle("Likes");
+            }
             fragment = ShotsFragment.newInstance(type);
         }
         getSupportFragmentManager().beginTransaction()

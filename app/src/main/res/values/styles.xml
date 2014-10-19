@@ -5,47 +5,47 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Swipeable" parent="@android:style/Theme.Holo">
+    <style name="Swipeable" parent="Theme.AppCompat">
         <item name="android:windowIsTranslucent">true</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_ab_back_mtrl_am_alpha</item>
     </style>
 
 
-    <style name="Translucent" parent="@android:style/Theme.Translucent.NoTitleBar">
+    <style name="Translucent" parent="Theme.AppCompat.NoActionBar">
         <!-- Empty on purpose -->
     </style>
 
-    <style name="Theme.Dribbblestyle" parent="@android:style/Theme.Holo">
-        <item name="android:actionBarItemBackground">@drawable/selectable_background_dribbblestyle
+    <style name="Theme.Dribbblestyle" parent="Theme.AppCompat">
+        <item name="colorPrimary">#181818</item>
+        <item name="colorPrimaryDark">#181818</item>
+        <item name="actionBarItemBackground">@drawable/selectable_background_dribbblestyle
         </item>
-        <item name="android:popupMenuStyle">@style/PopupMenu.Dribbblestyle</item>
-        <item name="android:dropDownListViewStyle">@style/DropDownListView.Dribbblestyle</item>
-        <item name="android:actionBarTabStyle">@style/ActionBarTabStyle.Dribbblestyle</item>
-        <item name="android:actionDropDownStyle">@style/DropDownNav.Dribbblestyle</item>
-        <item name="android:actionBarStyle">@style/ActionBar.Transparent.Dribbblestyle</item>
-        <item name="android:actionModeBackground">@drawable/cab_background_top_dribbblestyle</item>
-        <item name="android:actionModeSplitBackground">
+        <item name="popupMenuStyle">@style/PopupMenu.Dribbblestyle</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Dribbblestyle</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Dribbblestyle</item>
+        <item name="actionDropDownStyle">@style/DropDownNav.Dribbblestyle</item>
+        <item name="actionBarStyle">@style/ActionBar.Transparent.Dribbblestyle</item>
+        <item name="actionModeBackground">@drawable/cab_background_top_dribbblestyle</item>
+        <item name="actionModeSplitBackground">
             @drawable/cab_background_bottom_dribbblestyle
         </item>
-        <item name="android:actionModeCloseButtonStyle">
+        <item name="actionModeCloseButtonStyle">
             @style/ActionButton.CloseMode.Dribbblestyle
         </item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_ab_back_mtrl_am_alpha</item>
+        <!--<item name="homeAsUpIndicator">@drawable/ic_ab_back_mtrl_am_alpha</item>-->
     </style>
 
-    <style name="ActionBar.Solid.Dribbblestyle" parent="@android:style/Widget.Holo.ActionBar.Solid">
-        <item name="android:logo">@drawable/logo</item>
-        <item name="android:colorBackground">#0e0e0e</item>
-        <item name="android:background">#0e0e0e</item>
-        <item name="android:backgroundStacked">@drawable/ab_stacked_solid_dribbblestyle</item>
-        <item name="android:backgroundSplit">@drawable/ab_bottom_solid_dribbblestyle</item>
-        <item name="android:progressBarStyle">@style/ProgressBar.Dribbblestyle</item>
-    </style>
+    <!--<style name="ActionBar.Solid.Dribbblestyle" parent="ThemeOverlay.AppCompat.ActionBar">-->
+    <!--<item name="logo">@drawable/logo</item>-->
+    <!--<item name="colorBackground">#0e0e0e</item>-->
+    <!--<item name="backgroundStacked">@drawable/ab_stacked_solid_dribbblestyle</item>-->
+    <!--<item name="backgroundSplit">@drawable/ab_bottom_solid_dribbblestyle</item>-->
+    <!--<item name="progressBarStyle">@style/ProgressBar.Dribbblestyle</item>-->
+    <!--</style>-->
 
-    <style name="ActionBar.Transparent.Dribbblestyle" parent="@android:style/Widget.Holo.ActionBar">
-        <item name="android:background">@drawable/ab_stacked_solid_dribbblestyle</item>
-        <item name="android:logo">@drawable/logo</item>
-        <item name="android:progressBarStyle">@style/ProgressBar.Dribbblestyle</item>
+    <style name="ActionBar.Transparent.Dribbblestyle" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="background">@drawable/ab_stacked_solid_dribbblestyle</item>
+        <item name="logo">@drawable/logo</item>
+        <item name="progressBarStyle">@style/ProgressBar.Dribbblestyle</item>
     </style>
 
     <style name="PopupMenu.Dribbblestyle" parent="@android:style/Widget.Holo.ListPopupWindow">
@@ -75,7 +75,7 @@
     </style>
 
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
-    <style name="Theme.Dribbblestyle.Widget" parent="@android:style/Theme.Holo">
+    <style name="Theme.Dribbblestyle.Widget" parent="ThemeOverlay.AppCompat.ActionBar">
         <item name="android:popupMenuStyle">@style/PopupMenu.Dribbblestyle</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Dribbblestyle</item>
     </style>

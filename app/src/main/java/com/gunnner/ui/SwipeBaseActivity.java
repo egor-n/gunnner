@@ -18,11 +18,11 @@ public class SwipeBaseActivity extends SwipeBackActivity {
     }
 
     private void setUpActionBar() {
-        getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#181818")));
-        getActionBar().setLogo(new ColorDrawable(Color.TRANSPARENT));
-        getActionBar().setDisplayShowHomeEnabled(true);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setTitle("");
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#181818")));
+        getSupportActionBar().setLogo(new ColorDrawable(Color.TRANSPARENT));
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
     }
 
     @Override

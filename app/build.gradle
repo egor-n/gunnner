@@ -16,22 +16,22 @@ repositories {
 
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+    compileSdkVersion 21
+    buildToolsVersion '21.0.1'
 
     defaultConfig {
-        applicationId "com.gunnner"
+        applicationId 'com.gunnner'
         minSdkVersion 15
-        targetSdkVersion 19
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 21
+        versionCode 3
+        versionName '1.1'
     }
     signingConfigs {
         testing {
-            storeFile file("testing.jks")
-            storePassword "testing"
-            keyAlias "testing"
-            keyPassword "testing"
+            storeFile file('testing.jks')
+            storePassword 'testing'
+            keyAlias 'testing'
+            keyPassword 'testing'
         }
     }
     buildTypes {
@@ -45,7 +45,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:support-v4:19.1.0'
+    compile 'com.android.support:appcompat-v7:21.+'
 
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'

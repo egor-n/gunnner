@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="@android:style/Theme.Holo">
+    <style name="AppTheme" parent="Theme.AppCompat">
         <item name="android:windowTranslucentNavigation">@bool/translucent_navigation</item>
         <item name="android:windowIsTranslucent">false</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_ab_back_mtrl_am_alpha</item>
     </style>
 
-    <style name="Swipeable" parent="@android:style/Theme.Holo">
+    <style name="Swipeable" parent="Theme.AppCompat">
         <item name="android:windowTranslucentNavigation">@bool/translucent_navigation</item>
         <item name="android:windowIsTranslucent">true</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_ab_back_mtrl_am_alpha</item>
     </style>
 
     <style name="Translucent" parent="@android:style/Theme.Translucent.NoTitleBar">

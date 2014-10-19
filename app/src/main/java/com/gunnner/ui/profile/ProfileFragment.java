@@ -83,6 +83,7 @@ public class ProfileFragment extends Fragment implements ProfileController.OnPla
             mListener = (ShotsFragment.OnShotClickedListener) getActivity();
         } catch (ClassCastException ignored) {
         }
+
         Utils.setInsets(getActivity(), mPlayerShotsList);
         playerId = getArguments().getInt(PLAYER_ID);
         String playerName = getArguments().getString(PLAYER_NAME);
