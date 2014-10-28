@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat">
+    <style name="AppTheme" parent="Theme.Dribbblestyle">
         <item name="android:windowTranslucentNavigation">@bool/translucent_navigation</item>
         <item name="android:windowIsTranslucent">false</item>
     </style>
 
-    <style name="Swipeable" parent="Theme.AppCompat">
+    <style name="Swipeable" parent="Theme.Dribbblestyle">
         <item name="android:windowTranslucentNavigation">@bool/translucent_navigation</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>

@@ -1,5 +1,6 @@
 package com.gunnner.ui.main;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -75,9 +76,11 @@ public class MainFragment extends Fragment implements ShotsFragment.OnTabsHideLi
     }
 
     private void prepareTabs() {
+        Resources res = getResources();
         mSlidingTabs.setCustomTabView(R.layout.tab_indicator, android.R.id.text1);
         mSlidingTabs.setDistributeEvenly(true);
-        mSlidingTabs.setSelectedIndicatorColors(getResources().getColor(R.color.dribbble));
+        mSlidingTabs.setSelectedIndicatorColors(res.getColor(R.color.dribbble2),
+                res.getColor(R.color.dribbble), res.getColor(R.color.dribbble3));
         mSlidingTabs.setViewPager(mViewPager);
     }
 
@@ -89,6 +92,7 @@ public class MainFragment extends Fragment implements ShotsFragment.OnTabsHideLi
 
     @Override
     public void hideTabs(boolean hide) {
+/*
         if (hide) {
             if (tabsHidden) {
                 mSlidingTabs.animate().y(mTabsTop - mSlidingTabs.getHeight()).start();
@@ -100,5 +104,6 @@ public class MainFragment extends Fragment implements ShotsFragment.OnTabsHideLi
                 tabsHidden = true;
             }
         }
+*/
     }
 }

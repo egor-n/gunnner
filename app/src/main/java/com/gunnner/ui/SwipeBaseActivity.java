@@ -1,7 +1,5 @@
 package com.gunnner.ui;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -18,8 +16,8 @@ public class SwipeBaseActivity extends SwipeBackActivity {
     }
 
     private void setUpActionBar() {
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#181818")));
-        getSupportActionBar().setLogo(new ColorDrawable(Color.TRANSPARENT));
+//        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#181818")));
+//        getSupportActionBar().setLogo(new ColorDrawable(Color.TRANSPARENT));
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");

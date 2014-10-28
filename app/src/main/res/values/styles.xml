@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Swipeable" parent="Theme.AppCompat">
+    <style name="Swipeable" parent="Theme.Dribbblestyle">
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
@@ -16,68 +16,8 @@
 
     <style name="Theme.Dribbblestyle" parent="Theme.AppCompat">
         <item name="colorPrimary">@color/primary</item>
+        <item name="colorAccent">@color/accent</item>
         <item name="colorPrimaryDark">@color/primary</item>
-        <item name="actionBarItemBackground">@drawable/selectable_background_dribbblestyle
-        </item>
-        <item name="popupMenuStyle">@style/PopupMenu.Dribbblestyle</item>
-        <item name="dropDownListViewStyle">@style/DropDownListView.Dribbblestyle</item>
-        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Dribbblestyle</item>
-        <item name="actionDropDownStyle">@style/DropDownNav.Dribbblestyle</item>
-        <item name="actionBarStyle">@style/ActionBar.Transparent.Dribbblestyle</item>
-        <item name="actionModeBackground">@drawable/cab_background_top_dribbblestyle</item>
-        <item name="actionModeSplitBackground">
-            @drawable/cab_background_bottom_dribbblestyle
-        </item>
-        <item name="actionModeCloseButtonStyle">
-            @style/ActionButton.CloseMode.Dribbblestyle
-        </item>
-        <!--<item name="homeAsUpIndicator">@drawable/ic_ab_back_mtrl_am_alpha</item>-->
-    </style>
-
-    <!--<style name="ActionBar.Solid.Dribbblestyle" parent="ThemeOverlay.AppCompat.ActionBar">-->
-    <!--<item name="logo">@drawable/logo</item>-->
-    <!--<item name="colorBackground">#0e0e0e</item>-->
-    <!--<item name="backgroundStacked">@drawable/ab_stacked_solid_dribbblestyle</item>-->
-    <!--<item name="backgroundSplit">@drawable/ab_bottom_solid_dribbblestyle</item>-->
-    <!--<item name="progressBarStyle">@style/ProgressBar.Dribbblestyle</item>-->
-    <!--</style>-->
-
-    <style name="ActionBar.Transparent.Dribbblestyle" parent="ThemeOverlay.AppCompat.ActionBar">
-        <item name="background">@drawable/ab_stacked_solid_dribbblestyle</item>
-        <item name="logo">@drawable/logo</item>
-        <item name="progressBarStyle">@style/ProgressBar.Dribbblestyle</item>
-    </style>
-
-    <style name="PopupMenu.Dribbblestyle" parent="@android:style/Widget.Holo.ListPopupWindow">
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_dribbblestyle</item>
-    </style>
-
-    <style name="DropDownListView.Dribbblestyle" parent="@android:style/Widget.Holo.ListView.DropDown">
-        <item name="android:listSelector">@drawable/selectable_background_dribbblestyle</item>
-    </style>
-
-    <style name="ActionBarTabStyle.Dribbblestyle" parent="@android:style/Widget.Holo.ActionBar.TabView">
-        <item name="android:background">@drawable/tab_indicator_ab_dribbblestyle</item>
-    </style>
-
-    <style name="DropDownNav.Dribbblestyle" parent="@android:style/Widget.Holo.Spinner">
-        <item name="android:background">@drawable/spinner_background_ab_dribbblestyle</item>
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_dribbblestyle</item>
-        <item name="android:dropDownSelector">@drawable/selectable_background_dribbblestyle</item>
-    </style>
-
-    <style name="ProgressBar.Dribbblestyle" parent="@android:style/Widget.Holo.ProgressBar.Horizontal">
-        <item name="android:progressDrawable">@drawable/progress_horizontal_dribbblestyle</item>
-    </style>
-
-    <style name="ActionButton.CloseMode.Dribbblestyle" parent="@android:style/Widget.Holo.ActionButton.CloseMode">
-        <item name="android:background">@drawable/btn_cab_done_dribbblestyle</item>
-    </style>
-
-    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
-    <style name="Theme.Dribbblestyle.Widget" parent="ThemeOverlay.AppCompat.ActionBar">
-        <item name="android:popupMenuStyle">@style/PopupMenu.Dribbblestyle</item>
-        <item name="android:dropDownListViewStyle">@style/DropDownListView.Dribbblestyle</item>
     </style>
 
     <style name="ColonTextView">
