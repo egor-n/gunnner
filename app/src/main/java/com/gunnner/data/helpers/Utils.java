@@ -7,6 +7,7 @@ import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 
 import com.gunnner.R;
@@ -155,6 +156,16 @@ public class Utils {
     public static void clearImageCache(Context context) {
         getImageLoader(context).clearMemoryCache();
         getImageLoader(context).clearDiskCache();
+    }
+
+    public static void removeOnGlobalLayoutListener(ViewTreeObserver observer,
+                                                    ViewTreeObserver.OnGlobalLayoutListener listener) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            observer.removeOnGlobalLayoutListener(listener);
+        } else {
+            //noinspection deprecation
+            observer.removeGlobalOnLayoutListener(listener);
+        }
     }
 
     private static ImageLoaderConfiguration imageLoaderConfiguration(Context context) {

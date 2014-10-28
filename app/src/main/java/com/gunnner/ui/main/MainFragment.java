@@ -69,12 +69,15 @@ public class MainFragment extends Fragment implements ShotsFragment.OnTabsHideLi
             @Override
             public void onGlobalLayout() {
                 mTabsTop = mSlidingTabs.getTop();
-                getView().getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                Utils.removeOnGlobalLayoutListener(getView().getViewTreeObserver(), this);
             }
         });
     }
 
     private void prepareTabs() {
+        mSlidingTabs.setCustomTabView(R.layout.tab_indicator, android.R.id.text1);
+        mSlidingTabs.setDistributeEvenly(true);
+        mSlidingTabs.setSelectedIndicatorColors(getResources().getColor(R.color.dribbble));
         mSlidingTabs.setViewPager(mViewPager);
     }
 

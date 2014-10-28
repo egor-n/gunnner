@@ -14,7 +14,8 @@
         android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background"
+        android:background="@color/primary"
+        android:elevation="4dp"
         tools:layout_height="50dp"/>
 
 </RelativeLayout>

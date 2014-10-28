@@ -6,4 +6,6 @@
     <color name="background_row_drawer_checked">#383838</color>
     <color name="aqua">#009688</color>
     <color name="gray">#808080</color>
+
+    <color name="primary">#181818</color>
 </resources>

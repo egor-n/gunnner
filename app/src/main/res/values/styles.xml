@@ -15,8 +15,8 @@
     </style>
 
     <style name="Theme.Dribbblestyle" parent="Theme.AppCompat">
-        <item name="colorPrimary">#181818</item>
-        <item name="colorPrimaryDark">#181818</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary</item>
         <item name="actionBarItemBackground">@drawable/selectable_background_dribbblestyle
         </item>
         <item name="popupMenuStyle">@style/PopupMenu.Dribbblestyle</item>
