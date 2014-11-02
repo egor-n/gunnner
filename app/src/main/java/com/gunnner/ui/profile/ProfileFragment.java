@@ -141,11 +141,6 @@ public class ProfileFragment extends Fragment implements ProfileController.OnPla
         if (shouldLoadMore) {
             mPlayerShotsList.setOnScrollListener(new InfiniteScrollListener() {
                 @Override
-                public void hideTabs(boolean show) {
-                    // do nothing
-                }
-
-                @Override
                 public void loadMore(int page, int totalItemsCount) {
                     if (controller != null) {
                         controller.loadMore(playerId);

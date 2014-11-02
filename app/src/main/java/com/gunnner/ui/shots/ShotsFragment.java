@@ -17,7 +17,6 @@ import com.gunnner.data.InfiniteScrollListener;
 import com.gunnner.data.PlayerController;
 import com.gunnner.data.helpers.Utils;
 import com.gunnner.data.models.Shot;
-import com.squareup.okhttp.internal.Util;
 
 import java.util.ArrayList;
 
@@ -44,7 +43,6 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
     private ArrayList<Shot> shots = new ArrayList<Shot>();
 
     private OnShotClickedListener mListener;
-    private OnTabsHideListener tabsListener;
 
     private ShotsController controller;
     private PlayerController playerController;
@@ -95,17 +93,6 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
         mListView.setOnItemClickListener(this);
         mListView.setOnScrollListener(new InfiniteScrollListener() {
             @Override
-            public void hideTabs(boolean hide) {
-                if (tabsListener != null) {
-                    if (hide) {
-                        tabsListener.hideTabs(true);
-                    } else {
-                        tabsListener.hideTabs(false);
-                    }
-                }
-            }
-
-            @Override
             public void loadMore(int page, int totalItemsCount) {
                 if (mType == FOLLOWING) {
                     playerController.loadMoreFollowingShots();
@@ -134,11 +121,6 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        try {
-            tabsListener = (OnTabsHideListener) getParentFragment();
-        } catch (ClassCastException ignored) {
-        }
-
         mProgressBar.setVisibility(View.VISIBLE);
 
         shots = getArguments().getParcelableArrayList(SHOTS);
@@ -220,9 +202,5 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
 
     public interface OnShotClickedListener {
         public void onShotClicked(Shot shot);
-    }
-
-    public interface OnTabsHideListener {
-        public void hideTabs(boolean hide);
     }
 }
