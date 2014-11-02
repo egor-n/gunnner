@@ -1,15 +1,12 @@
 package com.gunnner.ui.main;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.SearchView;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.gunnner.R;
@@ -21,19 +18,16 @@ import com.gunnner.ui.BaseActivity;
 import com.gunnner.ui.SettingsFragment;
 import com.gunnner.ui.drawer.NavigationDrawerFragment;
 import com.gunnner.ui.profile.ProfileFragment;
-import com.gunnner.ui.shots.SearchController;
-import com.gunnner.ui.shots.ShotsController;
+import com.gunnner.ui.shots.ShotsActivity;
 import com.gunnner.ui.shots.ShotsFragment;
 import com.gunnner.ui.widgets.InputDialog;
 
-import java.util.ArrayList;
-
 public class MainActivity extends BaseActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
-        ShotsFragment.OnShotClickedListener, InputDialog.CustomDialogCallback {
+        ShotsFragment.OnShotClickedListener, InputDialog.CustomDialogCallback,
+        MainFragment.SearchListener {
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
-    private SearchController searchController;
     private AlertDialog dialog;
 
     @Override
@@ -43,7 +37,6 @@ public class MainActivity extends BaseActivity
         Crashlytics.start(this);
         setContentView(R.layout.activity_main);
 
-        searchController = SearchController.getInstance();
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
@@ -138,53 +131,7 @@ public class MainActivity extends BaseActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            getMenuInflater().inflate(R.menu.main, menu);
             restoreActionBar();
-
-            final SearchView searchView = new SearchView(this);
-            searchView.setOnSearchClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(MainActivity.this, "Search icon clicked", Toast.LENGTH_SHORT).show();
-                }
-            });
-            searchView.setFocusable(false);
-
-            MenuItem search = menu.findItem(R.id.action_search);
-            search.setActionView(searchView);
-            search.setIcon(R.drawable.ic_search);
-            search.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS
-                    | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
-
-            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    Utils.hideKeyboard(MainActivity.this);
-                    // TODO: show a progress bar or something
-                    searchController.search(query, new ShotsController.OnShotsLoadedListener() {
-                        @Override
-                        public void onShotsLoaded(ArrayList<Shot> shots) {
-                            getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.container,
-                                            ShotsFragment.newInstance(shots))
-                                    .addToBackStack("")
-                                    .commit();
-                        }
-
-                        @Override
-                        public void onShotsError() {
-
-                        }
-                    });
-                    return true;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String s) {
-                    return false;
-                }
-            });
-
             return true;
         }
         return super.onCreateOptionsMenu(menu);
@@ -220,5 +167,13 @@ public class MainActivity extends BaseActivity
     @Override
     public void onCancel() {
 
+    }
+
+    @Override
+    public void onSearchQuery(String query) {
+        Utils.hideKeyboard(this);
+        Intent intent = new Intent(this, ShotsActivity.class);
+        intent.putExtra("query", query);
+        startActivity(intent);
     }
 }

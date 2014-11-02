@@ -4,7 +4,11 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -20,6 +24,12 @@ public class MainFragment extends Fragment {
 
     @InjectView(R.id.sliding_tabs) SlidingTabLayout mSlidingTabs;
     @InjectView(R.id.view_pager) ViewPager mViewPager;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,6 +53,34 @@ public class MainFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.main, menu);
+
+        final SearchView searchView = new SearchView(getActivity());
+        searchView.setFocusable(false);
+
+        MenuItem search = menu.findItem(R.id.action_search);
+        search.setActionView(searchView);
+        search.setIcon(R.drawable.ic_search);
+        search.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS
+                | MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                ((SearchListener) getActivity()).onSearchQuery(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+    }
+
     private void prepareTabs() {
         Resources res = getResources();
         mSlidingTabs.setCustomTabView(R.layout.tab_indicator, android.R.id.text1);
@@ -56,5 +94,9 @@ public class MainFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(CURRENT_TAB, mViewPager.getCurrentItem());
+    }
+
+    public interface SearchListener {
+        public void onSearchQuery(String query);
     }
 }

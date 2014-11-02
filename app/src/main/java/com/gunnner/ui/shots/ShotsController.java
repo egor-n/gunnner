@@ -1,7 +1,5 @@
 package com.gunnner.ui.shots;
 
-import android.util.Log;
-
 import com.gunnner.data.api.Api;
 import com.gunnner.data.api.ShotsResponse;
 import com.gunnner.data.models.Shot;
@@ -35,7 +33,6 @@ public class ShotsController {
         callbacks.put(reference, callback);
         if (shots.containsKey(reference)) {
             if (callback != null) {
-                Log.e("got shots", "for reference " + reference + " from cache");
                 callback.onShotsLoaded(shots.get(reference));
             }
         } else {

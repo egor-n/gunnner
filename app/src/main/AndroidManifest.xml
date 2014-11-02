@@ -27,6 +27,9 @@
         <activity
             android:name="com.gunnner.ui.shots.ShotImageActivity"
             android:theme="@style/Translucent"/>
+        <activity
+            android:name="com.gunnner.ui.shots.ShotsActivity"
+            android:theme="@style/Swipeable"/>
 
         <meta-data
             android:name="com.crashlytics.ApiKey"

@@ -28,6 +28,7 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
     public static final int FOLLOWING = 1;
     public static final int LIKES = 2;
     public static final int MY_SHOTS = 3;
+    public static final int SEARCH = 4;
 
     private static final String REFERENCE = "reference";
     private static final String TYPE = "type";
@@ -47,10 +48,11 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
     private ShotsController controller;
     private PlayerController playerController;
 
-    public static Fragment newInstance(ArrayList<Shot> shots) {
+    public static Fragment newInstance(ArrayList<Shot> shots, int type) {
         ShotsFragment fragment = new ShotsFragment();
         Bundle args = new Bundle();
         args.putParcelableArrayList(SHOTS, shots);
+        args.putInt(TYPE, type);
         fragment.setArguments(args);
         return fragment;
     }
@@ -100,6 +102,8 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
                     playerController.loadMoreLikesShots();
                 } else if (mType == MY_SHOTS) {
                     playerController.loadMorePlayerShots();
+                } else if (mType == SEARCH) {
+                    ((ShotsActivity) getActivity()).loadMore(ShotsFragment.this);
                 } else {
                     controller.loadMore(mReference);
                 }
@@ -140,6 +144,8 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
             Utils.setInsets(getActivity(), mListView);
             playerController = PlayerController.getInstance(getActivity());
             playerController.getPlayerShots(this);
+        } else if (mType == SEARCH) {
+            Utils.setInsets(getActivity(), mListView);
         } else {
             Utils.setBottomInsets(getActivity(), mListView);
             addTopPadding();
@@ -150,7 +156,7 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
     private void addTopPadding() {
         mListView.setPadding(
                 mListView.getPaddingLeft(),
-                mListView.getPaddingTop() + Utils.dpToPixels(getActivity(), 44f),
+                mListView.getPaddingTop() + Utils.dpToPixels(getActivity(), 48f), // + tabs height
                 mListView.getPaddingRight(),
                 mListView.getPaddingBottom()
         );

@@ -9,6 +9,7 @@
     <style name="Swipeable" parent="Theme.Dribbblestyle">
         <item name="android:windowTranslucentNavigation">@bool/translucent_navigation</item>
         <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@drawable/bottom_shadow</item>
     </style>
 
     <style name="Translucent" parent="@android:style/Theme.Translucent.NoTitleBar">

@@ -186,6 +186,9 @@ public class ShotView extends FrameLayout {
                 toLoad = mShot.getImageUrl();
             }
         }
+        if (TextUtils.isEmpty(toLoad)) {
+            toLoad = mShot.getImageUrl();
+        }
         Utils.getImageLoader(getContext())
                 .displayImage(toLoad, mShotImage, Utils.getDisplayImageOptions());
     }

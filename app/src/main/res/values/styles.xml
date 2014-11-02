@@ -6,6 +6,7 @@
     </style>
 
     <style name="Swipeable" parent="Theme.Dribbblestyle">
+        <item name="android:windowContentOverlay">@drawable/bottom_shadow</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
