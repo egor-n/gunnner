@@ -26,3 +26,5 @@ assets/crashlytics-build.properties
 
 # Crashlytics
 crashlytics.properties
+
+gradle.properties
