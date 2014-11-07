@@ -21,6 +21,7 @@ import com.gunnner.ui.profile.ProfileFragment;
 import com.gunnner.ui.shots.ShotsActivity;
 import com.gunnner.ui.shots.ShotsFragment;
 import com.gunnner.ui.widgets.InputDialog;
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends BaseActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
@@ -33,8 +34,9 @@ public class MainActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         Settings.restore(this);
-        Crashlytics.start(this);
+
         setContentView(R.layout.activity_main);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)

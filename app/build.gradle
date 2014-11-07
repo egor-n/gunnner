@@ -1,23 +1,23 @@
 buildscript {
     repositories {
-        maven { url 'http://download.crashlytics.com/maven' }
+        maven { url 'https://maven.fabric.io/repo' }
     }
 
     dependencies {
-        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
+        classpath 'io.fabric.tools:gradle:1.+'
     }
 }
 apply plugin: 'com.android.application'
-apply plugin: 'crashlytics'
+apply plugin: 'io.fabric'
 
 repositories {
-    maven { url 'http://download.crashlytics.com/maven' }
+    maven { url 'https://maven.fabric.io/repo' }
 }
 
 
 android {
     compileSdkVersion 21
-    buildToolsVersion '21.0.1'
+    buildToolsVersion '21.0.2'
 
     defaultConfig {
         applicationId 'com.gunnner'
@@ -49,12 +49,14 @@ dependencies {
 
     compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
-    compile 'com.squareup.retrofit:retrofit:1.6.1'
+    compile 'com.squareup.retrofit:retrofit:1.7.1'
     compile 'org.jsoup:jsoup:1.7.3'
-    compile 'com.jakewharton:butterknife:5.1.2'
+    compile 'com.jakewharton:butterknife:6.0.0'
     compile 'com.mcxiaoke.photoview:library:1.2.3'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.2'
-    compile 'com.crashlytics.android:crashlytics:1.+'
 
     compile project(':app:projectLibs:sbl')
+    compile('com.crashlytics.sdk.android:crashlytics:2.0.1@aar') {
+        transitive = true;
+    }
 }
