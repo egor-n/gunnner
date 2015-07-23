@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gunnner</string>
+    <string name="action_browser">Navegador</string>
+    <string name="action_example">Ação exemplo</string>
+    <string name="action_settings">Configurações</string>
+    <string name="action_share">Compartilhar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="clear_cache_summary">Apagar todas as imagens carregadas pelo aplicativo</string>
+    <string name="clear_cache_title">Limpar cache</string>
+    <string name="confirm">Confirmar</string>
+    <string name="dribbble_username">Seu usuário no Dribbble</string>
+    <string name="enter_your_username">Apenas nome de usuário Dribbble é necessário.</string>
+    <string name="followers_label">SEGUIDORES</string>
+    <string name="following_label">SEGUINDO</string>
+    <string name="hello_blank_fragment">Olá fragmento em branco</string>
+    <string name="hello_world">Olá pessoal!</string>
+    <string name="likes_label">CURTI</string>
+    <string name="log_in">Entrar</string>
+    <string name="log_out">Sair</string>
+</resources>
