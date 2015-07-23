@@ -5,15 +5,15 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:21.+'
+    compile 'com.android.support:appcompat-v7:22.2.1'
 }
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.0.1"
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
 
     defaultConfig {
         minSdkVersion 7
-        targetSdkVersion 21
+        targetSdkVersion 22
     }
 }
