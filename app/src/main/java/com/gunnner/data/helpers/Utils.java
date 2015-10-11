@@ -14,14 +14,15 @@ import com.gunnner.R;
 import com.gunnner.data.models.Shot;
 import com.gunnner.ui.profile.ProfileActivity;
 import com.gunnner.ui.shots.OpenedShotActivity;
-import com.nostra13.universalimageloader.cache.disc.impl.ext.LruDiscCache;
+import com.nostra13.universalimageloader.cache.disc.impl.ext.LruDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemoryCache;
-import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+
+import java.io.IOException;
 
 /**
  * @author Egor N.
@@ -169,12 +170,20 @@ public class Utils {
     }
 
     private static ImageLoaderConfiguration imageLoaderConfiguration(Context context) {
-        return new ImageLoaderConfiguration.Builder(context)
-                .threadPoolSize(3)
-                .threadPriority(Thread.MIN_PRIORITY)
-                .memoryCache(new WeakMemoryCache())
-                .memoryCache(new UsingFreqLimitedMemoryCache(2 * 1024 * 1024))
-                .diskCache(new LruDiscCache(context.getCacheDir(), new HashCodeFileNameGenerator(), 50 * 1024 * 1024))
-                .build();
+        try {
+            return new ImageLoaderConfiguration.Builder(context)
+                    .threadPoolSize(3)
+                    .threadPriority(Thread.MIN_PRIORITY)
+                    .memoryCache(new UsingFreqLimitedMemoryCache(2 * 1024 * 1024))
+                    .diskCache(new LruDiskCache(context.getCacheDir(), new HashCodeFileNameGenerator(), 50 * 1024 * 1024))
+                    .build();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ImageLoaderConfiguration.Builder(context)
+                    .threadPoolSize(3)
+                    .threadPriority(Thread.MIN_PRIORITY)
+                    .memoryCache(new UsingFreqLimitedMemoryCache(2 * 1024 * 1024))
+                    .build();
+        }
     }
 }
