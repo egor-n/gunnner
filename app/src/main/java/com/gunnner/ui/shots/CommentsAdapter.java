@@ -59,21 +59,21 @@ public class CommentsAdapter extends BaseAdapter {
 
         ViewHolder holder = (ViewHolder) view.getTag();
         Utils.getImageLoader(context).displayImage(
-                comment.getPlayer().getAvatarUrl(), holder.playerAvatar,
+                comment.getUser().getAvatarUrl(), holder.playerAvatar,
                 Utils.getDisplayImageOptions());
-        holder.playerName.setText(comment.getPlayer().getName());
+        holder.playerName.setText(comment.getUser().getName());
         holder.commentBody.setText(Html.fromHtml(comment.getBody()));
 
         holder.playerAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.openProfile(context, comment.getPlayer().get_id());
+                Utils.openProfile(context, comment.getUser().get_id());
             }
         });
         holder.playerName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.openProfile(context, comment.getPlayer().get_id());
+                Utils.openProfile(context, comment.getUser().get_id());
             }
         });
 

@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.gunnner.R;
 import com.gunnner.data.InfiniteScrollListener;
-import com.gunnner.data.PlayerController;
+import com.gunnner.data.UserController;
 import com.gunnner.data.helpers.Utils;
 import com.gunnner.data.models.Shot;
 
@@ -34,9 +34,12 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
     private static final String TYPE = "type";
     private static final String SHOTS = "shots";
 
-    @InjectView(R.id.shots_list) AbsListView mListView;
-    @InjectView(R.id.progress_bar) ProgressBar mProgressBar;
-    @InjectView(R.id.empty) TextView mEmptyView;
+    @InjectView(R.id.shots_list)
+    AbsListView mListView;
+    @InjectView(R.id.progress_bar)
+    ProgressBar mProgressBar;
+    @InjectView(R.id.empty)
+    TextView mEmptyView;
 
     private String mReference;
     private int mType;
@@ -46,7 +49,7 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
     private OnShotClickedListener mListener;
 
     private ShotsController controller;
-    private PlayerController playerController;
+    private UserController userController;
 
     public static Fragment newInstance(ArrayList<Shot> shots, int type) {
         ShotsFragment fragment = new ShotsFragment();
@@ -97,11 +100,11 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
             @Override
             public void loadMore(int page, int totalItemsCount) {
                 if (mType == FOLLOWING) {
-                    playerController.loadMoreFollowingShots();
+                    userController.loadMoreFollowingShots();
                 } else if (mType == LIKES) {
-                    playerController.loadMoreLikesShots();
+                    userController.loadMoreLikesShots();
                 } else if (mType == MY_SHOTS) {
-                    playerController.loadMorePlayerShots();
+                    userController.loadMorePlayerShots();
                 } else if (mType == SEARCH) {
                     ((ShotsActivity) getActivity()).loadMore(ShotsFragment.this);
                 } else {
@@ -134,16 +137,16 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
 
         if (mType == FOLLOWING) {
             Utils.setInsets(getActivity(), mListView);
-            playerController = PlayerController.getInstance(getActivity());
-            playerController.getFollowingShots(this);
+            userController = UserController.getInstance(getActivity());
+            userController.getFollowingShots(this);
         } else if (mType == LIKES) {
             Utils.setInsets(getActivity(), mListView);
-            playerController = PlayerController.getInstance(getActivity());
-            playerController.getLikesShots(this);
+            userController = UserController.getInstance(getActivity());
+            userController.getLikesShots(this);
         } else if (mType == MY_SHOTS) {
             Utils.setInsets(getActivity(), mListView);
-            playerController = PlayerController.getInstance(getActivity());
-            playerController.getPlayerShots(this);
+            userController = UserController.getInstance(getActivity());
+            userController.getPlayerShots(this);
         } else if (mType == SEARCH) {
             Utils.setInsets(getActivity(), mListView);
         } else {
@@ -185,7 +188,7 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
             this.shots = shots;
             mProgressBar.setVisibility(View.GONE);
             if (mAdapter == null) {
-                mAdapter = new ShotsAdapter(shots, getActivity());
+                mAdapter = new ShotsAdapter(shots);
                 mListView.setAdapter(mAdapter);
             } else {
                 mAdapter.setItems(shots);
@@ -207,6 +210,6 @@ public class ShotsFragment extends Fragment implements AbsListView.OnItemClickLi
     }
 
     public interface OnShotClickedListener {
-        public void onShotClicked(Shot shot);
+        void onShotClicked(Shot shot);
     }
 }

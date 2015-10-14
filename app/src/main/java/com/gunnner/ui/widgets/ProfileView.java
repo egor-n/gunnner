@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.gunnner.R;
 import com.gunnner.data.helpers.DateFormatter;
 import com.gunnner.data.helpers.Utils;
-import com.gunnner.data.models.Player;
+import com.gunnner.data.models.User;
 import com.gunnner.ui.profile.ProfileActivity;
 
 import butterknife.ButterKnife;
@@ -38,7 +38,7 @@ public class ProfileView extends RelativeLayout {
     @InjectView(R.id.rebounds_value) TextView mReboundsValue;
     @InjectView(R.id.member_since) TextView mMemberSince;
 
-    private Player player;
+    private User user;
 
     public ProfileView(Context context) {
         super(context);
@@ -65,46 +65,46 @@ public class ProfileView extends RelativeLayout {
         ButterKnife.inject(this);
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setUser(User user) {
+        this.user = user;
 
         try {
-            ((ProfileActivity) getContext()).setTitle(player.getUsername());
+            ((ProfileActivity) getContext()).setTitle(user.getUsername());
         } catch (ClassCastException ignored) {
             // it falls here if ProfileFragment is used inside of MainActivity (my profile)
         }
 
         Utils.getImageLoader(getContext())
-                .displayImage(player.getAvatarUrl(), mPlayerImage, Utils.getDisplayImageOptions());
+                .displayImage(user.getAvatarUrl(), mPlayerImage, Utils.getDisplayImageOptions());
 
-        mPlayerName.setText(player.getName());
-        mPlayerLocation.setText(player.getLocation());
-        if (TextUtils.isEmpty(player.getTwitterScreenName())) {
+        mPlayerName.setText(user.getName());
+        mPlayerLocation.setText(user.getLocation());
+        if (TextUtils.isEmpty(user.getTwitterScreenName())) {
             mPlayerTwitter.setVisibility(View.GONE);
         } else {
-            mPlayerTwitter.setText(player.getTwitterScreenName());
+            mPlayerTwitter.setText(user.getTwitterScreenName());
         }
-        mShotsValue.setText(player.getShotsCount() + "");
-        mLikesValue.setText(player.getLikesCount() + "");
-        mFollowersValue.setText(player.getFollowersCount() + "");
-        mFollowingValue.setText(player.getFollowingCount() + "");
-        mReboundsValue.setText(player.getReboundsCount() + "");
+        mShotsValue.setText(user.getShotsCount() + "");
+        mLikesValue.setText(user.getLikesCount() + "");
+        mFollowersValue.setText(user.getFollowersCount() + "");
+        mFollowingValue.setText(user.getFollowingCount() + "");
+        mReboundsValue.setText(user.getReboundsCount() + "");
         mMemberSince.setText(Html.fromHtml("<font color=\"#ea4c89\">Member since:</font> " +
-                DateFormatter.formatDate(player.getCreatedAt())));
+                DateFormatter.formatDate(user.getCreatedAt())));
     }
 
     @OnClick(R.id.player_twitter)
     void onTwitterNameClicked() {
-        if (player == null) {
+        if (user == null) {
             return;
         }
 
         try {
             getContext().startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("twitter://user?screen_name=" + player.getTwitterScreenName())));
+                    Uri.parse("twitter://user?screen_name=" + user.getTwitterScreenName())));
         } catch (Exception e) {
             getContext().startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://twitter.com/#!/" + player.getTwitterScreenName())));
+                    Uri.parse("https://twitter.com/#!/" + user.getTwitterScreenName())));
         }
     }
 }

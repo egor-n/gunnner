@@ -4,7 +4,6 @@ import android.util.SparseArray;
 import android.util.SparseIntArray;
 
 import com.gunnner.data.api.Api;
-import com.gunnner.data.api.CommentsResponse;
 import com.gunnner.data.models.Comment;
 import com.gunnner.data.models.Shot;
 
@@ -73,19 +72,17 @@ public class OpenedShotController {
             page = 1;
         }
         pages.put(shotId, page);
-        Api.dribbble().comments(shotId, page, new Callback<CommentsResponse>() {
+        Api.dribbble().comments(shotId, page, new Callback<ArrayList<Comment>>() {
             @Override
-            public void success(CommentsResponse commentsResponse, Response response) {
+            public void success(ArrayList<Comment> newComments, Response response) {
                 ArrayList<Comment> commentsList = comments.get(shotId);
                 if (commentsList != null) {
-                    commentsList.addAll(commentsResponse.getComments());
+                    commentsList.addAll(newComments);
                 } else {
-                    comments.put(shotId, commentsResponse.getComments());
+                    comments.put(shotId, newComments);
                 }
                 if (callbacks.get(shotId) != null) {
-                    callbacks.get(shotId).onCommentsLoaded(
-                            commentsResponse.getPage() < commentsResponse.getPages(),
-                            comments.get(shotId));
+                    callbacks.get(shotId).onCommentsLoaded(newComments.size() > 0, comments.get(shotId)); // TODO
                 }
             }
 
@@ -115,8 +112,8 @@ public class OpenedShotController {
     }
 
     public interface OnCommentsLoadedListener {
-        public void onShotLoaded(Shot shot);
+        void onShotLoaded(Shot shot);
 
-        public void onCommentsLoaded(boolean shouldLoadMore, ArrayList<Comment> comments);
+        void onCommentsLoaded(boolean shouldLoadMore, ArrayList<Comment> comments);
     }
 }

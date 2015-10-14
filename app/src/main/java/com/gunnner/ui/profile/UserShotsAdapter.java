@@ -23,12 +23,12 @@ import butterknife.InjectView;
 /**
  * @author Egor N.
  */
-public class PlayerShotsAdapter extends BaseAdapter {
-    ArrayList<Shot> shots;
-    Context context;
-    DisplayImageOptions options;
+public class UserShotsAdapter extends BaseAdapter {
+    private ArrayList<Shot> shots;
+    private Context context;
+    private DisplayImageOptions options;
 
-    public PlayerShotsAdapter(ArrayList<Shot> shots, Context context) {
+    public UserShotsAdapter(ArrayList<Shot> shots, Context context) {
         this.shots = shots;
         this.context = context;
         options = new DisplayImageOptions.Builder()

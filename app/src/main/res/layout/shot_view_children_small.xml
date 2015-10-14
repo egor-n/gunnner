@@ -69,7 +69,7 @@
             tools:text="Very very lengthy title so it doesn't fit"/>
 
         <TextView
-            android:id="@+id/player"
+            android:id="@+id/user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/time"

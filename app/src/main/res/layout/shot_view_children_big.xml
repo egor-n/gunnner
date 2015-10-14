@@ -70,7 +70,7 @@
             tools:text="Very very lengthy title so it doesn't fit"/>
 
         <TextView
-            android:id="@+id/player"
+            android:id="@+id/user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/title"
@@ -121,7 +121,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@id/player"
+            android:layout_below="@id/user"
             android:drawableLeft="@drawable/ic_date"
             android:drawablePadding="2dp"
             android:drawableStart="@drawable/ic_date"
@@ -136,7 +136,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/time"
             android:layout_marginTop="6dp"
-            android:autoLink="all"
             android:gravity="center_vertical"
             android:textColor="#f3f3f3"
             android:textColorLink="@color/dribbble"

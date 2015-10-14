@@ -4,9 +4,8 @@ import android.util.SparseArray;
 import android.util.SparseIntArray;
 
 import com.gunnner.data.api.Api;
-import com.gunnner.data.api.ShotsResponse;
-import com.gunnner.data.models.Player;
 import com.gunnner.data.models.Shot;
+import com.gunnner.data.models.User;
 
 import java.util.ArrayList;
 
@@ -20,9 +19,9 @@ import retrofit.client.Response;
 public class ProfileController {
     private static ProfileController instance;
 
-    private Player userProfile;
+    private User userProfile;
     private OnPlayerDataListener userCallback;
-    private SparseArray<Player> players = new SparseArray<Player>();
+    private SparseArray<User> players = new SparseArray<User>();
     private SparseArray<ArrayList<Shot>> shots = new SparseArray<ArrayList<Shot>>();
     private SparseArray<OnPlayerDataListener> callbacks = new SparseArray<OnPlayerDataListener>();
     private SparseIntArray pages = new SparseIntArray();
@@ -89,12 +88,12 @@ public class ProfileController {
     }
 
     private void loadProfile(final String playerId) {
-        Api.dribbble().playerProfile(playerId, new Callback<Player>() {
+        Api.dribbble().userProfile(playerId, new Callback<User>() {
             @Override
-            public void success(Player player, Response response) {
-                userProfile = player;
+            public void success(User user, Response response) {
+                userProfile = user;
                 if (userCallback != null) {
-                    userCallback.onPlayerReceived(player);
+                    userCallback.onPlayerReceived(user);
                 }
             }
 
@@ -109,11 +108,11 @@ public class ProfileController {
     }
 
     private void loadProfile(final int playerId) {
-        Api.dribbble().playerProfile(playerId, new Callback<Player>() {
+        Api.dribbble().userProfile(playerId, new Callback<User>() {
             @Override
-            public void success(Player player, Response response) {
+            public void success(User user, Response response) {
                 if (callbacks.get(playerId) != null) {
-                    callbacks.get(playerId).onPlayerReceived(player);
+                    callbacks.get(playerId).onPlayerReceived(user);
                 }
             }
 
@@ -134,19 +133,17 @@ public class ProfileController {
         }
         pages.put(playerId, page);
 
-        Api.dribbble().playerShots(playerId, page, new Callback<ShotsResponse>() {
+        Api.dribbble().userShots(playerId, page, new Callback<ArrayList<Shot>>() {
             @Override
-            public void success(ShotsResponse shotsResponse, Response response) {
+            public void success(ArrayList<Shot> newShots, Response response) {
                 ArrayList<Shot> shotsList = shots.get(playerId);
                 if (shotsList != null) {
-                    shotsList.addAll(shotsResponse.getShots());
+                    shotsList.addAll(newShots);
                 } else {
-                    shots.put(playerId, shotsResponse.getShots());
+                    shots.put(playerId, newShots);
                 }
                 if (callbacks.get(playerId) != null) {
-                    callbacks.get(playerId).onShotsReceived(
-                            shotsResponse.getPage() < shotsResponse.getPages(),
-                            shots.get(playerId));
+                    callbacks.get(playerId).onShotsReceived(newShots.size() > 0, shots.get(playerId)); // TODO
                 }
             }
 
@@ -158,10 +155,10 @@ public class ProfileController {
     }
 
     public interface OnPlayerDataListener {
-        public void onPlayerReceived(Player player);
+        void onPlayerReceived(User user);
 
-        public void onPlayerError();
+        void onPlayerError();
 
-        public void onShotsReceived(boolean shouldLoadMore, ArrayList<Shot> shots);
+        void onShotsReceived(boolean shouldLoadMore, ArrayList<Shot> shots);
     }
 }

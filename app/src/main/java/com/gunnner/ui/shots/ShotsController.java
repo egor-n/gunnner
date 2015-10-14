@@ -1,7 +1,6 @@
 package com.gunnner.ui.shots;
 
 import com.gunnner.data.api.Api;
-import com.gunnner.data.api.ShotsResponse;
 import com.gunnner.data.models.Shot;
 
 import java.util.ArrayList;
@@ -55,13 +54,13 @@ public class ShotsController {
         if (!pages.containsKey(reference)) {
             pages.put(reference, 1);
         }
-        Api.dribbble().shots(reference, pages.get(reference), new Callback<ShotsResponse>() {
+        Api.dribbble().shots(reference, pages.get(reference), new Callback<ArrayList<Shot>>() {
             @Override
-            public void success(ShotsResponse shotsResponse, Response response) {
+            public void success(ArrayList<Shot> newShots, Response response) {
                 if (shots.containsKey(reference)) {
-                    shots.get(reference).addAll(shotsResponse.getShots());
+                    shots.get(reference).addAll(newShots);
                 } else {
-                    shots.put(reference, shotsResponse.getShots());
+                    shots.put(reference, newShots);
                 }
                 if (callbacks.get(reference) != null) {
                     callbacks.get(reference).onShotsLoaded(shots.get(reference));
@@ -78,8 +77,8 @@ public class ShotsController {
     }
 
     public interface OnShotsLoadedListener {
-        public void onShotsLoaded(ArrayList<Shot> shots);
+        void onShotsLoaded(ArrayList<Shot> shots);
 
-        public void onShotsError();
+        void onShotsError();
     }
 }

@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.Html;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,16 +36,28 @@ public class ShotView extends FrameLayout {
     public static final int SMALL = 0;
     public static final int BIG = 1;
 
-    @InjectView(R.id.shot_image) ImageView mShotImage;
-    @InjectView(R.id.rebound) ImageView mRebound;
-    @InjectView(R.id.title) TextView mTitle;
-    @InjectView(R.id.player) TextView mPlayer;
-    @InjectView(R.id.views) TextView mViews;
-    @InjectView(R.id.likes) TextView mLikes;
-    @InjectView(R.id.comments) TextView mComments;
-    @InjectView(R.id.time) TextView mTime;
-    @Optional @InjectView(R.id.gif) ImageView mGif;
-    @Optional @InjectView(R.id.description) TextView mDescription;
+    @InjectView(R.id.shot_image)
+    ImageView mShotImage;
+    @InjectView(R.id.rebound)
+    ImageView mRebound;
+    @InjectView(R.id.title)
+    TextView mTitle;
+    @InjectView(R.id.user)
+    TextView mUser;
+    @InjectView(R.id.views)
+    TextView mViews;
+    @InjectView(R.id.likes)
+    TextView mLikes;
+    @InjectView(R.id.comments)
+    TextView mComments;
+    @InjectView(R.id.time)
+    TextView mTime;
+    @Optional
+    @InjectView(R.id.gif)
+    ImageView mGif;
+    @Optional
+    @InjectView(R.id.description)
+    TextView mDescription;
 
     private int style = 0;
     private Shot mShot;
@@ -83,8 +96,8 @@ public class ShotView extends FrameLayout {
             LayoutInflater.from(context).inflate(R.layout.shot_view_children_big, this, true);
         }
 
-        int[] attributess = new int[]{android.R.attr.selectableItemBackground};
-        TypedArray ta = context.obtainStyledAttributes(attributess);
+        int[] attributes = new int[]{android.R.attr.selectableItemBackground};
+        TypedArray ta = context.obtainStyledAttributes(attributes);
         Drawable foreground = ta.getDrawable(0);
         ta.recycle();
         setForeground(foreground);
@@ -119,47 +132,53 @@ public class ShotView extends FrameLayout {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public void setShot(Shot shot) {
         this.mShot = shot;
-        boolean isGif = shot.getImageUrl().endsWith("gif");
 
         loadImage();
-        if (isGif) {
-            mGif.setVisibility(View.VISIBLE);
+        if (shot.isAnimated()) {
+            mGif.setVisibility(VISIBLE);
         } else {
-            mGif.setVisibility(View.GONE);
+            mGif.setVisibility(GONE);
         }
 
         if (shot.isRebound()) {
-            mRebound.setVisibility(View.VISIBLE);
+            mRebound.setVisibility(VISIBLE);
             mRebound.animate().alpha(1).setDuration(600).start();
         } else {
-            mRebound.setVisibility(View.GONE);
+            mRebound.setVisibility(GONE);
         }
 
         mTitle.setText(shot.getTitle());
-        if (shot.getPlayer() != null) {
-            mPlayer.setText(Html.fromHtml("by " + "<font color=\"#ea4c89\">" + shot.getPlayer().getName() + "</font>"));
+        if (shot.getUser() != null) {
+            mUser.setVisibility(VISIBLE);
+            mUser.setText(Html.fromHtml("by " + "<font color=\"#ea4c89\">" + shot.getUser().getName() + "</font>"));
+        } else {
+            mUser.setVisibility(GONE);
         }
 
         if (style == BIG) {
-            mPlayer.setOnClickListener(new OnClickListener() {
+            mUser.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Utils.openProfile(getContext(), mShot.getPlayer().get_id());
+                    Utils.openProfile(getContext(), mShot.getUser().get_id());
                 }
             });
         }
 
         if (!TextUtils.isEmpty(shot.getCreatedAt())) {
+            mTime.setVisibility(VISIBLE);
             mTime.setText(DateFormatter.formatDate(shot.getCreatedAt()));
+        } else {
+            mTime.setVisibility(GONE);
         }
-        mViews.setText(shot.getViewsCount() + "");
-        mLikes.setText(shot.getLikesCount() + "");
+        mViews.setText(String.valueOf(shot.getViewsCount()));
+        mLikes.setText(String.valueOf(shot.getLikesCount()));
         if (style == SMALL) {
-            mComments.setText(shot.getCommentsCount() + "");
+            mComments.setText(String.valueOf(shot.getCommentsCount()));
         } else {
             mComments.setText(shot.getCommentsCount() + " Responses");
             if (!TextUtils.isEmpty(shot.getDescription())) {
                 mDescription.setText(Html.fromHtml(shot.getDescription()));
+                mDescription.setMovementMethod(LinkMovementMethod.getInstance());
             }
         }
     }
@@ -180,7 +199,7 @@ public class ShotView extends FrameLayout {
         if (Settings.reduceDataUsage()) {
             toLoad = mShot.getImageTeaserUrl();
         } else {
-            if (mShot.getImageUrl().endsWith("gif")) {
+            if (mShot.isAnimated()) {
                 toLoad = mShot.getImageTeaserUrl();
             } else {
                 toLoad = mShot.getImageUrl();

@@ -12,7 +12,7 @@ public class DateFormatter {
     private static DateFormat targetFormat;
 
     public static String formatDate(String dateString) {
-        SimpleDateFormat sourceFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss"); // 2012/06/30 22:24:50 -0400
+        SimpleDateFormat sourceFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'"); // 2015-10-10T09:26:55Z
         Date date;
         try {
             date = sourceFormat.parse(dateString);

@@ -8,12 +8,14 @@ import com.google.gson.annotations.SerializedName;
 public class Comment {
     @SerializedName("id")
     private int _id;
+    @SerializedName("body")
     private String body;
     @SerializedName("likes_count")
     private int likesCount;
     @SerializedName("created_at")
     private String createdAt;
-    private Player player;
+    @SerializedName("user")
+    private User user;
 
     public int get_id() {
         return _id;
@@ -31,7 +33,7 @@ public class Comment {
         return createdAt;
     }
 
-    public Player getPlayer() {
-        return player;
+    public User getUser() {
+        return user;
     }
 }

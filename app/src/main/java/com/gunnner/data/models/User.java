@@ -5,31 +5,33 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Player implements Parcelable {
+public class User implements Parcelable {
     @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Player> CREATOR = new Parcelable.Creator<Player>() {
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
         @Override
-        public Player createFromParcel(Parcel in) {
-            return new Player(in);
+        public User createFromParcel(Parcel in) {
+            return new User(in);
         }
 
         @Override
-        public Player[] newArray(int size) {
-            return new Player[size];
+        public User[] newArray(int size) {
+            return new User[size];
         }
     };
     @SerializedName("id")
     private int _id;
+    @SerializedName("name")
     private String name;
+    @SerializedName("username")
     private String username;
+    @SerializedName("url")
     private String url;
     @SerializedName("avatar_url")
     private String avatarUrl;
+    @SerializedName("location")
     private String location;
     @SerializedName("twitter_screen_name")
     private String twitterScreenName;
-    //    @SerializedName("drafted_by_player_id")
-//    private Object draftedByPlayerId;
     @SerializedName("shots_count")
     private int shotsCount;
     @SerializedName("draftees_count")
@@ -53,7 +55,7 @@ public class Player implements Parcelable {
     @SerializedName("created_at")
     private String createdAt;
 
-    protected Player(Parcel in) {
+    protected User(Parcel in) {
         _id = in.readInt();
         name = in.readString();
         username = in.readString();
@@ -148,7 +150,7 @@ public class Player implements Parcelable {
 
     @Override
     public String toString() {
-        return "Player{" +
+        return "User{" +
                 "id=" + _id +
                 ", name='" + name + '\'' +
                 ", username='" + username + '\'' +

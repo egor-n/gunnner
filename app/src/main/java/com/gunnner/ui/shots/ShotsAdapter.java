@@ -1,6 +1,5 @@
 package com.gunnner.ui.shots;
 
-import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -14,12 +13,10 @@ import java.util.ArrayList;
  * @author Egor N.
  */
 public class ShotsAdapter extends BaseAdapter {
-    ArrayList<Shot> shots;
-    Context context;
+    private ArrayList<Shot> shots;
 
-    public ShotsAdapter(ArrayList<Shot> shots, Context context) {
+    ShotsAdapter(ArrayList<Shot> shots) {
         this.shots = shots;
-        this.context = context;
     }
 
     @Override

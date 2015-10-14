@@ -17,8 +17,8 @@ import android.widget.TextView;
 import com.gunnner.R;
 import com.gunnner.data.InfiniteScrollListener;
 import com.gunnner.data.helpers.Utils;
-import com.gunnner.data.models.Player;
 import com.gunnner.data.models.Shot;
+import com.gunnner.data.models.User;
 import com.gunnner.ui.shots.ShotsFragment;
 import com.gunnner.ui.widgets.HeaderGridView;
 import com.gunnner.ui.widgets.ProfileView;
@@ -38,9 +38,9 @@ public class ProfileFragment extends Fragment implements ProfileController.OnPla
     @InjectView(R.id.player_error) TextView mPlayerError;
 
     private int playerId;
-    private Player mPlayer;
+    private User mUser;
     private ProfileView mProfileView;
-    private PlayerShotsAdapter mAdapter;
+    private UserShotsAdapter mAdapter;
     private ArrayList<Shot> mShots = new ArrayList<Shot>();
     private ShotsFragment.OnShotClickedListener mListener;
 
@@ -102,12 +102,12 @@ public class ProfileFragment extends Fragment implements ProfileController.OnPla
     }
 
     @Override
-    public void onPlayerReceived(Player player) {
-        if (!isAdded() || player == null) {
+    public void onPlayerReceived(User user) {
+        if (!isAdded() || user == null) {
             return;
         }
 
-        this.mPlayer = player;
+        this.mUser = user;
         mProgressBar.setVisibility(View.GONE);
         prepareHeader();
     }
@@ -127,13 +127,13 @@ public class ProfileFragment extends Fragment implements ProfileController.OnPla
         this.mShots = shots;
 
         if (mProfileView == null) {
-            // Player data wasn't loaded yet, so we have to wait for it to set adapter,
+            // User data wasn't loaded yet, so we have to wait for it to set adapter,
             // because you can't addHeaderView after setAdapter
             return;
         }
 
         if (mAdapter == null) {
-            mAdapter = new PlayerShotsAdapter(shots, getActivity());
+            mAdapter = new UserShotsAdapter(shots, getActivity());
         } else {
             mAdapter.setItems(shots);
         }
@@ -154,11 +154,11 @@ public class ProfileFragment extends Fragment implements ProfileController.OnPla
 
     private void prepareHeader() {
         mProfileView = ProfileView.inflate(mPlayerShotsList);
-        mProfileView.setPlayer(mPlayer);
+        mProfileView.setUser(mUser);
 
         mPlayerShotsList.addHeaderView(mProfileView, null, false);
 
-        mAdapter = new PlayerShotsAdapter(mShots, getActivity());
+        mAdapter = new UserShotsAdapter(mShots, getActivity());
         mPlayerShotsList.setAdapter(mAdapter); // set empty adapter so it shows the header
     }
 
@@ -169,17 +169,17 @@ public class ProfileFragment extends Fragment implements ProfileController.OnPla
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mPlayer == null) {
+        if (mUser == null) {
             return false;
         }
 
-        String url = "https://dribbble.com/" + mPlayer.getUsername();
+        String url = "https://dribbble.com/" + mUser.getUsername();
 
         int id = item.getItemId();
         if (id == R.id.action_share) {
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_SEND);
-            intent.putExtra(Intent.EXTRA_TEXT, mPlayer.getName() + "\n" + url);
+            intent.putExtra(Intent.EXTRA_TEXT, mUser.getName() + "\n" + url);
             intent.setType("text/plain");
             startActivity(intent);
             return true;

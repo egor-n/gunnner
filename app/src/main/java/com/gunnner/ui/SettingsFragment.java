@@ -11,8 +11,8 @@ import android.widget.Checkable;
 import android.widget.TextView;
 
 import com.gunnner.R;
-import com.gunnner.data.PlayerController;
 import com.gunnner.data.Settings;
+import com.gunnner.data.UserController;
 import com.gunnner.data.helpers.Utils;
 import com.gunnner.ui.widgets.CheckableRelativeLayout;
 
@@ -40,16 +40,16 @@ public class SettingsFragment extends Fragment {
 
         mReduceDataUsage.setChecked(Settings.reduceDataUsage());
 
-        if (!PlayerController.isLoggedIn(getActivity())) {
+        if (!UserController.isLoggedIn(getActivity())) {
             mLogOut.setVisibility(View.GONE);
         } else {
-            mLoggedInAs.setText(getString(R.string.logged_in_as) + " " + PlayerController.getName());
+            mLoggedInAs.setText(getString(R.string.logged_in_as) + " " + UserController.getName());
         }
     }
 
     @OnClick(R.id.log_out)
     void logOut() {
-        PlayerController.logOut(getActivity());
+        UserController.logOut(getActivity());
         mLogOut.setVisibility(View.GONE);
     }
 

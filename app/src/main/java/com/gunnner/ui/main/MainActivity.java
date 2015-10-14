@@ -10,8 +10,8 @@ import android.view.Menu;
 
 import com.crashlytics.android.Crashlytics;
 import com.gunnner.R;
-import com.gunnner.data.PlayerController;
 import com.gunnner.data.Settings;
+import com.gunnner.data.UserController;
 import com.gunnner.data.helpers.Utils;
 import com.gunnner.data.models.Shot;
 import com.gunnner.ui.BaseActivity;
@@ -21,6 +21,7 @@ import com.gunnner.ui.profile.ProfileFragment;
 import com.gunnner.ui.shots.ShotsActivity;
 import com.gunnner.ui.shots.ShotsFragment;
 import com.gunnner.ui.widgets.InputDialog;
+
 import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends BaseActivity
@@ -56,18 +57,18 @@ public class MainActivity extends BaseActivity
                         .commit();
                 break;
             case 1:  // my profile
-                if (PlayerController.isLoggedIn(this)) {
+                if (UserController.isLoggedIn(this)) {
                     setTitle("My profile");
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container,
-                                    ProfileFragment.newInstance(PlayerController.getName()))
+                                    ProfileFragment.newInstance(UserController.getName()))
                             .commit();
                 } else {
                     showInputDialog(-1);
                 }
                 break;
             case 2:  // my shots
-                if (PlayerController.isLoggedIn(this)) {
+                if (UserController.isLoggedIn(this)) {
                     setTitle("My shots");
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container,
@@ -78,7 +79,7 @@ public class MainActivity extends BaseActivity
                 }
                 break;
             case 3:  // following
-                if (PlayerController.isLoggedIn(this)) {
+                if (UserController.isLoggedIn(this)) {
                     setTitle("Following");
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container,
@@ -89,7 +90,7 @@ public class MainActivity extends BaseActivity
                 }
                 break;
             case 4:  // likes
-                if (PlayerController.isLoggedIn(this)) {
+                if (UserController.isLoggedIn(this)) {
                     setTitle("Likes");
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container,
@@ -146,7 +147,7 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void onConfirm(String username, int type) {
-        PlayerController.setName(MainActivity.this, username);
+        UserController.setName(MainActivity.this, username);
         Fragment fragment;
         if (type == -1) {
             setTitle("My profile");
@@ -168,7 +169,6 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void onCancel() {
-
     }
 
     @Override

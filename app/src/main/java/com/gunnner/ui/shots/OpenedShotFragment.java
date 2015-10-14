@@ -168,14 +168,14 @@ public class OpenedShotFragment extends Fragment implements
             if (mShot != null) {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_TEXT, mShot.getTitle() + "\n" + mShot.getShortUrl());
+                intent.putExtra(Intent.EXTRA_TEXT, mShot.getTitle() + "\n" + mShot.getUrl());
                 intent.setType("text/plain");
                 startActivity(intent);
                 return true;
             }
         } else if (id == R.id.action_browser) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(mShot.getShortUrl()));
+            intent.setData(Uri.parse(mShot.getUrl()));
             startActivity(intent);
             return true;
         }

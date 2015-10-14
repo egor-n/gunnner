@@ -5,9 +5,9 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import com.gunnner.data.api.Api;
-import com.gunnner.data.api.ShotsResponse;
-import com.gunnner.data.models.Player;
 import com.gunnner.data.models.Shot;
+import com.gunnner.data.models.ShotWrapper;
+import com.gunnner.data.models.User;
 import com.gunnner.ui.shots.ShotsController;
 
 import java.util.ArrayList;
@@ -19,14 +19,14 @@ import retrofit.client.Response;
 /**
  * @author Egor N.
  */
-public class PlayerController {
-    private static PlayerController instance;
+public class UserController {
+    private static UserController instance;
     private static String name;
-    private static Player player;
+    private static User user;
 
     private ArrayList<Shot> followingShots;
     private ArrayList<Shot> likesShots;
-    private ArrayList<Shot> playerShots;
+    private ArrayList<Shot> userShots;
     private int followingPage = 0;
     private int likesPage = 0;
     private int playerPage = 0;
@@ -36,11 +36,11 @@ public class PlayerController {
     private OnPlayerReceivedListener playerCallback;
     private ShotsController.OnShotsLoadedListener followingShotsCallback;
     private ShotsController.OnShotsLoadedListener likesShotsCallback;
-    private ShotsController.OnShotsLoadedListener playerShotsCallback;
+    private ShotsController.OnShotsLoadedListener userShotsCallback;
 
-    public static PlayerController getInstance(Context context) {
+    public static UserController getInstance(Context context) {
         if (instance == null) {
-            instance = new PlayerController();
+            instance = new UserController();
         }
         return instance;
     }
@@ -51,12 +51,12 @@ public class PlayerController {
     }
 
     public static void setName(Context context, String name) {
-        if (name.equals(PlayerController.name)) {
+        if (name.equals(UserController.name)) {
             return;
         }
 
-        PlayerController.name = name;
-        player = null;
+        UserController.name = name;
+        user = null;
 
         save(context);
     }
@@ -67,7 +67,7 @@ public class PlayerController {
 
     public static void logOut(Context context) {
         instance = null;
-        player = null;
+        user = null;
         name = null;
 
         save(context);
@@ -75,7 +75,7 @@ public class PlayerController {
 
     private static void restore(Context context) {
         if (instance == null) {
-            instance = new PlayerController();
+            instance = new UserController();
         }
 
         name = getPreferences(context).getString("name", "");
@@ -86,7 +86,7 @@ public class PlayerController {
     }
 
     private static SharedPreferences getPreferences(Context context) {
-        return context.getSharedPreferences("player", Context.MODE_PRIVATE);
+        return context.getSharedPreferences("user", Context.MODE_PRIVATE);
     }
 
     public void getLikesShots(ShotsController.OnShotsLoadedListener likesShotsCallback) {
@@ -112,12 +112,12 @@ public class PlayerController {
     }
 
     public void getPlayerShots(ShotsController.OnShotsLoadedListener playerShotsCallback) {
-        this.playerShotsCallback = playerShotsCallback;
-        if (playerShots == null) {
+        this.userShotsCallback = playerShotsCallback;
+        if (userShots == null) {
             loadMorePlayerShots();
         } else {
             if (playerShotsCallback != null) {
-                playerShotsCallback.onShotsLoaded(playerShots);
+                playerShotsCallback.onShotsLoaded(userShots);
             }
         }
     }
@@ -144,14 +144,15 @@ public class PlayerController {
     }
 
     public void loadFollowingShots() {
-        Api.dribbble().followingShots(name, followingPage, new Callback<ShotsResponse>() {
+        Api.dribbble().followingShots(name, followingPage, new Callback<ArrayList<ShotWrapper>>() {
             @Override
-            public void success(ShotsResponse shotsResponse, Response response) {
-                shouldLoadMoreFollowing = shotsResponse.shouldLoadMore();
+            public void success(ArrayList<ShotWrapper> shots, Response response) {
+                shouldLoadMoreFollowing = shots.size() > 0; // TODO
                 if (followingShots == null) {
-                    followingShots = shotsResponse.getShots();
-                } else {
-                    followingShots.addAll(shotsResponse.getShots());
+                    followingShots = new ArrayList<>();
+                }
+                for (ShotWrapper wrapper : shots) {
+                    followingShots.add(wrapper.getShot());
                 }
                 if (followingShotsCallback != null) {
                     followingShotsCallback.onShotsLoaded(followingShots);
@@ -168,14 +169,15 @@ public class PlayerController {
     }
 
     public void loadLikesShots() {
-        Api.dribbble().likesShots(name, likesPage, new Callback<ShotsResponse>() {
+        Api.dribbble().likesShots(name, likesPage, new Callback<ArrayList<ShotWrapper>>() {
             @Override
-            public void success(ShotsResponse shotsResponse, Response response) {
-                shouldLoadMoreLikes = shotsResponse.shouldLoadMore();
+            public void success(ArrayList<ShotWrapper> shots, Response response) {
+                shouldLoadMoreLikes = shots.size() > 0; // TODO
                 if (likesShots == null) {
-                    likesShots = shotsResponse.getShots();
-                } else {
-                    likesShots.addAll(shotsResponse.getShots());
+                    likesShots = new ArrayList<>();
+                }
+                for (ShotWrapper wrapper : shots) {
+                    likesShots.add(wrapper.getShot());
                 }
                 if (likesShotsCallback != null) {
                     likesShotsCallback.onShotsLoaded(likesShots);
@@ -192,32 +194,32 @@ public class PlayerController {
     }
 
     public void loadPlayerShots() {
-        Api.dribbble().playerShots(name, playerPage, new Callback<ShotsResponse>() {
+        Api.dribbble().userShots(name, playerPage, new Callback<ArrayList<Shot>>() {
             @Override
-            public void success(ShotsResponse shotsResponse, Response response) {
-                shouldLoadMorePlayerShots = shotsResponse.shouldLoadMore();
-                if (playerShots == null) {
-                    playerShots = shotsResponse.getShots();
+            public void success(ArrayList<Shot> shots, Response response) {
+                shouldLoadMorePlayerShots = shots.size() > 0; // TODO
+                if (userShots == null) {
+                    userShots = shots;
                 } else {
-                    playerShots.addAll(shotsResponse.getShots());
+                    userShots.addAll(shots);
                 }
-                if (playerShotsCallback != null) {
-                    playerShotsCallback.onShotsLoaded(playerShots);
+                if (userShotsCallback != null) {
+                    userShotsCallback.onShotsLoaded(userShots);
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
-                if (playerShotsCallback != null) {
-                    playerShotsCallback.onShotsError();
+                if (userShotsCallback != null) {
+                    userShotsCallback.onShotsError();
                 }
             }
         });
     }
 
     public interface OnPlayerReceivedListener {
-        public void onPlayerReceived(Player player);
+        void onPlayerReceived(User user);
 
-        public void onPlayerError();
+        void onPlayerError();
     }
 }

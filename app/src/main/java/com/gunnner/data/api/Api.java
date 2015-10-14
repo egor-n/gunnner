@@ -1,10 +1,15 @@
 package com.gunnner.data.api;
 
 import com.google.gson.JsonObject;
-import com.gunnner.data.models.Player;
+import com.gunnner.data.models.Comment;
 import com.gunnner.data.models.Shot;
+import com.gunnner.data.models.ShotWrapper;
+import com.gunnner.data.models.User;
+
+import java.util.ArrayList;
 
 import retrofit.Callback;
+import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.http.GET;
 import retrofit.http.Path;
@@ -16,7 +21,14 @@ import retrofit.http.Query;
 public class Api {
     private static RestAdapter restAdapter = new RestAdapter.Builder()
             .setLogLevel(RestAdapter.LogLevel.FULL)
-            .setEndpoint("http://api.dribbble.com")
+            .setRequestInterceptor(new RequestInterceptor() {
+                @Override
+                public void intercept(RequestFacade request) {
+                    request.addHeader("Accept", "application/vnd.dribbble.v1.param+json");
+                    request.addHeader("Authorization", "Bearer 4e3e676ce2881d166900f7f0ba4f1c0c599f3126ff426c78e61fd3fc233b2a32");
+                }
+            })
+            .setEndpoint("https://api.dribbble.com/v1/")
             .build();
     private static DribbbleService dribbbleService = restAdapter.create(DribbbleService.class);
 
@@ -25,75 +37,75 @@ public class Api {
     }
 
     public interface DribbbleService {
-        @GET("/shots/{value}/")
-        public void shots(@Path("value") String param, @Query("page") int page,
-                          Callback<ShotsResponse> callback);
+        @GET("/shots")
+        void shots(@Query("list") String param, @Query("page") int page,
+                   Callback<ArrayList<Shot>> callback);
 
         @GET("/shots/{id}")
-        public void shot(@Path("id") int shotId, Callback<Shot> callback);
+        void shot(@Path("id") int shotId, Callback<Shot> callback);
 
         @GET("/shots/{id}/rebounds")
-        public void rebounds(@Path("id") int shotId, Callback<ShotsResponse> callback);
+        void rebounds(@Path("id") int shotId, Callback<ShotsResponse> callback);
 
         @GET("/shots/{id}/comments")
-        public void comments(@Path("id") int shotId, @Query("page") int page,
-                             Callback<CommentsResponse> callback);
+        void comments(@Path("id") int shotId, @Query("page") int page,
+                      Callback<ArrayList<Comment>> callback);
 
         @GET("/players/{id}/shots")
-        public void playerShots(@Path("id") int playerId, @Query("page") int page,
-                                Callback<ShotsResponse> callback);
+        void userShots(@Path("id") int playerId, @Query("page") int page,
+                       Callback<ArrayList<Shot>> callback);
 
-        @GET("/players/{id}/shots/following")
-        public void followingShots(@Path("id") int playerId, @Query("page") int page,
-                                   Callback<ShotsResponse> callback);
+        @GET("/users/{id}/shots/following")
+        void followingShots(@Path("id") int userId, @Query("page") int page,
+                            Callback<ArrayList<ShotWrapper>> callback);
 
-        @GET("/players/{id}/shots/likes")
-        public void likesShots(@Path("id") int playerId, @Query("page") int page,
-                               Callback<ShotsResponse> callback);
+        @GET("/users/{id}/shots/likes")
+        void likesShots(@Path("id") int userId, @Query("page") int page,
+                        Callback<ArrayList<ShotWrapper>> callback);
 
-        @GET("/players/{id}")
-        public void playerProfile(@Path("id") int playerId, Callback<Player> callback);
+        @GET("/users/{id}")
+        void userProfile(@Path("id") int userId, Callback<User> callback);
 
-        @GET("/players/{id}/followers/")
-        public void playerFollowers(@Path("id") int playerId, @Query("page") int page,
-                                    Callback<PlayersResponse> callback);
+        @GET("/users/{id}/followers/")
+        void userFollowers(@Path("id") int userId, @Query("page") int page,
+                           Callback<UsersResponse> callback);
 
-        @GET("/players/{id}/following")
-        public void playerFollowing(@Path("id") int playerId, @Query("page") int page,
-                                    Callback<PlayersResponse> callback);
+        @GET("/users/{id}/following")
+        void userFollowing(@Path("id") int userId, @Query("page") int page,
+                           Callback<UsersResponse> callback);
 
-        @GET("/players/{id}/draftees")
-        public void playerDraftees(@Path("id") int playerId, @Query("page") int page,
-                                   Callback<PlayersResponse> callback);
+        @GET("/users/{id}/draftees")
+        void userDraftees(@Path("id") int userId, @Query("page") int page,
+                          Callback<UsersResponse> callback);
 
-        @GET("/players/{id}/shots")
-        public void playerShots(@Path("id") String playerName, @Query("page") int page,
-                                Callback<ShotsResponse> callback);
+        @GET("/users/{id}/shots")
+        void userShots(@Path("id") String userName, @Query("page") int page,
+                       Callback<ArrayList<Shot>> callback);
 
-        @GET("/players/{id}/shots/following")
-        public void followingShots(@Path("id") String playerName, @Query("page") int page,
-                                   Callback<ShotsResponse> callback);
+        @GET("/users/{id}/following")
+        void followingShots(@Path("id") String userName, @Query("page") int page,
+                            Callback<ArrayList<ShotWrapper>> callback);
 
-        @GET("/players/{id}/shots/likes")
-        public void likesShots(@Path("id") String playerName, @Query("page") int page,
-                               Callback<ShotsResponse> callback);
+        @GET("/users/{id}/likes")
+        void likesShots(@Path("id") String userName, @Query("page") int page,
+                        Callback<ArrayList<ShotWrapper>> callback);
 
-        @GET("/{id}")
-        public void playerProfile(@Path("id") String playerName, Callback<Player> callback);
+        @GET("/users/{id}")
+        void userProfile(@Path("id") String userName, Callback<User> callback);
 
-        @GET("/players/{id}/followers")
-        public void playerFollowers(@Path("id") String playerName, @Query("page") int page,
-                                    Callback<PlayersResponse> callback);
+        @GET("/users/{id}/followers")
+        void userFollowers(@Path("id") String userName, @Query("page") int page,
+                           Callback<UsersResponse> callback);
 
-        @GET("/players/{id}/following")
-        public void playerFollowing(@Path("id") String playerName, @Query("page") int page,
-                                    Callback<PlayersResponse> callback);
+        @GET("/users/{id}/following")
+        void userFollowing(@Path("id") String userName, @Query("page") int page,
+                           Callback<UsersResponse> callback);
 
-        @GET("/players/{id}/draftees")
-        public void playerDraftees(@Path("id") String playerName, @Query("page") int page,
-                                   Callback<PlayersResponse> callback);
+        @GET("/users/{id}/draftees")
+        void userDraftees(@Path("id") String userName, @Query("page") int page,
+                          Callback<UsersResponse> callback);
 
         @GET("/search")
-        public JsonObject search(@Query("q") String query, @Query("page") int page);
+        JsonObject search(@Query("q") String query, @Query("page") int page);
     }
 }

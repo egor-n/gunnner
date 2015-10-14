@@ -19,13 +19,13 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return ShotsFragment.newInstance(Shot.DEBUTS);
-            case 1:
-                return ShotsFragment.newInstance(Shot.EVERYONE);
-            case 2:
                 return ShotsFragment.newInstance(Shot.POPULAR);
+            case 1:
+                return ShotsFragment.newInstance(Shot.DEBUTS);
+            case 2:
+                return ShotsFragment.newInstance(Shot.PLAYOFFS);
         }
-        return ShotsFragment.newInstance(Shot.POPULAR);
+        return ShotsFragment.newInstance(Shot.DEBUTS);
     }
 
     @Override
@@ -37,11 +37,11 @@ public class MainPagerAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "DEBUTS";
-            case 1:
-                return "EVERYONE";
-            case 2:
                 return "POPULAR";
+            case 1:
+                return "DEBUTS";
+            case 2:
+                return "PLAYOFFS";
         }
         return "POPULAR";
     }
