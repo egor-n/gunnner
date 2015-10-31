@@ -5,6 +5,7 @@ Gunnner
 
 The Gunnner app lets you:
 
+- Search shots
 - Browse Debuts, Everyone and Popular feeds on Dribbble
 - Browse your likes, your shots and shots you're following
 - Browse players' <b>profiles</b> as well as their shots
@@ -14,13 +15,6 @@ The Gunnner app lets you:
 - Swipe back to close the shot
 
 <sub><sup>1</sup> A person who is competitive, ambitious and substantially exceeds minimum requirements.</sub>
-
-Development
------------
-
-Right now Dribbble API doesn't have write-access, but they are planning to implement it. A soon as they make it [public](https://dribbble.com/shots/1680023), I am planning to update Gunnner.
-
-I am open to pull-requests and will gladly review review each one.
 
 License
 -------
