@@ -1,3 +1,8 @@
+Notice
+======
+
+Gunnner has been deprecated since [Dribbble API v1](https://developer.dribbble.com/v1/) has been retired on March 26, 2018.
+
 Gunnner
 =======
 
